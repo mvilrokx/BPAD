@@ -54,7 +54,7 @@ $(function () {
 						function (r) {
 							$(data.rslt.obj).attr("id", r.feature.id);
 							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
-							$(data.rslt.obj).children("a").attr("href", "<%= features_path %>/" + r.feature.id);
+							$(data.rslt.obj).children("a").attr("href", "<%= features_path %>/" + r.feature.id + '/edit');
 						},
 						"json"
 					);
@@ -276,7 +276,7 @@ $(function () {
         	"icon"				: '/icons/add.png',
         	"submenu"			: {
      				"add_lba" : {
-            	"label"				: "LBA",
+            	"label"				: "Business Area",
 		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "lba" } } ); },
             	"icon"				: '/icons/package_add.png'
             },
@@ -291,7 +291,7 @@ $(function () {
             	"icon"				: '/icons/plugin_add.png'
             },
      				"add_feature" : {
-            	"label"				: "FWU",
+            	"label"				: "Feature",
 		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "feature" } } ); },
             	"icon"				: '/icons/bullet_black.png'
             }
@@ -324,7 +324,7 @@ $(function () {
 <div class="push-1 span-22 last">
   <div class="span-10 colborder">
 	  <div class="span-10">
-			<input type="button" class="button" value="Add LBA" id="add_lba" style="float:left;">
+			<input type="button" class="button" value="Add Business Area" id="add_lba" style="float:left;">
 			<input type="button" class="button" value="Add LBO" id="add_lbo" style="float:left;">
 			<input type="button" class="button" value="Add FWU" id="add_fwu" style="float:left;">
 			<input type="button" class="button" value="Add Feature" id="add_feature" style="float:left;">

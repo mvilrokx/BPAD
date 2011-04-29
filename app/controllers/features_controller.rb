@@ -20,6 +20,7 @@ class FeaturesController < ApplicationController
 
   def create
     @feature = Feature.new(params[:feature])
+    @feature.priority = "Must Have"
     if @feature.save
       flash[:notice] = "Successfully created feature."
 #      redirect_to @feature
