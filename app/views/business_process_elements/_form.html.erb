@@ -1,0 +1,12 @@
+<% form_for [@business_process, @business_process_element] do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :element_type %><br />
+    <%= f.select :element_type, BusinessProcessElement::ELEMENT_TYPES.map {|t| [t.humanize.camelize, t]} %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

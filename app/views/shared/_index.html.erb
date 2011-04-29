@@ -1,0 +1,23 @@
+<% object_name = objects[0].class.name.humanize %>
+<% title object_name, false %>
+<h3>
+	objects_name
+	<% if current_user.iteration %>
+		<%= link_to image_tag('/icons/add.png', :alt=> "Add New #{object_name}"), actions[:new], :title => "Add New #{object_name}" %>
+	<% end %>
+</h3>
+
+<div class="push-1 span-22 last">
+  <div class="span-11">
+	  <%= will_paginate objects %>
+  </div>
+  <div class="span-11 last" style="text-align:right;">
+  	<%= page_entries_info objects %>
+  </div>
+</div>
+
+<div class="push-1 span-22 last">
+  <table class="pretty">
+  	<%= yield(table_content) or yield %>
+  </table>
+</div>

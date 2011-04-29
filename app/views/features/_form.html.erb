@@ -1,0 +1,20 @@
+<div style='position: <%= defined?(call_type) ? "fixed" : "static" %> '>
+  <% form_for @feature, :html => {:class => defined?(call_type) ? call_type : ""} do |f| %>
+    <%= f.error_messages %>
+    <p>
+      <%= f.label :priority %><br />
+			<%= f.select :priority, Feature::PRIORITY %>
+    </p>
+
+    </p>
+    <p>
+      <%= f.label :scope %><br />
+      <%= f.text_field :scope %>
+    </p>
+    <p>
+      <%= f.label :description %><br />
+      <%= f.text_area :description %>
+    </p>
+    <p><%= f.submit %></p>
+  <% end %>
+<div>

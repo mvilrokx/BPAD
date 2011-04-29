@@ -1,0 +1,70 @@
+<% title "Steps for " + @path.name, false %>
+<h3>
+	Business Process: <%= link_to @path.business_process.name, business_processes_path  %>
+	>> Path: <%= link_to @path.name, business_process_paths_path(@path.business_process)  %>
+	>> Steps
+</h3>
+
+<div class="push-1 span-22 last">
+  <div class="span-11">
+	  <%= will_paginate @steps %>
+  </div>
+  <div class="span-11 last" style="text-align:right;">
+  	<%= page_entries_info @steps %>
+  </div>
+</div>
+<div class="push-1 span-22 last">
+<% if @steps.size != 0 %>
+  <table class="pretty">
+    <tr>
+	    <th>Steps</th>
+	    <th>Type</th>
+      <th># Features</th>
+      <th>Map Status</th>
+      <th>Signoffs</th>
+	    <th>Actions</th>
+    </tr>
+    <% for step in @steps %>
+      <tr>
+        <td>
+          <%=h step.element_name %>
+          <% if !step.comment.blank? %>
+            <%= image_tag '/icons/comment.png', :alt=> step.comment, :title=> step.comment %>
+          <% end %>
+        </td>
+        <td><%=h step.element_type %></td>
+	 	    <td><%= link_to step.features.count, edit_step_bam_to_fam_map_path(step), :title=> 'Manage Features' if step.features[0] %></td>
+        <td><%=step.mapping_required? ? h(status_iconifier(step.status)):"Not Required" %></td>
+        <td>
+	        <% if step.mapped? %>
+	        	<table class="nested">
+	  	      	<% for approval in step.bam_to_fam_map.approvals %>
+	  	      		<tr>
+	  	      			<% if approval.user == current_user %>
+			  	      		<td style="width: 50px;"><%= link_to approval.user.username, edit_bam_to_fam_map_approval_path(step.bam_to_fam_map, approval) %></td>
+				          <% else %>
+			  	      		<td style="width: 50px;"><%= approval.user.username %></td>
+				          <% end %>
+		  	      		<td style="width: 16px;"><%= h(status_iconifier(approval.status, false)) %></td>
+		  	      		<td style="width: 60px;"><%= h approval.approval_date.strftime("%d-%b-%Y") if approval.approval_date %></td>
+	  	      		</tr>
+	  	      	<% end %>
+	        	</table>
+        	<% end %>
+        </td>
+
+				<% if step.mapping_required? %>
+					<% if step.bam_to_fam_map %>
+			      <td><%= link_to image_tag('/icons/plugin_edit.png', :alt=> "Edit Features"), edit_step_bam_to_fam_map_path(step), :title=> 'Edit Features' %></td>
+					<% else %>
+		  	    <td><%= link_to image_tag('/icons/plugin_add.png', :alt=> "Add Features"), new_step_bam_to_fam_map_path(step), :title=> 'Add Features' %></td>
+					<% end %>
+				<% else %>
+		      <td><%= image_tag '/icons/plugin_disabled.png', :alt=> "Disabled", :title=> 'Disabled' %></td>
+				<% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+</div>

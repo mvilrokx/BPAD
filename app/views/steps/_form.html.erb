@@ -1,0 +1,16 @@
+<% form_for [@path, @step] do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :path_id %><br />
+    <%= f.text_field :path_id %>
+  </p>
+  <p>
+    <%= f.label :business_process_element_id %><br />
+    <%= f.text_field :business_process_element_id %>
+  </p>
+  <p>
+    <%= f.label :comment %><br />
+    <%= f.text_area :comment %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

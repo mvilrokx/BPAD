@@ -1,0 +1,9 @@
+one:
+  business_process_id: 1
+  name: MyString
+  element_type: MyString
+
+two:
+  business_process_id: 1
+  name: MyString
+  element_type: MyString

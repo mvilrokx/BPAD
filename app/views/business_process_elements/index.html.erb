@@ -1,0 +1,28 @@
+<% title "Business Process Elements for " + @business_process.name %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Element Type</th>
+  </tr>
+  <% for business_process_element in @business_process_elements %>
+    <tr>
+      <td><%= link_to ((business_process_element.name.blank? ? "N/A" : business_process_element.name), business_process_element_flows_path(business_process_element)) %></td>
+      <td><%=h business_process_element.element_type %></td>
+      <td><%= link_to "Show", business_process_business_process_element_path(@business_process, business_process_element) %></td>
+      <td><%= link_to "Edit", edit_business_process_business_process_element_path(@business_process, business_process_element) %></td>
+      <td><%= link_to "Destroy", business_process_business_process_element_path(@business_process, business_process_element), :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+    <% for target_element in business_process_element.target_elements %>
+    <tr>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;next step&nbsp;&mdash;&mdash;&mdash;&gt; <%=h target_element.name.blank? ? "N/A" : target_element.name %></td>
+      <td><%=h target_element.element_type %></td>
+    </tr>
+    <% end %>
+  <% end %>
+</table>
+
+<p>
+<%= link_to "New Business Process Element", new_business_process_business_process_element_path(@business_process) %> |
+<%= link_to "Back to All Business Processes", business_processes_path %>
+</p>

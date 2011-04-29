@@ -1,0 +1,28 @@
+<% title "Approval" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @approval.user_id %>
+</p>
+<p>
+  <strong>Approvable:</strong>
+  <%=h @approval.approvable_id %>
+</p>
+<p>
+  <strong>Approvable Type:</strong>
+  <%=h @approval.approvable_type %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%=h @approval.status %>
+</p>
+<p>
+  <strong>Approval Date:</strong>
+  <%=h @approval.approval_date %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_approval_path(@approval) %> |
+  <%= link_to "Destroy", @approval, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", approvals_path %>
+</p>

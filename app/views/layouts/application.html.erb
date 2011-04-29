@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title><%= h(yield(:title) || "Untitled") %></title>
+    <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js' %>
+    <%= javascript_include_tag 'application.js' %>
+    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'blueprint/screen' %>
+    <%= stylesheet_link_tag 'blueprint/print', :media => 'print' %>
+    <!--[if IE]>
+    <%= stylesheet_link_tag 'blueprint/ie' %>
+    <![endif]>-->
+    <%= yield(:head) %>
+    <%= stylesheet_link_tag 'blueprint/plugins/fancy-type/screen' %>
+    <%= stylesheet_link_tag 'blueprint/plugins/buttons/screen' %>
+    <%= csrf_meta_tag %>
+  </head>
+  <body>
+    <div class="container">
+
+	    <div class="span-24 last" style="min-height:600px;">
+
+  	    <div class="span-24 last">
+    	    <div class="span-12" style="text-align:left;">
+      	    <span style="color:red;">Active Iteration:
+  	    	    <% if logged_in? && working_on_iteration? %>
+  		    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;"><%= current_user.iteration.name %>
+  		    	    </span>
+  	          <% else %>
+  		    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;">NONE!!!
+  		    	    </span>
+  	          <% end %>
+      	    </span>
+    			</div>
+    	    <div class="span-12 last" style="text-align:right;">
+      	    <% if logged_in? %>
+              Logged in as <%= link_to current_user.username, edit_user_path(current_user) %>! Not you?
+              <%= link_to "Log out", logout_path %>
+            <% else %>
+              <%= link_to "Sign up", signup_path %> or
+              <%= link_to "log in", login_path %>
+            <% end %>
+    			</div>
+   			</div>
+   			<hr/>
+
+				<%= render :partial => "shared/mainnav",
+								   :locals => {:active_menu_item => yield(:active_menu_item)} %>
+
+   			<%= yield :subnav %>
+
+  	    <div class="span-24 last">
+  	      <%- flash.each do |name, msg| -%>
+    	      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      	  <%- end -%>
+  			</div>
+
+  	    <div class="span-24 last">
+  	      <%- if show_title? -%>
+    	      <h3><%=h yield(:title) %></h3>
+      	  <%- end -%>
+  			</div>
+
+  	    <div class="span-24 last">
+					<%= yield(:content) or yield %>
+  			</div>
+
+			</div>
+
+ 			<hr/>
+ 	    <div class="span-24 last" style="text-align:right;">
+ 	    	&copy;&nbsp;<%= Time.new.year %>
+			</div>
+    </div>
+  </body>
+</html>

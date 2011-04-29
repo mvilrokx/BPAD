@@ -1,0 +1,16 @@
+<% title "Bam To Fam Feature" %>
+
+<p>
+  <strong>Feature:</strong>
+  <%=h @bam_to_fam_feature.feature_id %>
+</p>
+<p>
+  <strong>Bam To Fam Map:</strong>
+  <%=h @bam_to_fam_feature.bam_to_fam_map_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_bam_to_fam_feature_path(@bam_to_fam_feature) %> |
+  <%= link_to "Destroy", @bam_to_fam_feature, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", bam_to_fam_features_path %>
+</p>

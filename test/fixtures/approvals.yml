@@ -1,0 +1,13 @@
+one:
+  user_id: 1
+  approvable_id: 1
+  approvable_type: MyString
+  status: MyString
+  approval_date: 2011-02-10
+
+two:
+  user_id: 1
+  approvable_id: 1
+  approvable_type: MyString
+  status: MyString
+  approval_date: 2011-02-10

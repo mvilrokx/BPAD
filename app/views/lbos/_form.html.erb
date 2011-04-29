@@ -1,0 +1,12 @@
+<% form_for @lbo do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :business_area_id %><br />
+    <%= f.text_field :business_area_id %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

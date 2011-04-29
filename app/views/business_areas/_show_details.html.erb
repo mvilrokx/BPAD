@@ -1,0 +1,60 @@
+<div class="span-11 last pretty_show">
+  <div class="span-5">
+	  <div class="span-5 last pretty_label">
+	    Type
+  	</div>
+	  <div class="span-5 last pretty_label">
+	    Name
+  	</div>
+	  <div class="span-5 last pretty_label">
+	    Hierarchy
+  	</div>
+  </div>
+  <div class="span-5 last">
+	  <div class="span-5 last pretty_show_field">
+			Business Area
+  	</div>
+	  <div class="span-5 last pretty_show_field">
+			<%=h @business_area.name %>
+  	</div>
+	  <div class="span-5 last pretty_show_field">
+    	<% for business_area in @business_area.ancestors.reverse %>
+    		<%= link_to h(business_area.name), business_area %> &gt;
+    	<% end %>
+  	</div>
+  </div>
+</div>
+
+<div class="span-11 last pretty_show">
+  <div class="span-5">
+	  <div class="span-5 last pretty_label">
+	    LBOs
+  	</div>
+  </div>
+  <div class="span-5 last">
+    <% unless @business_area.Lbos.empty? %>
+     	<% for lbo in @business_area.Lbos %>
+			  <div class="span-5 last pretty_show_field">
+      		<%= link_to h(lbo.name), lbo %>
+	      </div>
+     	<% end %>
+		<% end %>
+  </div>
+</div>
+
+<div class="span-11 last pretty_show">
+  <div class="span-5">
+	  <div class="span-5 last pretty_label">
+	    Child LBAs
+  	</div>
+  </div>
+  <div class="span-5 last">
+    <% unless @business_area.children.empty? %>
+     	<% for business_area in @business_area.children %>
+			  <div class="span-5 last pretty_show_field">
+      		<%= link_to h(business_area.name), business_area %>
+	      </div>
+     	<% end %>
+    <% end %>
+  </div>
+</div>

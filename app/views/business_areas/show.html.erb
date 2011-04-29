@@ -1,0 +1,37 @@
+<% title "Business Area #{@business_area.name}" %>
+
+<p>
+	<% for business_area in @business_area.ancestors.reverse %>
+		<%= link_to h(business_area.name), business_area %> &gt;
+	<% end %>
+	<%= @business_area.name %>
+</p>
+
+
+
+
+<% unless @business_area.children.empty? %>
+  <ul>
+  	<% for business_area in @business_area.children %>
+  		<li><%= link_to h(business_area.name), business_area %></li>
+  	<% end %>
+  </ul>
+<% end %>
+
+
+
+
+<% unless @business_area.Lbos.empty? %>
+	<h3>LBOs</h3>
+  <ul>
+  	<% for lbo in @business_area.Lbos %>
+  		<li><%= link_to h(lbo.name), lbo %></li>
+  	<% end %>
+  </ul>
+<% end %>
+
+<p>
+  <%= link_to "Edit", edit_business_area_path(@business_area) %> |
+  <%= link_to "Destroy", @business_area, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", business_areas_path %>
+</p>

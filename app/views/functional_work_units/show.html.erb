@@ -1,0 +1,20 @@
+<% title "Functional Work Unit" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @functional_work_unit.name %>
+</p>
+<p>
+  <strong>Type:</strong>
+  <%=h @functional_work_unit.type %>
+</p>
+<p>
+  <strong>Parent:</strong>
+  <%=h @functional_work_unit.parent_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_functional_work_unit_path(@functional_work_unit) %> |
+  <%= link_to "Destroy", @functional_work_unit, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", functional_work_units_path %>
+</p>

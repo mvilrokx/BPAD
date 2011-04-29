@@ -1,0 +1,19 @@
+<% title "Lbos" %>
+
+<table>
+  <tr>
+    <th>Business Area</th>
+    <th>Name</th>
+  </tr>
+  <% for lbo in @lbos %>
+    <tr>
+      <td><%=h lbo.business_area_id %></td>
+      <td><%=h lbo.name %></td>
+      <td><%= link_to "Show", lbo %></td>
+      <td><%= link_to "Edit", edit_lbo_path(lbo) %></td>
+      <td><%= link_to "Destroy", lbo, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Lbo", new_lbo_path %></p>

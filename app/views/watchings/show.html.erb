@@ -1,0 +1,24 @@
+<% title "Watching" %>
+
+<p>
+  <strong>User:</strong>
+  <%=h @watching.user_id %>
+</p>
+<p>
+  <strong>Watchable:</strong>
+  <%=h @watching.watchable_id %>
+</p>
+<p>
+  <strong>Watchable Type:</strong>
+  <%=h @watching.watchable_type %>
+</p>
+<p>
+  <strong>Creator:</strong>
+  <%=h @watching.creator %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_watching_path(@watching) %> |
+  <%= link_to "Destroy", @watching, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", watchings_path %>
+</p>

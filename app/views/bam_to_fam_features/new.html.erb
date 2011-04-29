@@ -1,0 +1,70 @@
+<% title "Edit Bam To Fam Map" %>
+
+<% form_for [@step, @bam_to_fam_map] do |f| %>
+
+  <%= f.error_messages %>
+  <%= f.hidden_field @step.id %>
+
+  <div class="span-18 last">
+    <div class="span-8">
+    	<h4>Available Features</h4>
+    	<div id="left_side">
+    		<%= collection_select(:bam_to_fam, :feature_id, Feature.all, :id, :name, {}, {:multiple => true, :style => "min-width: 250px;"}) %>
+    	</div>
+    </div>
+
+    <div class="span-2 prepend-top">
+    	<div class="prepend-top" style="vertical-align: middle;">
+        <%= link_to image_tag('/icons/play_blue.png', :title => 'Move Selected Right', :alt => 'Move Selected Right'), "javascript:void(0)", :id=>"move_selected_right" %> <br/>
+        <%= link_to image_tag('/icons/forward_blue.png', :title => 'Move All Right', :alt => 'Move All Right'), "javascript:void(0)", :id=>"move_all_right" %> <br/>
+        <%= link_to image_tag('/icons/reverse_blue.png', :title => 'Move Selected Left', :alt => 'Move Selected Left'), "javascript:void(0)", :id=>"move_selected_left" %> <br/>
+        <%= link_to image_tag('/icons/rewind_blue.png', :title => 'Move All Left', :alt => 'Move All Left'), "javascript:void(0)", :id=>"move_all_left" %> <br/>
+    	</div>
+    </div>
+
+    <div class="span-8 last">
+    	<h4>Included Features</h4>
+    	<div id="right_side">
+    		<%= collection_select(:bam_to_fam_features, :feature_id, Feature.all, :id, :name, {}, {:multiple => true, :style => "min-width: 250px;"}) %>
+    	</div>
+    </div>
+  </div>
+
+  <div class="span-18 last">
+  	<p><%= f.submit %></p>
+  </div>
+
+<% end %>
+
+<script>
+$(document).ready(function () {
+
+	$('#move_selected_right').click(function(){
+		move ('#left_side select option:selected', '#right_side select');
+	});
+
+	$('#move_all_right').click(function(){
+		move ('#left_side select option', '#right_side select');
+	});
+
+	$('#move_selected_left').click(function(){
+		move ('#right_side select option:selected', '#left_side select');
+	});
+
+	$('#move_all_left').click(function(){
+		move ('#right_side select option', '#left_side select');
+	});
+
+	function move (from, to) {
+		$(from).each (function(){
+			$(to)
+          .append($("<option></option>")
+	          .attr("value",$(this).val())
+  	        .text($(this).text()));
+		});
+		$(from).remove();
+	};
+
+
+});
+</script>

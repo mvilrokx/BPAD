@@ -1,0 +1,11 @@
+one:
+  user_id: 1
+  watchable_id: 1
+  watchable_type: MyString
+  creator: false
+
+two:
+  user_id: 1
+  watchable_id: 1
+  watchable_type: MyString
+  creator: false

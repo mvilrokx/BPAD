@@ -1,0 +1,16 @@
+<% form_for [@step, @bam_to_fam_map], :url => step_bam_to_fam_map_path(@step) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :step_id %><br />
+    <%= f.text_field :step_id %>
+  </p>
+  <p>
+    <%= f.label :functional_work_unit_id %><br />
+  	<%= f.select :functional_work_unit_id, FunctionalWorkUnit.all.map {|e| [e.name, e.id]},{}, {:style => "width:200px"} %>
+  </p>
+  <p>
+    <%= f.label :status %><br />
+    <%= f.text_field :status %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

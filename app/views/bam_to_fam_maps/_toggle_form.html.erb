@@ -1,0 +1,91 @@
+<div class="span-18 last">
+  <div class="span-8">
+    <%= label_tag "Limit Available Features List by Functional Work Unit" %>
+    <%= collection_select(:functional_work_unit, :id, @fwus, :id, :name, {:include_blank => true}, {:id => 'fwu_limit_list'}) %>
+ 	</div>
+</div>
+<hr class="space" />
+<% form_for [@step, @bam_to_fam_map], :url => step_bam_to_fam_map_path(@step) do |f| %>
+  <%= f.error_messages %>
+
+  <div class="span-18 last">
+    <div class="span-8">
+    	<h4>Available Features</h4>
+    	<div id="left_side" class="span-8 last">
+    		<%= collection_select(:feature, :feature_id, @features, :id, :name, {}, {:multiple => true, :size=> "30", :style => "width: 310px;"}) %>
+    	</div>
+    </div>
+
+    <div class="span-2 prepend-top">
+    	<div class="span-2 last prepend-top" style="text-align: center;">
+        <%= link_to image_tag('/icons/play_blue.png', :title => 'Move Selected Right', :alt => 'Move Selected Right', :mouseover => image_path('/icons/play_green.png')), "javascript:void(0)", :id=>"move_selected_right" %> <br/>
+        <%= link_to image_tag('/icons/forward_blue.png', :title => 'Move All Right', :alt => 'Move All Right', :mouseover => image_path('/icons/forward_green.png')), "javascript:void(0)", :id=>"move_all_right" %> <br/>
+        <%= link_to image_tag('/icons/reverse_blue.png', :title => 'Move Selected Left', :alt => 'Move Selected Left', :mouseover => image_path('/icons/reverse_green.png')), "javascript:void(0)", :id=>"move_selected_left" %> <br/>
+        <%= link_to image_tag('/icons/rewind_blue.png', :title => 'Move All Left', :alt => 'Move All Left', :mouseover => image_path('/icons/rewind_green.png')), "javascript:void(0)", :id=>"move_all_left" %> <br/>
+    	</div>
+    </div>
+
+    <div class="span-8 last">
+    	<h4>Included Features</h4>
+    	<div id="right_side" class="span-8 last">
+    		<%= collection_select(:bam_to_fam_features_attributes, :feature_id, @mapped_features, :id, :name, {}, {:multiple => true, :size=> "30", :style => "width: 310px;"}) %>
+    	</div>
+    </div>
+  </div>
+
+  <div class="span-18 last">
+  	<p><%= f.submit %></p>
+  </div>
+
+<% end %>
+
+<div class="span-18 last">
+	<%= link_to "Cancel", path_steps_path(@step.path) %>
+</div>
+
+<script>
+$(document).ready(function () {
+
+	$('#move_selected_right').click(function(){
+		move ('#left_side select option:selected', '#right_side select');
+	});
+
+	$('#move_all_right').click(function(){
+		move ('#left_side select option', '#right_side select');
+	});
+
+	$('#move_selected_left').click(function(){
+		move ('#right_side select option:selected', '#left_side select');
+	});
+
+	$('#move_all_left').click(function(){
+		move ('#right_side select option', '#left_side select');
+	});
+
+	$('input:submit').click(function(event){
+		$('#right_side select option:not(:selected)').attr('selected','selected');
+	});
+
+	$('#fwu_limit_list').change(function(event){
+	  $.ajax({
+	    url: "/functional_work_units/features",
+	    type: "GET",
+	    data: ({id : $('#fwu_limit_list option:selected').attr("value")}),
+	    success: function(data) {
+        $('#left_side select').html(data);
+      }
+	  });
+	});
+
+});
+
+function move (from, to) {
+	$(from).each (function(){
+		$(to)
+        .append($("<option></option>")
+          .attr("value",$(this).val())
+	        .text($(this).text()));
+	});
+	$(from).remove();
+};
+</script>

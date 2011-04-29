@@ -1,0 +1,16 @@
+<% title "Lbo" %>
+
+<p>
+  <strong>Business Area:</strong>
+  <%=h @lbo.business_area_id %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%=h @lbo.name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_lbo_path(@lbo) %> |
+  <%= link_to "Destroy", @lbo, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", lbos_path %>
+</p>

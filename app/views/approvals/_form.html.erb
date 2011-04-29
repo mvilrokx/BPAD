@@ -1,0 +1,16 @@
+You are approving that the Business Process Step <strong><%= @bam_to_fam_map.step.element_name %></strong> is covered by these features:
+
+<ol>
+  <% for bam_feature in @bam_to_fam_map.bam_to_fam_features %>
+    <li><%= bam_feature.feature.name %></li>
+  <% end %>
+</ol>
+
+<% form_for [@bam_to_fam_map, @approval] do |f| %>
+  <%= f.error_messages %>
+  <% if @approval.approved? %>
+    <%= f.submit "Reject" %></p>
+  <% else %>
+    <%= f.submit "Approve" %></p>
+  <% end %>
+<% end %>

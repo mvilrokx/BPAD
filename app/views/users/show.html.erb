@@ -1,0 +1,33 @@
+<% title "User" %>
+
+<p>
+  <strong>Username:</strong>
+  <%=h @user.username %>
+</p>
+
+<h3>Objects you are watching: </h3>
+
+<% watched_objects = @user.watchings.group_by { |w| w.watchable_type } %>
+<% watched_objects.sort.each do |type, objects| %>
+	<h4><%= type.pluralize %></h4>
+	<table>
+		<tr>
+			<th>name</th>
+			<th>Owned by you?</th>
+		</tr>
+	<% objects.each do |object|%>
+ 		<% watched_object = object.watchable_type.constantize.find(object.watchable_id) %>
+		<tr>
+			<td><%=h watched_object.name %></td>
+			<td><%=h object.creator? ? "Yes":"No" %></td>
+		</tr>
+	<% end %>
+	</table>
+<% end %>
+
+
+<p>
+  <%= link_to "Edit", edit_user_path(@user) %> |
+  <%= link_to "Destroy", user_path (@user), :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", users_path %>
+</p>

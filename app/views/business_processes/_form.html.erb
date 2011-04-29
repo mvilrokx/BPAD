@@ -1,0 +1,15 @@
+<% form_for @business_process, :html => { :multipart => true } do |f| %>
+  <%= f.error_messages %>
+	<fieldset>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name, :class => "text" %>
+  </p>
+
+  <p>
+  	<%= f.file_field :bpmn %>
+  </p>
+
+  <p><%= f.submit %></p>
+	</fieldset>
+<% end %>

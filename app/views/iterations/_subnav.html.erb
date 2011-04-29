@@ -1,0 +1,15 @@
+<% menu_items ||= [["Models",iteration_path(@iteration)], ["BAM to FAM Mapping",bam_to_fam_maps_path ]] %>
+
+<div class="span-24 last">
+	<ul class="sub_nav">
+		<% menu_items.each do |menu_item| -%>
+			<li
+			<% if menu_item[0] ==  active_menu_item -%>
+				class="active">
+			<% else -%>
+				>
+			<% end -%>
+			<%= link_to menu_item[0], menu_item[1] -%></li>
+		<% end -%>
+	</ul>
+</div>

@@ -1,0 +1,7 @@
+one:
+  business_area_id: 1
+  name: MyString
+
+two:
+  business_area_id: 1
+  name: MyString

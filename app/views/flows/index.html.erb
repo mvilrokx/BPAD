@@ -1,0 +1,19 @@
+<% title "Flows" %>
+
+<table>
+  <tr>
+    <th>Business Process Element</th>
+    <th>Target Element</th>
+  </tr>
+  <% for flow in @flows %>
+    <tr>
+      <td><%=h flow.business_process_element_id %></td>
+      <td><%=h flow.target_element_id %></td>
+      <td><%= link_to "Show", flow %></td>
+      <td><%= link_to "Edit", edit_flow_path(flow) %></td>
+      <td><%= link_to "Destroy", flow, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Flow", new_flow_path %></p>

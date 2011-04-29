@@ -1,0 +1,61 @@
+<% title "Business Processes", false %>
+<h3>
+	Business Processes
+	<% if current_user.iteration %>
+		<%= link_to image_tag('/icons/add.png', :alt=> 'Add New Business Process') , new_business_process_path, :title => 'Add New Business Process' %>
+	<% end %>
+</h3>
+
+<div class="push-1 span-22 last">
+  <div class="span-11">
+	  <%= will_paginate @business_processes %>
+  </div>
+  <div class="span-11 last" style="text-align:right;">
+  	<%= page_entries_info @business_processes %>
+  </div>
+</div>
+
+<div class="push-1 span-22 last">
+  <table class="pretty">
+    <tr>
+      <th><%= sortable @business_processes, "name" %></th>
+      <th><%= sortable @business_processes, "bpmn_file_name", "File Name" %></th>
+      <th><%= sortable @business_processes, "updated_at", "Last Updated" %></th>
+      <th>Iteration</th>
+      <% if current_user.iteration %>
+	      <th colspan=4>Actions</th>
+      <% end %>
+    </tr>
+    <% for business_process in @business_processes %>
+      <tr>
+        <td><%= business_process.name %></td>
+        <td><%= business_process.file_name %></td>
+        <td><%= business_process.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%d-%b-%Y %H:%M") %></td>
+        <td><%= business_process.iteration.try(:name)||'' %></td>
+	      <% if current_user.iteration %>
+ 		      <% if current_user.iteration == business_process.iteration || business_process.iteration.nil? %>
+	  	      <td><%= link_to image_tag('/icons/pencil.png', :alt=> "Edit"), edit_business_process_path(business_process), :title=> 'Edit' %></td>
+	  	    <% else %>
+	  	      <td><%= image_tag('/icons/pencil_disabled.png', :alt=> "Edit Disabled", :title=> 'Edit Disabled') %></td>
+	  	    <% end %>
+ 		      <% if current_user.iteration == business_process.iteration || business_process.iteration.nil? %>
+	    	    <td><%= link_to image_tag('/icons/bin_closed.png', :mouseover => image_path('/icons/bin.png'), :alt=> "Delete"), business_process, :confirm => 'Are you sure?', :method => :delete, :title=> 'Delete' %></td>
+	  	    <% else %>
+	  	      <td><%= image_tag('/icons/bin_closed_disabled.png', :alt=> "Delete Disabled", :title=> 'Delete Disabled') %></td>
+	  	    <% end %>
+ 		      <% if current_user.iteration == business_process.iteration || business_process.iteration.nil? %>
+	      	  <td><%= link_to image_tag('/icons/arrow_switch.png', :mouseover => image_path('/icons/arrow_switch_bluegreen.png'), :alt=> "Paths", :class=>"align_icon_with_text") + "(#{business_process.paths.count})", business_process_paths_path(business_process), :title=> 'Paths' %></td>
+	  	    <% else %>
+	  	      <td><%= image_tag('/icons/arrow_switch_disabled.png', :alt=> "Paths Disabled", :title=> 'Paths Disabled') %></td>
+	  	    <% end %>
+ 		      <% if business_process.watchings.find_by_user_id(current_user.id) %>
+	      	  <td><%= link_to "", business_process_watching_path(business_process, business_process.watchings.find_by_user_id(current_user.id)), :title=> 'Click to remove from watchlist', :class => "watching remove" %></td>
+	  	    <% else %>
+	      	  <td><%= link_to "", business_process_watchings_path(business_process), :title=> 'Click to add to watchlist', :class => "watching add" %></td>
+	  	    <% end %>
+	      <% end %>
+      </tr>
+    <% end %>
+  </table>
+	<p><%= link_to "New Business Process", new_business_process_path %></p>
+</div>

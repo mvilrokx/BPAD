@@ -1,0 +1,58 @@
+<% title "Iteration: " + h(@iteration.name), false %>
+
+<%= render :partial => "subnav",
+					 :locals => {:active_menu_item => "Models"} %>
+
+<h3>Iteration: <%= h(@iteration.name) %></h3>
+
+<div class="push-1 span-23 last">
+	<h3>Business Process Paths</h3>
+
+  <div class="push-1 span-22 last">
+    <table class="pretty">
+      <tr>
+        <th>name</th>
+        <th>Business Process</th>
+        <th>Last Updated</th>
+        <th>Version</th>
+      </tr>
+      <% for path in @paths %>
+        <tr>
+          <td><%=h path.name %></td>
+          <td><%=h path.business_process.name %></td>
+          <td><%=h path.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%d-%b-%Y %H:%M") %></td>
+          <td><%=h path.versions.length %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+</div>
+
+<div class="push-1 span-23 last">
+	<h3>FAM</h3>
+
+  <div class="push-1 span-22 last">
+    <table class="pretty">
+      <tr>
+        <th>name</th>
+        <th>Last Updated</th>
+        <th>Version</th>
+      </tr>
+      <% for fam in @fams %>
+        <tr>
+          <td><%=h fam.name %></td>
+          <td><%=h fam.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%d-%b-%Y %H:%M") %></td>
+          <td><%=h fam.versions.length %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+	<hr/>
+</div>
+
+<div class="push-1 span-23 last">
+	<h3>TAM</h3>
+	<hr/>
+</div>

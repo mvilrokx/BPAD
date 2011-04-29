@@ -1,0 +1,2 @@
+module BusinessAreasHelper
+end

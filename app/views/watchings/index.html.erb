@@ -1,0 +1,23 @@
+<% title "Watchings" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Watchable</th>
+    <th>Watchable Type</th>
+    <th>Creator</th>
+  </tr>
+  <% for watching in @watchings %>
+    <tr>
+      <td><%=h watching.user_id %></td>
+      <td><%=h watching.watchable_id %></td>
+      <td><%=h watching.watchable_type %></td>
+      <td><%=h watching.creator %></td>
+      <td><%= link_to "Show", watching %></td>
+      <td><%= link_to "Edit", edit_watching_path(watching) %></td>
+      <td><%= link_to "Destroy", watching, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Watching", new_watching_path %></p>

@@ -1,0 +1,12 @@
+<% form_for @flow do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :business_process_element_id %><br />
+    <%= f.text_field :business_process_element_id %>
+  </p>
+  <p>
+    <%= f.label :target_element_id %><br />
+    <%= f.text_field :target_element_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

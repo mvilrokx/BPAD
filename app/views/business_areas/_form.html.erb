@@ -1,0 +1,12 @@
+<% form_for @business_area do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :parent_id %><br />
+    <%= f.collection_select :parent_id, BusinessArea.all(:order => "name"), :id, :name, :include_blank => true %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

@@ -1,0 +1,25 @@
+<% title "Approvals" %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Approvable</th>
+    <th>Approvable Type</th>
+    <th>Status</th>
+    <th>Approval Date</th>
+  </tr>
+  <% for approval in @approvals %>
+    <tr>
+      <td><%=h approval.user_id %></td>
+      <td><%=h approval.approvable_id %></td>
+      <td><%=h approval.approvable_type %></td>
+      <td><%=h approval.status %></td>
+      <td><%=h approval.approval_date %></td>
+      <td><%= link_to "Show", approval %></td>
+      <td><%= link_to "Edit", edit_approval_path(approval) %></td>
+      <td><%= link_to "Destroy", approval, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Approval", new_approval_path %></p>

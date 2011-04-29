@@ -1,0 +1,57 @@
+<% title "Paths for " + @business_process.name, false %>
+<h3>
+	Business Process: <%= link_to @business_process.name, business_processes_path  %>
+	>> Paths
+	<% if current_user.iteration %>
+		<%= link_to image_tag('/icons/add.png', :alt=> "Add New Path") , new_business_process_path_path(@business_process), :title => 'Add New Path' %>
+	<% end %>
+</h3>
+
+<div class="push-1 span-22 last">
+  <div class="span-11">
+	  <%= will_paginate @paths %>
+  </div>
+  <div class="span-11 last" style="text-align:right;">
+  	<%= page_entries_info @paths %>
+  </div>
+</div>
+<div class="push-1 span-22 last">
+<% if @paths.size != 0 %>
+  <table class="pretty">
+    <tr>
+	    <th><%= sortable @paths, "name" %></th>
+	    <th><%= sortable @paths, "priority" %></th>
+      <th>Description</th>
+      <th>Complete?</th>
+      <th>Status</th>
+      <th><%= sortable @paths, "updated_at", "Last Updated" %></th>
+	    <th colspan=5>Actions</th>
+    </tr>
+    <% for path in @paths %>
+      <tr>
+        <td><%=h path.name %></td>
+        <td><%=h path.priority %></td>
+        <td><%=h path.description %></td>
+        <td><%= path.completed? ? image_tag('/icons/bullet_tick.png', :alt=> "Complete", :class=>"align_icon_with_text") : image_tag('/icons/bullet_cross.png', :alt=> "Incomplete", :class=>"align_icon_with_text") %> (<%= path.steps.count%>) </td>
+        <td><%= status_iconifier(path.status) %></td>
+	      <td><%=h path.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%d-%b-%Y %H:%M") %></td>
+	      <td><%= link_to image_tag('/icons/magnifier.png', :alt=> "Show"), business_process_path_path(@business_process, path), :title=> 'Show' %></td>
+	      <td><%= link_to image_tag('/icons/pencil.png', :alt=> "Edit"), edit_business_process_path_path(@business_process, path), :title=> 'Edit' %></td>
+  	    <td><%= link_to image_tag('/icons/bin_closed.png', :mouseover => image_path('/icons/bin.png'), :alt=> "Delete"), business_process_path_path(@business_process, path), :confirm => 'Are you sure?', :method => :delete, :title=> 'Delete' %></td>
+	      <td><%= link_to image_tag('/icons/table_relationship.png', :alt=> "Mappings"), path_steps_path(path), :title=> 'Mappings' %></td>
+	      <% if path.watchings.find_by_user_id(current_user.id) %>
+      	  <td><%= link_to "", path_watching_path(path, path.watchings.find_by_user_id(current_user.id)), :title=> 'Click to remove from watchlist', :class => "watching remove" %></td>
+  	    <% else %>
+      	  <td><%= link_to "", path_watchings_path(path), :title=> 'Click to add to watchlist', :class => "watching add" %></td>
+  	    <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+  <p>
+  <%= link_to "New Path", new_business_process_path_path(@business_process) %> |
+  <%= link_to "Back to All Business Processes", business_processes_path %>
+  </p>
+
+</div>

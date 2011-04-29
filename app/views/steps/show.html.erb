@@ -1,0 +1,20 @@
+<% title "Step" %>
+
+<p>
+  <strong>Path:</strong>
+  <%=h @step.path_id %>
+</p>
+<p>
+  <strong>Business Process Element:</strong>
+  <%=h @step.business_process_element_id %>
+</p>
+<p>
+  <strong>Comment:</strong>
+  <%=h @step.comment %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_path_step_path(@path, @step) %> |
+  <%= link_to "Destroy", path_steps_path (@path, @step), :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", path_steps_path(@path) %>
+</p>

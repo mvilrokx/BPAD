@@ -1,0 +1,16 @@
+<%= yield :index_header %>
+
+<div class="push-1 span-22 last">
+  <div class="span-11">
+	  <%= will_paginate yield :objects %>
+  </div>
+  <div class="span-11 last" style="text-align:right;">
+  	<%= page_entries_info yield :objects %>
+  </div>
+</div>
+
+<div class="push-1 span-22 last">
+  <table class="pretty">
+  	<%= yield(:table_content) or yield %>
+  </table>
+</div>

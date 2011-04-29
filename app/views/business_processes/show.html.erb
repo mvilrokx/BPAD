@@ -1,0 +1,12 @@
+<% title "Business Process" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @business_process.name %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_business_process_path(@business_process) %> |
+  <%= link_to "Destroy", @business_process, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", business_processes_path %>
+</p>

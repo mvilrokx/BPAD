@@ -1,0 +1,20 @@
+<% title "Business Process Element" %>
+
+<p>
+  <strong>Business Process:</strong>
+  <%=h @business_process_element.business_process_id %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%=h @business_process_element.name %>
+</p>
+<p>
+  <strong>Element Type:</strong>
+  <%=h @business_process_element.element_type %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_business_process_business_process_element_path(@business_process, @business_process_element) %> |
+  <%= link_to "Destroy", business_process_business_process_element_path(@business_process, @business_process_element), :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", business_process_business_process_elements_path(@business_process) %>
+</p>

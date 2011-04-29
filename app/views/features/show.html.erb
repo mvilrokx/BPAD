@@ -1,0 +1,20 @@
+<% title "Feature" %>
+
+<p>
+  <strong>Functional Work Unit:</strong>
+  <%=h @feature.functional_work_unit_id %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%=h @feature.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @feature.description %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_feature_path(@feature) %> |
+  <%= link_to "Destroy", @feature, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", features_path %>
+</p>

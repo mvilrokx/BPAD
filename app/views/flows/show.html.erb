@@ -1,0 +1,16 @@
+<% title "Flow" %>
+
+<p>
+  <strong>Business Process Element:</strong>
+  <%=h @flow.business_process_element_id %>
+</p>
+<p>
+  <strong>Target Element:</strong>
+  <%=h @flow.target_element_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_flow_path(@flow) %> |
+  <%= link_to "Destroy", @flow, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", flows_path %>
+</p>

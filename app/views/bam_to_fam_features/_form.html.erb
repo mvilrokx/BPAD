@@ -1,0 +1,12 @@
+<% form_for @bam_to_fam_feature do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :feature_id %><br />
+    <%= f.text_field :feature_id %>
+  </p>
+  <p>
+    <%= f.label :bam_to_fam_map_id %><br />
+    <%= f.text_field :bam_to_fam_map_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

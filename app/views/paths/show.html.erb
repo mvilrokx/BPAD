@@ -1,0 +1,27 @@
+<% title "Path" %>
+
+<p>
+  <strong>Business Process:</strong>
+  <%=h @path.business_process_id %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%=h @path.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @path.description %>
+</p>
+
+<h2>Steps</h2>
+<ol>
+  <% for step in @path.steps %>
+    <li><%=h step.business_process_element.name %> (<%=h step.business_process_element.element_type %>)</li>
+  <% end %>
+</ol>
+
+<p>
+  <%= link_to "Edit", edit_business_process_path_path(@business_process, @path) %> |
+  <%= link_to "Destroy", business_process_path_path(@business_process, @path), :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", business_process_paths_path(@business_process) %>
+</p>

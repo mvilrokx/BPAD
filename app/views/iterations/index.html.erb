@@ -1,0 +1,38 @@
+<% title "Iterations", false %>
+<h3>Iterations <%= link_to image_tag('/icons/add.png', :alt=> 'Add New Iteration') , new_iteration_path, :title => 'Add New Iteration' %></h3>
+
+<div class="push-1 span-22 last">
+  <div class="span-11">
+	  <%= will_paginate @iterations %>
+  </div>
+  <div class="span-11 last" style="text-align:right;">
+  	<%= page_entries_info @iterations %>
+  </div>
+</div>
+
+<div class="push-1 span-22 last">
+  <table class="pretty">
+    <tr>
+      <th><%= sortable @iterations, "id" %></th>
+      <th><%= sortable @iterations, "name" %></th>
+      <th><%= sortable @iterations, "updated_at", "Last Updated" %></th>
+      <th><%= sortable @iterations, "status" %></th>
+      <th colspan=3>Actions</th>
+    </tr>
+    <% for iteration in @iterations %>
+      <tr>
+        <td><%= iteration.id %></td>
+        <td><%= iteration.name %></td>
+        <td><%= iteration.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%d-%b-%Y %H:%M") %></td>
+        <% if iteration.open? %>
+		      <td><%= link_to image_tag('/icons/flag_green.png', :alt=> "Open", :title=> 'Open'), iteration %></td>
+		    <% else %>
+		      <td><%= link_to image_tag('/icons/flag_checked.png', :alt=> "Closed", :title=> 'Closed'), iteration %></td>
+		    <% end %>
+	      <td><%= link_to image_tag('/icons/magnifier.png', :alt=> "Show"), iteration, :title=> 'Show' %></td>
+        <td><%= link_to image_tag('/icons/pencil.png', :alt=> "Edit"), edit_iteration_path(iteration), :title=> 'Edit' %></td>
+        <td><%= link_to image_tag('/icons/bin_closed.png', :mouseover => image_path('/icons/bin.png'), :alt=> "Delete"), iteration, :confirm => 'Are you sure?', :method => :delete, :title=> 'Delete' %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

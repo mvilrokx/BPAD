@@ -1,0 +1,20 @@
+<% title "Bam To Fam Maps" %>
+<table>
+  <tr>
+    <th>Step</th>
+    <th>Functional Work Unit</th>
+    <th>Status</th>
+  </tr>
+  <% for bam_to_fam_map in @bam_to_fam_maps %>
+    <tr>
+      <td><%=h bam_to_fam_map.step_id %></td>
+      <td><%=h bam_to_fam_map.functional_work_unit_id %></td>
+      <td><%=h bam_to_fam_map.status %></td>
+      <td><%= link_to "Show", bam_to_fam_map %></td>
+      <td><%= link_to "Edit", edit_bam_to_fam_map_path(bam_to_fam_map) %></td>
+      <td><%= link_to "Destroy", bam_to_fam_map, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Bam To Fam Map", new_bam_to_fam_map_path %></p>

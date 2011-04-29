@@ -1,0 +1,241 @@
+#flash_notice, #flash_error, #flash_warning {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+
+#flash_notice {
+  background-color: #CFC;
+  border: solid 1px #6C6;
+}
+
+#flash_warning {
+  background-color: #FAAC58;
+  border: 1px solid #FF8000;
+}
+
+#flash_error {
+  background-color: #FCC;
+  border: solid 1px #C66;
+}
+
+.fieldWithErrors {
+  display: inline;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 8px;
+}
+
+#errorExplanation ul {
+  margin: 2px 24px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: disc;
+}
+
+ul.main_nav {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+ul.main_nav li {
+	display: inline;
+	list-style: none;
+  background:grey;
+  color:white;
+  padding:8px;
+  margin-bottom:1em;
+  border-radius: 7px; -moz-border-radius: 7px; -webkit-border-radius: 7px;
+}
+
+ul.main_nav li a {
+  color:white;
+  text-decoration: none;
+}
+
+.main_nav li a:hover {
+    color: rgba(255,255,255,1);
+    text-decoration: underline;
+    text-shadow: white 0px 0px 15px, white 0px 0px 6px, white 0px 0px 1px;
+}
+
+ul.main_nav li.active {
+  border:1px solid gray;
+  background:white;
+}
+
+ul.main_nav li.active a {
+  color:gray;
+}
+
+
+ul.sub_nav {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+ul.sub_nav li {
+	display: inline;
+	list-style: none;
+/*  background:grey;
+  color:white; */
+  border:1px solid grey;
+  padding:5px;
+  margin-bottom:1em;
+  border-radius: 7px; -moz-border-radius: 7px; -webkit-border-radius: 7px;
+}
+
+ul.sub_nav li.active {
+  border:1px solid red;
+}
+
+ul.sub_nav li a {
+  color:black;
+  text-decoration: none;
+}
+
+ul.sub_nav li.active a {
+  color:red;
+}
+
+ul.sub_nav li a:hover {
+    text-decoration: underline;
+}
+
+table.pretty {
+	border-bottom: 2px solid black;
+}
+
+.pretty tr:hover td {
+	background-color: #632a2a;
+  color: #fff;
+}
+
+.pretty th {
+	border-bottom: 2px solid black;
+}
+
+.pretty td {
+	padding: 2px 4px 2px 4px;
+	border-right: 2px solid white;
+/*	padding: 4px 10px 4px 5px; */
+}
+
+.pretty th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.pretty th .asc {
+  background-image: url(/icons/arrow_up.png);
+}
+
+.pretty th .desc {
+  background-image: url(/icons/arrow_down.png);
+}
+
+.pretty_show {
+	font-size: 16px;
+  margin-bottom: .5em;
+  border: 1px solid #D2D8E4;
+  border-bottom: 1px solid #888;
+  padding: 20px 0px;
+  background-color: #E5ECF9;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -khtml-border-radius: 5px;
+}
+
+.pretty_label {
+	color:#808080;
+	font-weight: bold;
+	text-align: left;
+	margin-left: 1em;
+	margin-right: 1em;
+  margin-bottom: .5em;
+  text-shadow: 0 1px 1px #fff;
+}
+
+.pretty_show_field {
+  border: 1px solid #888;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  padding-left: 1em;
+  margin-bottom: .5em;
+  -moz-box-shadow: 1px -1px 4px #888;
+	-webkit-box-shadow: 1px -1px 4px #888;
+	-khtml-box-shadow: 1px -1px 4px #888;
+	box-shadow: 1px -1px 4px #888;
+}
+
+.align_icon_with_text {
+	margin-bottom:-4px;
+}
+
+table.nested {
+	margin: 0px;
+	border-collapse: collapse;
+}
+
+/* Overwrite screen.css */
+.nested tbody tr:nth-child(even) td, tbody tr.even td {
+	background: transparent;
+}
+
+.nested tr {
+	border-bottom: 1px lightgrey solid;
+}
+
+.nested td {
+	padding: 0px;
+	border: 0px;
+}
+
+
+a.watching {
+  display: block;
+  min-height: 16px;
+  min-width: 16px;
+}
+a.watching.loading {
+  background: transparent url(/icons/ajax-loader.gif) top left no-repeat;
+}
+a.watching.add {
+  background: transparent url(/icons/heart_disabled.png) top left no-repeat;
+}
+a.watching.remove {
+  background: transparent url(/icons/heart.png) top left no-repeat;
+}
+a.watching.add.over {
+  background: transparent url(/icons/heart_add.png) top left no-repeat;
+}
+a.watching.remove.over {
+  background: transparent url(/icons/heart_delete.png) top left no-repeat;
+}
