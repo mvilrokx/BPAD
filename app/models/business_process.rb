@@ -55,6 +55,7 @@ class BusinessProcess < ActiveRecord::Base
                     'xmlns:serviceTask | ' +
                     'xmlns:callActivity | ' +
                     'xmlns:startEvent | ' +
+                    'xmlns:boundaryEvent | ' +
                     'xmlns:parallelGateway | ' +
                     'xmlns:exclusiveGateway | ' +
                     'xmlns:inclusiveGateway | ' +

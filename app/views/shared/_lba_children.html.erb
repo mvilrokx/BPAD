@@ -1,0 +1,31 @@
+<% if !lbas.nil? then %>
+  <% for lba in lbas %>
+  	<% if lba.children.empty? && lba.Lbos.empty? && lba.FunctionalWorkUnits.empty? then %>
+  		<li id=<%= lba.id %> rel="lba" ><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
+  	<% else %>
+  		<li id=<%= lba.id %> rel="lba" class='jstree-closed'><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
+  	<% end %>
+  <% end %>
+<% end %>
+
+<% if !lbos.nil? then %>
+	<% for lbo in lbos %>
+ 		<li id=<%= lbo.id %> rel="lbo"><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
+  <% end %>
+<% end %>
+
+<% if !functional_work_units.nil? then %>
+	<% for fwu in functional_work_units %>
+		<% if fwu.features.empty? then %>
+	 		<li id=<%= fwu.id %> rel="fwu"><%=link_to h(fwu.name||"NoName"), fwu, :class => 'fwu' %></li>
+		<% else %>
+	 		<li id=<%= fwu.id %> rel="fwu" class='jstree-closed'><%=link_to h(fwu.name||"NoName"), fwu, :class => 'fwu' %></li>
+  	<% end %>
+  <% end %>
+<% end %>
+
+<% if !features.nil? then %>
+	<% for feature in features %>
+ 		<li id=<%= feature.id %> rel="feature"><%=link_to h(feature.name||"NoName"), edit_feature_path(feature), :class => 'feature' %></li>
+  <% end %>
+<% end %>

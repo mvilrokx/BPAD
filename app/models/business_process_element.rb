@@ -16,6 +16,7 @@ class BusinessProcessElement < ActiveRecord::Base
     							 "userTask" =>                {:display_name => "User Task",          :mapping_required => true},
     							 "serviceTask" =>             {:display_name => "Service Task",       :mapping_required => true},
     							 "callActivity" =>            {:display_name => "Call Activity",      :mapping_required => false},
+    							 "boundaryEvent" =>           {:display_name => "Boundary Event",     :mapping_required => false},
     							 "parallelGateway" =>         {:display_name => "Parallel Gateway",   :mapping_required => false},
     							 "exclusiveGateway" =>        {:display_name => "Exclusive Gateway",  :mapping_required => false},
     							 "inclusiveGateway" =>        {:display_name => "Inclusive Gateway",  :mapping_required => false},

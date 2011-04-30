@@ -83,6 +83,31 @@ class BamToFamMapsController < ApplicationController
     redirect_to path_steps_path(@step.path)
   end
 
+  def lba_children
+  	if (params[:id] == 'root') then
+	    @business_areas = BusinessArea.roots
+    else
+    	if (params[:rel] == 'lba') then
+    		lba = BusinessArea.find(params[:id])
+    	  @business_areas = lba.children
+    	  @business_objects = lba.Lbos
+    	  @functional_work_units = lba.FunctionalWorkUnits
+    	elsif (params[:rel] == 'fwu') then
+    		fwu = FunctionalWorkUnit.find(params[:id])
+    		@non_mapped_features = fwu.non_mapped_features(params[:step_id])
+      end
+    end
+		respond_to do |format|
+      format.html  { render :partial => 'lba_children',
+                            :locals => {:lbas => @business_areas,
+             								            :lbos => @business_objects,
+      												          :functional_work_units => @functional_work_units,
+      													        :features => @non_mapped_features
+      																 }
+									 }
+    end
+  end
+
   private
     def find_step
       @step = Step.find(params[:step_id])

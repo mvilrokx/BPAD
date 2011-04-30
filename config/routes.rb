@@ -24,10 +24,18 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :business_processes, :has_many => [:business_process_elements, :paths, :watchings]
   map.resources :business_process_elements, :has_many => :flows
   map.resources :paths, :has_many => [:steps, :watchings]
-  map.resources :step, :has_one => :bam_to_fam_map
-  map.resources :step, :has_many => :bam_to_fam_features
+#  map.resources :step, :has_one => :bam_to_fam_map
+#  map.resources :step, :has_many => :bam_to_fam_features
   map.resources :bam_to_fam_maps, :has_many => :approvals
 
+
+     map.resources :step do |step|
+       step.resource :bam_to_fam_map, :collection => { :lba_children => :get}
+#       step.resources :has_one => :bam_to_fam_map, :collection => { :lba_children => :get}
+       step.resources :bam_to_fam_features
+     end
+  
+  
 #  map.resources :business_process_elements
 #  map.resources :flows
 #  map.resources :paths
