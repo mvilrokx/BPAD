@@ -18,6 +18,10 @@ class Feature < ActiveRecord::Base
 	  "#{functional_work_unit.name}: #{name}"
 	end
 
+	def mapped_to_step?(step_id)
+	  self.bam_to_fam_map_features.find(:step_id => step_id)
+	end
+
 	def interested_parties
   	@interested_parties = []
 	  @interested_parties << self.watchings.all

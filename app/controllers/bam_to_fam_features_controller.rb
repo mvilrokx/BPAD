@@ -15,10 +15,17 @@ class BamToFamFeaturesController < ApplicationController
   end
 
   def create
-    @bam_to_fam_feature = @step.bam_to_fam_features.new(params[:bam_to_fam_feature])
+    if @step.bam_to_fam_map
+      @bam_to_fam_map = @step.bam_to_fam_map
+    else
+      @bam_to_fam_map = @step.create_bam_to_fam_map
+    end
+    @bam_to_fam_feature = @bam_to_fam_map.bam_to_fam_features.new(:feature_id => params[:feature_id], :step_id => params[:step_id])
+    # @bam_to_fam_feature = @step.bam_to_fam_features.new(params[:bam_to_fam_feature])
     if @bam_to_fam_feature.save
       flash[:notice] = "Successfully created bam to fam feature."
-      redirect_to @bam_to_fam_feature
+			render :json => @bam_to_fam_feature, :layout => false
+      # redirect_to @bam_to_fam_feature
     else
       render :action => 'new'
     end
@@ -39,10 +46,16 @@ class BamToFamFeaturesController < ApplicationController
   end
 
   def destroy
-    @bam_to_fam_feature = @step.bam_to_fam_features.find(params[:id])
+    if params[:id] = -1
+      @bam_to_fam_feature = @step.bam_to_fam_features.find_by_feature_id(params[:feature_id])
+    else
+      @bam_to_fam_feature = @step.bam_to_fam_features.find(params[:id])
+    end
     @bam_to_fam_feature.destroy
+    
     flash[:notice] = "Successfully destroyed bam to fam feature."
-    redirect_to bam_to_fam_features_url
+    # redirect_to bam_to_fam_features_url
+    render :json => @bam_to_fam_feature, :layout => false
   end
 
   private

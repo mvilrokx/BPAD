@@ -12,7 +12,11 @@ class BamToFamMapsController < ApplicationController
   end
 
   def new
-    @bam_to_fam_map = @step.build_bam_to_fam_map
+    if @step.bam_to_fam_map
+      @bam_to_fam_map = @step.bam_to_fam_map
+    else
+      @bam_to_fam_map = @step.build_bam_to_fam_map
+    end
     @features = Feature.all
     @fwus = FunctionalWorkUnit.all
     @mapped_features = []
@@ -39,8 +43,9 @@ class BamToFamMapsController < ApplicationController
 
   def edit
     @bam_to_fam_map = @step.bam_to_fam_map
-    @mapped_features = @step.features
-    @features = Feature.all - @mapped_features
+#    @mapped_features = @step.features
+    @mapped_features = @bam_to_fam_map.bam_to_fam_features
+#    @features = Feature.all - @mapped_features
     @fwus = FunctionalWorkUnit.all
   end
 
@@ -93,8 +98,8 @@ class BamToFamMapsController < ApplicationController
     	  @business_objects = lba.Lbos
     	  @functional_work_units = lba.FunctionalWorkUnits
     	elsif (params[:rel] == 'fwu') then
-    		fwu = FunctionalWorkUnit.find(params[:id])
-    		@non_mapped_features = fwu.non_mapped_features(params[:step_id])
+    		@features = FunctionalWorkUnit.find(params[:id]).features
+        @mapped_features = @step.features
       end
     end
 		respond_to do |format|
@@ -102,7 +107,8 @@ class BamToFamMapsController < ApplicationController
                             :locals => {:lbas => @business_areas,
              								            :lbos => @business_objects,
       												          :functional_work_units => @functional_work_units,
-      													        :features => @non_mapped_features
+      													        :features => @features,
+      													        :mapped_features => @mapped_features
       																 }
 									 }
     end

@@ -79,13 +79,13 @@ class Step < ActiveRecord::Base
 
 	end
 
-	def bam_to_fam_map
-		if !self.bam_to_fam_features.blank?
-			self.bam_to_fam_features[0].bam_to_fam_map
-		else
-			nil
-		end
-	end
+#	def bam_to_fam_map
+#		if !self.bam_to_fam_features.blank?
+#			self.bam_to_fam_features[0].bam_to_fam_map
+#		else
+#			nil
+#		end
+#	end
 
 	def interested_parties
   	@interested_parties = []

@@ -10,5 +10,9 @@ class BamToFamFeature < ActiveRecord::Base
 	  @interested_parties << self.step.interested_parties
 	  @interested_parties.flatten.compact
 	end
+	
+	def name
+	  feature.name
+	end
 
 end

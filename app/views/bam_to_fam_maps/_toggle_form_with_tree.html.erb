@@ -1,10 +1,59 @@
 <% content_for :head do %>
-  <%= javascript_include_tag 'jstree/jquery.jstree.js' %>
+  <%= javascript_include_tag 'jstree-read-only/jquery.jstree.js' %>
 <% end %>
 
 <script type="text/javascript">
 $(function () {
 	$("#lba_tree")
+		.bind("check_node.jstree", function (e, data) {
+			switch(data.rslt.obj.attr("rel")) {
+				case "lbo":
+					break;
+				case "lba":
+					break;
+				case "fwu":
+					break;
+				case "feature":
+					$.ajax({
+					  type: 'POST',
+  					url: "<%= bam_to_fam_features_path %>",
+  					context: $(this),
+						data: { "feature_id" : data.rslt.obj.attr("id"), "step_id" : <%= @step.id %> },
+						success: function (r) {
+//  						$(data.rslt.obj).attr("id", r.bam_to_fam_feature.id);
+						  // Add it to the right side
+						  $('#right_side ul').append('<li id=' + r.bam_to_fam_feature.id + '>' + data.rslt.obj.text().trim() + '</li>')
+						  $('li[id=' + r.bam_to_fam_feature.id + ']').effect("highlight", {}, 3000);
+						},
+						dataType: "json"
+					});
+					break;
+			};
+		})
+		.bind("uncheck_node.jstree", function (e, data) {
+			switch(data.rslt.obj.attr("rel")) {
+				case "lbo":
+					break;
+				case "lba":
+					break;
+				case "fwu":
+					break;
+				case "feature":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= bam_to_fam_features_path %>/-1",
+						data: { "feature_id" : data.rslt.obj.attr("id"), "step_id" : <%= @step.id %> },
+						success : function (r) {
+						  // Remove it to from right side
+//						  $('#right_side ul li[id=' + r.bam_to_fam_feature.id + ']').fadeOut(200, function(){$(this).remove()});
+						  $('#right_side ul li[id=' + r.bam_to_fam_feature.id + ']').remove();
+						},
+						dataType: "json"
+					});
+					break;
+			};
+		})
 		.jstree({
 			"core" : {"animation" : 100,
 								"initially_open" : ["root"] },
@@ -30,6 +79,35 @@ $(function () {
 	  						  		}
   	  },
   	"ui" : {"select_limit" : 1},
+			"types" : {
+				"types" : {
+					"root" : {
+						"icon" : {
+							"image" : "/icons/application_cascade.png"
+						}
+					},
+					"lba" : {
+						"icon" : {
+							"image" : "/icons/package.png"
+						}
+					},
+					"lbo" : {
+						"icon" : {
+							"image" : "/icons/brick.png"
+						}
+					},
+					"fwu" : {
+						"icon" : {
+							"image" : "/icons/plugin.png"
+						}
+					},
+					"feature" : {
+						"icon" : {
+							"image" : "/icons/bullet_black.png"
+						}
+					}
+				}
+			},
 		"plugins" : [ "themes", "html_data", "types", "ui", "checkbox" ]
 	});
 });
@@ -46,7 +124,17 @@ $(function () {
 			<div id="lba_tree" style="overflow: auto;"></div>
 		</div>
 	</div>
-  <div class="span-11 last details">
+  <div class="span-11 last">
+    <div class="span-8 last">
+    	<h4>Included Features</h4>
+    	<div id="right_side" class="span-8 last">
+    	  <ul>
+    	    <% for mapped_feature in @mapped_features %>
+    	      <li id=<%= mapped_feature.id %> ><%= mapped_feature.name||"NoName" %></li>
+    	    <% end %>
+    	  </ul>
+    	</div>
+    </div>
 	</div>
 </div>
 
