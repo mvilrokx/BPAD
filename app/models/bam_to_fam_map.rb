@@ -12,17 +12,18 @@ class BamToFamMap < ActiveRecord::Base
 
 	include Trackable
 
-	after_update :unmap_and_unapprove
-	after_create :add_approvals
+#	after_update :unmap_and_unapprove
+#	after_create :add_approvals
 
 	protected
 		def unmap_and_unapprove
 			puts "unmap_and_unapprove"
-			step.unmap! # if step.mapped?
+			step.unmap! if step.mapped?
 			approvals.each do |a|
 				a.unapprove!
 				a.approval_date = nil
 			end
+			add_approvals
 		end
 
 		def add_approvals
