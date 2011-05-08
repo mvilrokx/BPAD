@@ -1,6 +1,8 @@
 <div style='position: <%= defined?(call_type) ? "fixed" : "static" %> '>
   <% form_for @feature, :html => {:class => defined?(call_type) ? call_type : ""} do |f| %>
     <%= f.error_messages %>
+      <p>Owner: <strong id="owner"><%= @feature.owner.username if @feature.owner %></strong> <%= link_to 'Are YOU the owner?', change_owner_feature_watchings_path(@feature), :class => "update_owner" %> </p>
+    <p>Last Updated By: <strong><%= User.find(@feature.originator).username %></strong></p>
     <p>
       <%= f.label :priority %><br />
 			<%= f.select :priority, Feature::PRIORITY %>

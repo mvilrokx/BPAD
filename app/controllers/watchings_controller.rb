@@ -65,6 +65,25 @@ class WatchingsController < ApplicationController
     end
   end
 
+  def change_owner
+    @watchable = find_watchable
+    @current_owner = @watchable.watchings.find(:first, {:conditions => ["creator = 1"]})
+    if @current_owner
+      @current_owner.update_attributes(:creator => false)
+    end
+    if @new_owner = @watchable.watchings.find_by_user_id(current_user.id)
+      @new_owner.update_attributes(:creator => true)
+    else
+      @new_owner = @watchable.watchings.create(:user_id => current_user.id, :creator => true)
+    end
+    if request.xhr?
+      render :json => @watchable.owner
+    else
+      redirect_to business_areas_url
+    end
+  end
+
+
   private
 
     def find_watchable

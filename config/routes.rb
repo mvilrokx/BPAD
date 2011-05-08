@@ -16,7 +16,16 @@ ActionController::Routing::Routes.draw do |map|
 
 #  map.resources :bam_to_fam_maps
 
-  map.resources :features
+
+
+   map.resources :features do |feature|
+     feature.resource :watchings, :member => { :change_owner => :get}
+   end
+   
+#  map.resources :features, :has_many => [:watchings]
+
+
+
   map.resources :lbos
   map.resources :functional_work_units, :collection => {:features => :get}
   map.resources :business_areas,
@@ -29,11 +38,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :bam_to_fam_maps, :has_many => :approvals
 
 
-     map.resources :step do |step|
-       step.resource :bam_to_fam_map, :collection => { :lba_children => :get}
+   map.resources :step do |step|
+     step.resource :bam_to_fam_map, :collection => { :lba_children => :get}
 #       step.resources :has_one => :bam_to_fam_map, :collection => { :lba_children => :get}
-       step.resources :bam_to_fam_features
-     end
+     step.resources :bam_to_fam_features
+   end
   
   
 #  map.resources :business_process_elements

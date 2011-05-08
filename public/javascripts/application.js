@@ -84,3 +84,15 @@ $('.watching.remove').live('click', function(e) {
     }
   });
 });
+
+// hijack update_owner buttons
+$('.update_owner').live('click', function(e) {
+	e.preventDefault();
+	$.ajax({
+		url: $(this).attr('href'),
+		success: function(owner){
+		  $('#owner').html(owner.user.username);
+		}
+	});
+});
+

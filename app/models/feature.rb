@@ -13,6 +13,7 @@ class Feature < ActiveRecord::Base
 	has_paper_trail :ignore => [:name]
 
 	include Trackable
+	include Watchable
 
 	def fwu_feature
 	  "#{functional_work_unit.name}: #{name}"
@@ -28,5 +29,6 @@ class Feature < ActiveRecord::Base
 	  @interested_parties << self.functional_work_unit.interested_parties
 	  @interested_parties.flatten.compact
 	end
+
 
 end
