@@ -116,9 +116,15 @@ $(function () {
 <% title "Mappings for #{@step.element_name}" %>
 
 <div class="push-1 span-22 last">
+  <%=link_to "Back to Steps", path_steps_path(@step.path)%>
+</div>
+<div class="push-1 span-22 last">
   <div class="span-10 colborder">
 	  <div class="span-10">
-			<input type="button" class="button" value="Map" id="add_lba" style="float:left;">
+			<input type="button" class="button" value="Open All" id="open_all" style="float:left;">
+			<input type="button" class="button" value="Close All" id="close_all" style="float:left;">
+			<input type="button" class="button" value="Open Selected" id="open_current" style="float:left;">
+			<input type="button" class="button" value="Close Selected" id="close_current" style="float:left;">
 		</div>
 	  <div class="span-10">
 			<div id="lba_tree" style="overflow: auto;"></div>
@@ -137,6 +143,9 @@ $(function () {
     </div>
 	</div>
 </div>
+<div class="push-1 span-22 last">
+  <%=link_to "Back to Steps", path_steps_path(@step.path)%>
+</div>
 
 <script type="text/javascript">
 $(function () {
@@ -145,6 +154,18 @@ $(function () {
   });
 	$("#remove, #rename").click(function () {
     $("#lba_tree").jstree(this.id);
+  });
+	$("#open_all").click(function () {
+	  $("#lba_tree").jstree("open_all");
+  });
+	$("#close_all").click(function () {
+	  $("#lba_tree").jstree("close_all");
+  });
+	$("#open_current").click(function (e,data) {
+	  $("#lba_tree").jstree("open_all", ".jstree-clicked");
+  });
+	$("#close_current").click(function (e,data) {
+	  $("#lba_tree").jstree("close_all", ".jstree-clicked");
   });
 });
 </script>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110509010149) do
+ActiveRecord::Schema.define(:version => 20110510104931) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(:version => 20110509010149) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "iteration_id"
+  end
+
+  create_table "build_features", :force => true do |t|
+    t.string   "name"
+    t.integer  "buildable_id"
+    t.string   "buildable_type"
+    t.text     "description"
+    t.integer  "iteration_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "parent_id"
   end
 
   create_table "business_areas", :force => true do |t|

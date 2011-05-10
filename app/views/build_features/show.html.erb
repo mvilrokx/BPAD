@@ -1,0 +1,28 @@
+<% title "Build Feature" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @build_feature.name %>
+</p>
+<p>
+  <strong>Buildable:</strong>
+  <%=h @build_feature.buildable_id %>
+</p>
+<p>
+  <strong>Buildable Type:</strong>
+  <%=h @build_feature.buildable_type %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @build_feature.description %>
+</p>
+<p>
+  <strong>Iteration:</strong>
+  <%=h @build_feature.iteration_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_build_feature_path(@build_feature) %> |
+  <%= link_to "Destroy", @build_feature, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", build_features_path %>
+</p>

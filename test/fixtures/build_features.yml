@@ -1,0 +1,13 @@
+one:
+  name: MyString
+  buildable_id: 1
+  buildable_type: MyString
+  description: MyText
+  iteration_id: 1
+
+two:
+  name: MyString
+  buildable_id: 1
+  buildable_type: MyString
+  description: MyText
+  iteration_id: 1

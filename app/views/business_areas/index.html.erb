@@ -6,7 +6,7 @@
 $(function () {
 	$("#lba_tree")
 //		.bind("loaded.jstree", function (event, data) {
-//			alert("TREE IS LOADED");
+//			alert("TREE IS LOADED");r
 //		})
 
 		.bind("create.jstree", function (e, data) {
@@ -330,6 +330,7 @@ $(function () {
 			<input type="button" class="button" value="Add Feature" id="add_feature" style="float:left;">
 			<input type="button" class="button" value="Delete" id="remove" style="float:left;">
 			<input type="button" class="button" value="Rename" id="rename" style="float:left;">
+			<input type="button" class="button" value="Open All" id="open_all" style="float:left;">
 		</div>
 	  <div class="span-10">
 			<div id="lba_tree" style="overflow: auto;"></div>
@@ -346,6 +347,9 @@ $(function () {
   });
 	$("#remove, #rename").click(function () {
     $("#lba_tree").jstree(this.id);
+  });
+	$("#open_all").click(function () {
+	  $("#lba_tree").jstree("open_all");
   });
 });
 </script>

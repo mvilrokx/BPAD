@@ -5,13 +5,22 @@ class LbasController < ApplicationController
       @lbas = Lba.roots
     else
     	if (params[:rel] == 'lba') then
-     	  @lbas = Lba.find(params[:id]).children
-     	  @lbos = Lba.find(params[:id]).lbos
+    	  lba = Lba.find(params[:id])
+     	  @lbas = lba.children
+     	  @lbos = lba.lbos
+     	  @build_features = lba.build_features
+    	elsif (params[:rel] == 'lbo') then
+    	  lbo = Lbo.find(params[:id])
+     	  @build_features = lbo.build_features
+    	elsif (params[:rel] == 'build_feature') then
+    	  bf = BuildFeature.find(params[:id])
+     	  @build_features = bf.children
       end
     end
 		respond_to do |format|
       format.html  { render :partial => 'lba_children', :locals => {:lbas => @lbas, 
-                                                                    :lbos => @lbos
+                                                                    :lbos => @lbos,
+                                                                    :bfs => @build_features
       																															}}
     end
   end
@@ -30,6 +39,7 @@ class LbasController < ApplicationController
   
   def create
     @lba = Lba.new(params[:lba])
+    ap @lba
     if @lba.save
       flash[:notice] = "Successfully created lba."
  			render :json => @lba, :layout => false

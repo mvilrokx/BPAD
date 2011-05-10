@@ -1,0 +1,25 @@
+<% title "Build Features" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Buildable</th>
+    <th>Buildable Type</th>
+    <th>Description</th>
+    <th>Iteration</th>
+  </tr>
+  <% for build_feature in @build_features %>
+    <tr>
+      <td><%=h build_feature.name %></td>
+      <td><%=h build_feature.buildable_id %></td>
+      <td><%=h build_feature.buildable_type %></td>
+      <td><%=h build_feature.description %></td>
+      <td><%=h build_feature.iteration_id %></td>
+      <td><%= link_to "Show", build_feature %></td>
+      <td><%= link_to "Edit", edit_build_feature_path(build_feature) %></td>
+      <td><%= link_to "Destroy", build_feature, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Build Feature", new_build_feature_path %></p>

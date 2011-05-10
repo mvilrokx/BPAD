@@ -5,6 +5,7 @@ class Lbo < ActiveRecord::Base
   belongs_to :lba, :foreign_key => "business_area_id"
   
   has_many :watchings, :as => :watchable, :dependent => :destroy
+  has_many :build_features, :as => :buildable
 
 	has_paper_trail :ignore => [:name]
 

@@ -10,7 +10,21 @@
 
 <% if !lbos.nil? %>
 	<% for lbo in lbos %>
- 		<li id=<%= lbo.id %> rel="lbo"><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
+  	<% if lbo.build_features.empty? %>
+   		<li id=<%= lbo.id %> rel="lbo"><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
+  	<% else %>
+   		<li id=<%= lbo.id %> rel="lbo" class='jstree-closed'><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
+  	<% end %>
+  <% end %>
+<% end %>
+
+<% if !bfs.nil? %>
+  <% for bf in bfs %>
+  	<% if bf.children.empty? %>
+  		<li id=<%= bf.id %> rel="build_feature" ><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
+  	<% else %>
+  		<li id=<%= bf.id %> rel="build_feature" class='jstree-closed'><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
+  	<% end %>
   <% end %>
 <% end %>
 

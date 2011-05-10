@@ -25,7 +25,6 @@ $(document).ajaxSend(function(e, xhr, options) {
   xhr.setRequestHeader("X-CSRF-Token", token);
 });
 
-d
 // hijack ajax buttons
 $('.ajax').live('submit', function(e) {
 	e.preventDefault();

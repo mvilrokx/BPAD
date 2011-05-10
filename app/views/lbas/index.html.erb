@@ -5,20 +5,11 @@
 <script type="text/javascript">
 $(function () {
 	$("#lba_tree")
+//	  .bind("loaded.jstree", function (event, data) {
+//      $("#lba_tree").jstree("open_all");
+//    })
 		.bind("create.jstree", function (e, data) {
 			switch(data.rslt.obj.attr("rel")) {
-				case "lbo":
-					$.post(
-						"<%= lbos_path %>",
-						{ "lbo" : {"business_area_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
-						function (r) {
-							$(data.rslt.obj).attr("id", r.lbo.id);
-							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
-							$(data.rslt.obj).children("a").attr("href", "<%= lbos_path %>/" + r.lbo.id);
-						},
-						"json"
-					);
-					break;
 				case "lba":
 					$.post(
 						"<%= lbas_path %>",
@@ -31,14 +22,38 @@ $(function () {
 						"json"
 					);
 					break;
-				case "fwu":
+				case "lbo":
 					$.post(
-						"<%= functional_work_units_path %>",
-						{ "functional_work_unit" : {"business_area_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						"<%= lbos_path %>",
+						{ "lbo" : {"business_area_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
 						function (r) {
-							$(data.rslt.obj).attr("id", r.functional_work_unit.id);
+							$(data.rslt.obj).attr("id", r.lbo.id);
 							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
-							$(data.rslt.obj).children("a").attr("href", "<%= functional_work_units_path %>/" + r.functional_work_unit.id);
+							$(data.rslt.obj).children("a").attr("href", "<%= lbos_path %>/" + r.lbo.id);
+						},
+						"json"
+					);
+					break;
+				case "build_feature":
+				  if (data.rslt.parent.attr("rel") == "build_feature"){
+						buildable_type = null;
+            buildable_id = null;
+            parent_id = data.rslt.parent.attr("id");
+				  } else {
+						buildable_type = data.rslt.parent.attr("rel");
+            buildable_id = data.rslt.parent.attr("id");
+            parent_id = null;
+				  }
+					$.post(
+						"<%= build_features_path %>",
+						{ "build_feature" : {"buildable_type" : buildable_type, 
+						                     "buildable_id" : buildable_id, 
+						                     "parent_id" : parent_id, 
+						                     "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.build_features.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= build_features_path %>/" + r.build_features.id);
 						},
 						"json"
 					);
@@ -81,12 +96,12 @@ $(function () {
 						}
 					});
 					break;
-				case "feature":
+				case "build_feature":
 					$.ajax({
 						async : false,
 						type: 'PUT',
-						url: "<%= features_path %>/" + data.rslt.obj.attr("id"),
-						data: { "feature" : {"name" : data.rslt.new_name}	},
+						url: "<%= build_features_path %>/" + data.rslt.obj.attr("id"),
+						data: { "build_feature" : {"name" : data.rslt.new_name}	},
 						success : function (r) {
 //							data.inst.refresh();
 						}
@@ -130,11 +145,11 @@ $(function () {
 						}
 					});
 					break;
-				case "feature":
+				case "build_feature":
 					$.ajax({
 						async : false,
 						type: 'DELETE',
-						url: "<%= features_path %>/" + data.rslt.obj.attr("id"),
+						url: "<%= build_features_path %>/" + data.rslt.obj.attr("id"),
 						data: { "id" : data.rslt.obj.attr("id")},
 						success : function (r) {
 //							data.inst.refresh();
@@ -208,14 +223,6 @@ $(function () {
 		.jstree({
 			"core" : {"animation" : 100,
 								"initially_open" : ["root"] },
-//	  "json_data" : { data : "Root node",
-//	  								ajax : {
-//	  									url: "business_areas/index.json",
-//	  									data : function (n) {
-//														   return { id : n.attr ? n.attr("id") : 0 };
-//														 }
-//	  								}
-//	  },
 			"types" : {
 				"max_depth" : -2,
 				"max_children" : -2,
@@ -228,27 +235,27 @@ $(function () {
 						}
 					},
 					"lba" : {
-						"valid_children": ["lba", "lbo", "fwu"],
+						"valid_children": ["lba", "lbo", "build_feature"],
 						"icon" : {
 							"image" : "/icons/package.png"
 						}
 					},
 					"lbo" : {
-						"valid_children" : ["none"],
+						"valid_children" : ["none", "build_feature"],
 						"icon" : {
 							"image" : "./icons/brick.png"
 						}
 					},
-					"fwu" : {
-						"valid_children" : ["feature"],
+					"build_feature" : {
+						"valid_children" : ["build_feature"],
 						"icon" : {
-							"image" : "./icons/plugin.png"
+							"image" : "./icons/bullet_black.png"
 						}
 					},
 					"feature" : {
 						"valid_children" : ["none"],
 						"icon" : {
-							"image" : "./icons/bullet_black.png"
+							"image" : "./icons/plugin.png"
 						}
 					}
 				}
@@ -285,9 +292,9 @@ $(function () {
 		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "fwu" } } ); },
             	"icon"				: '/icons/plugin_add.png'
             },
-     				"add_feature" : {
-            	"label"				: "Feature",
-		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "feature" } } ); },
+     				"add_build_feature" : {
+            	"label"				: "Build Feature",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "build_feature" } } ); },
             	"icon"				: '/icons/bullet_black.png'
             }
         	}
@@ -313,34 +320,45 @@ $(function () {
 });
 </script>
 
-<% title "Logical Business Areas", false %>
-<h3>Logical Business Areas <%= link_to image_tag('/icons/add.png', :alt=> 'Add New Business Area') , new_business_area_path, :title => 'Add New Business Area' %></h3>
+<% title "Logical Business Areas" %>
 
 <div class="push-1 span-22 last">
   <div class="span-10 colborder">
 	  <div class="span-10">
-			<input type="button" class="button" value="Add Business Area" id="add_lba" style="float:left;">
-			<input type="button" class="button" value="Add LBO" id="add_lbo" style="float:left;">
-			<input type="button" class="button" value="Add FWU" id="add_fwu" style="float:left;">
-			<input type="button" class="button" value="Add Feature" id="add_feature" style="float:left;">
-			<input type="button" class="button" value="Delete" id="remove" style="float:left;">
-			<input type="button" class="button" value="Rename" id="rename" style="float:left;">
+			<input type="button" class="button" value="Open All" id="open_all" style="float:left;">
+			<input type="button" class="button" value="Close All" id="close_all" style="float:left;">
+			<input type="button" class="button" value="Open Selected" id="open_current" style="float:left;">
+			<input type="button" class="button" value="Close Selected" id="close_current" style="float:left;">
 		</div>
+
 	  <div class="span-10">
 			<div id="lba_tree" style="overflow: auto;"></div>
 		</div>
+
 	</div>
+
   <div class="span-11 last details">
+
 	</div>
 </div>
 
 <script type="text/javascript">
 $(function () {
-	$("#add_lba, #add_lbo, #add_fwu, #add_feature").click(function () {
-	  $("#lba_tree").jstree("create", null, "last", { "attr" : { "rel" : this.id.toString().replace("add_", "") } });
+	$("#open_all").click(function () {
+	  $("#lba_tree").jstree("open_all");
   });
 	$("#remove, #rename").click(function () {
     $("#lba_tree").jstree(this.id);
   });
+	$("#close_all").click(function () {
+	  $("#lba_tree").jstree("close_all");
+  });
+	$("#open_current").click(function (e,data) {
+	  $("#lba_tree").jstree("open_all", ".jstree-clicked");
+  });
+	$("#close_current").click(function (e,data) {
+	  $("#lba_tree").jstree("close_all", ".jstree-clicked");
+  });
 });
 </script>
+

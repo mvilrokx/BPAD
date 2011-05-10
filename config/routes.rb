@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :build_features
+
   map.resources :lbas, :collection => { :lba_children => :get}
   
   map.resources :iterations
