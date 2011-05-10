@@ -10,8 +10,8 @@ class BamToFamFeature < ActiveRecord::Base
 
 	def interested_parties
   	@interested_parties = []
-	  @interested_parties << self.feature.interested_parties
-	  @interested_parties << self.step.interested_parties
+	  @interested_parties << self.feature.interested_parties if feature
+	  @interested_parties << self.step.interested_parties if step
 	  @interested_parties.flatten.compact
 	end
 	
