@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :lbas, :collection => { :lba_children => :get}
+  
   map.resources :iterations
   map.resources :watchings
   map.resources :bam_to_fam_features

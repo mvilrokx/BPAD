@@ -1,0 +1,20 @@
+<% title "Lba" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @lba.name %>
+</p>
+<p>
+  <strong>Parent:</strong>
+  <%=h @lba.parent_id %>
+</p>
+<p>
+  <strong>Iteration:</strong>
+  <%=h @lba.iteration_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_lba_path(@lba) %> |
+  <%= link_to "Destroy", @lba, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", lbas_path %>
+</p>

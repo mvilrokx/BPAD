@@ -1,0 +1,16 @@
+<% if !lbas.nil? %>
+  <% for lba in lbas %>
+  	<% if lba.children.empty? && lba.lbos.empty? %>
+  		<li id=<%= lba.id %> rel="lba" ><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
+  	<% else %>
+  		<li id=<%= lba.id %> rel="lba" class='jstree-closed'><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
+  	<% end %>
+  <% end %>
+<% end %>
+
+<% if !lbos.nil? %>
+	<% for lbo in lbos %>
+ 		<li id=<%= lbo.id %> rel="lbo"><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
+  <% end %>
+<% end %>
+

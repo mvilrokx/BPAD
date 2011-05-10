@@ -26,6 +26,7 @@ Rails::Initializer.run do |config|
 	config.gem 'will_paginate', :version => '~> 2.3.11', :source => 'http://gemcutter.org'
 	config.gem 'paper_trail', :version => '~> 1'
 	config.gem 'aasm', :version => '~> 2'
+  config.gem "compass", :version => '>= 0.11.1'
 
 	# Only needed in DEV
 	config.gem 'awesome_print', :as => 'ap'
