@@ -7,7 +7,10 @@
       <%= f.label :priority %><br />
 			<%= f.select :priority, Feature::PRIORITY %>
     </p>
-
+    <p>
+      <%= f.label :feature_type %><br />
+			<%= f.select :feature_type, Feature::FEATURE_TYPES, {:include_blank => true} %>
+    </p>
     </p>
     <p>
       <%= f.label :scope %><br />

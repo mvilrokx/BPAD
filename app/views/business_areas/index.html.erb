@@ -324,13 +324,10 @@ $(function () {
 <div class="push-1 span-22 last">
   <div class="span-10 colborder">
 	  <div class="span-10">
-			<input type="button" class="button" value="Add Business Area" id="add_lba" style="float:left;">
-			<input type="button" class="button" value="Add LBO" id="add_lbo" style="float:left;">
-			<input type="button" class="button" value="Add FWU" id="add_fwu" style="float:left;">
-			<input type="button" class="button" value="Add Feature" id="add_feature" style="float:left;">
-			<input type="button" class="button" value="Delete" id="remove" style="float:left;">
-			<input type="button" class="button" value="Rename" id="rename" style="float:left;">
-			<input type="button" class="button" value="Open All" id="open_all" style="float:left;">
+			<button class="button" id="open_all">Open All</button>
+			<button class="button" id="close_all">Close All</button>
+			<button class="button" id="open_current">Open Selected</button>
+			<button class="button" id="close_current">Close Selected</button>
 		</div>
 	  <div class="span-10">
 			<div id="lba_tree" style="overflow: auto;"></div>
@@ -350,6 +347,15 @@ $(function () {
   });
 	$("#open_all").click(function () {
 	  $("#lba_tree").jstree("open_all");
+  });
+	$("#close_all").click(function () {
+	  $("#lba_tree").jstree("close_all");
+  });
+	$("#open_current").click(function (e,data) {
+	  $("#lba_tree").jstree("open_all", ".jstree-clicked");
+  });
+	$("#close_current").click(function (e,data) {
+	  $("#lba_tree").jstree("close_all", ".jstree-clicked");
   });
 });
 </script>

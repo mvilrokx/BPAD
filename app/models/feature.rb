@@ -7,6 +7,7 @@ class Feature < ActiveRecord::Base
   has_many :steps, :through => :bam_to_fam_map_features
 
   PRIORITY = ["Must Have", "Should Have", "Nice to Have"]
+  FEATURE_TYPES = ["Business Rule", "UI", "Miscellaneous"]
 
   validates_inclusion_of :priority, :in => PRIORITY
 

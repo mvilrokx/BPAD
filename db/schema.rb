@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110510104931) do
+ActiveRecord::Schema.define(:version => 20110512140459) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20110510104931) do
     t.integer  "iteration_id"
     t.string   "priority"
     t.string   "scope"
+    t.string   "feature_type"
   end
 
   create_table "flows", :force => true do |t|
@@ -111,6 +112,16 @@ ActiveRecord::Schema.define(:version => 20110510104931) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "iteration_id"
+  end
+
+  create_table "issues", :force => true do |t|
+    t.string   "name"
+    t.integer  "issueable_id"
+    t.string   "issueable_type"
+    t.text     "description"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "iterations", :force => true do |t|

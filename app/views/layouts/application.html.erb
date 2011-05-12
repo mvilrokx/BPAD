@@ -7,6 +7,7 @@
     <%= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js' %>
     <%= javascript_include_tag 'application.js' %>
     <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'css3buttons.css', :media => 'screen, projection' %>
     <%= stylesheet_link_tag 'compiled/screen.css', :media => 'screen, projection' %>
     <%= stylesheet_link_tag 'compiled/print.css', :media => 'print' %>
     <!--[if lt IE 8]><%= stylesheet_link_tag 'compiled/ie.css', :media => 'screen, projection' %><![endif]-->
@@ -14,17 +15,16 @@
     <%= yield(:head) %>
 
     <%= stylesheet_link_tag 'blueprint/plugins/fancy-type/screen' %>
-    <%= stylesheet_link_tag 'blueprint/plugins/buttons/screen' %>
     <%= csrf_meta_tag %>
   </head>
   <body>
-    <div class="container">
-
-	    <div class="span-24 last" style="min-height:600px;">
-
-  	    <div class="span-24 last">
-    	    <div class="span-12" style="text-align:left;">
-      	    <span style="color:red;">Active Iteration:
+    <div id="header">
+      <div class="container">
+  	    <div class="span-24 last" style="position: relative; height: 120px;">
+    	    <div class="span-24 last">
+    	    
+      	    <div class="span-6" id="active_iteration">
+        	    Active Iteration:
   	    	    <% if logged_in? && working_on_iteration? %>
   		    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;"><%= current_user.iteration.name %>
   		    	    </span>
@@ -32,22 +32,28 @@
   		    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;">NONE!!!
   		    	    </span>
   	          <% end %>
-      	    </span>
+      	    </div>
+    	    
+      	    <div class="push-10 span-8 last" id="signing_menu">
+        	    <% if logged_in? %>
+                Logged in as <%= link_to current_user.username, edit_user_path(current_user) %>! Not you?
+                <%= link_to "Log out", logout_path %>
+              <% else %>
+                <%= link_to "Sign up", signup_path %> or
+                <%= link_to "log in", login_path %>
+              <% end %>
+      			</div>
     			</div>
-    	    <div class="span-12 last" style="text-align:right;">
-      	    <% if logged_in? %>
-              Logged in as <%= link_to current_user.username, edit_user_path(current_user) %>! Not you?
-              <%= link_to "Log out", logout_path %>
-            <% else %>
-              <%= link_to "Sign up", signup_path %> or
-              <%= link_to "log in", login_path %>
-            <% end %>
-    			</div>
-   			</div>
-   			<hr/>
+				  <%= render :partial => "shared/mainnav",
+								     :locals => {:active_menu_item => yield(:active_menu_item)} %>
+        </div>    
+      </div>    
+    </div>
 
-				<%= render :partial => "shared/mainnav",
-								   :locals => {:active_menu_item => yield(:active_menu_item)} %>
+    <div class="container">
+
+	    <div class="span-24 last" style="min-height:600px;">
+	    <hr class="space"/>
 
    			<%= yield :subnav %>
 

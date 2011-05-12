@@ -95,3 +95,20 @@ $('.update_owner').live('click', function(e) {
 	});
 });
 
+
+function removeHTMLTags(htmlString) {
+    if(htmlString)
+    {
+      var mydiv = document.createElement("div");
+       mydiv.innerHTML = htmlString;
+
+        if (document.all) // IE Stuff
+        {
+            return mydiv.innerText;
+        }   
+        else // Mozilla does not work with innerText
+        {
+            return mydiv.textContent.replace(/\>+(?= )/g,'');
+        }                           
+    }
+};

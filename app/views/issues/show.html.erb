@@ -1,0 +1,28 @@
+<% title "Issue" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @issue.name %>
+</p>
+<p>
+  <strong>Issueable:</strong>
+  <%=h @issue.issueable_id %>
+</p>
+<p>
+  <strong>Issueable Type:</strong>
+  <%=h @issue.issueable_type %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @issue.description %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%=h @issue.status %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_issue_path(@issue) %> |
+  <%= link_to "Destroy", @issue, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", issues_path %>
+</p>

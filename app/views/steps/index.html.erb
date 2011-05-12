@@ -1,9 +1,15 @@
 <% title "Steps for " + @path.name, false %>
-<h3>
-	Business Process: <%= link_to @path.business_process.name, business_processes_path  %>
-	>> Path: <%= link_to @path.name, business_process_paths_path(@path.business_process)  %>
-	>> Steps
-</h3>
+<div class="span-24 last">
+  <ul id="breadcrumb">
+    <li class="first"><%= link_to "Business Processes", business_processes_path  %></li>
+    <li><%= link_to @path.business_process.name, business_process_paths_path(@path.business_process) %></li>
+    <li><%= @path.name %></li>
+  </ul>
+</div>
+
+<div class="push-1 span-22 last">
+  <span class="title_label">Steps</span>
+</div>
 
 <div class="push-1 span-22 last">
   <div class="span-11">
@@ -15,7 +21,7 @@
 </div>
 <div class="push-1 span-22 last">
 <% if @steps.size != 0 %>
-  <table class="pretty">
+  <table class="pretty striped">
     <tr>
 	    <th>Steps</th>
 	    <th>Type</th>
@@ -66,5 +72,9 @@
     <% end %>
   </table>
 <% end %>
+
+  <p>
+    <%= link_to "Back to All Paths of the Business Process", business_process_paths_path(@path.business_process), :class=>"button" %>
+  </p>
 
 </div>

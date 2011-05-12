@@ -1,0 +1,13 @@
+one:
+  name: MyString
+  issueable_id: 1
+  issueable_type: MyString
+  description: MyText
+  status: MyString
+
+two:
+  name: MyString
+  issueable_id: 1
+  issueable_type: MyString
+  description: MyText
+  status: MyString

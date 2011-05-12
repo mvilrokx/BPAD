@@ -19,6 +19,10 @@ class BamToFamFeature < ActiveRecord::Base
 	  feature.name
 	end
 
+	def description
+	  feature.description
+	end
+
   protected
 		def reset_approvals
 			step.unmap! if step.mapped?

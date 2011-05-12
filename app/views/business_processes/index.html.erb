@@ -1,10 +1,12 @@
 <% title "Business Processes", false %>
-<h3>
-	Business Processes
-	<% if current_user.iteration %>
-		<%= link_to image_tag('/icons/add.png', :alt=> 'Add New Business Process') , new_business_process_path, :title => 'Add New Business Process' %>
-	<% end %>
-</h3>
+<div class="span-24 last">
+  <ul id="breadcrumb">
+    <li class="first">Business Processes</li>
+  </ul>
+</div>
+<div class="push-1 span-22 last">
+  <span class="title_label">Business Processes</span>
+</div>
 
 <div class="push-1 span-22 last">
   <div class="span-11">
@@ -16,7 +18,7 @@
 </div>
 
 <div class="push-1 span-22 last">
-  <table class="pretty">
+  <table class="pretty striped">
     <tr>
       <th><%= sortable @business_processes, "name" %></th>
       <th><%= sortable @business_processes, "bpmn_file_name", "File Name" %></th>
@@ -57,5 +59,5 @@
       </tr>
     <% end %>
   </table>
-	<p><%= link_to "New Business Process", new_business_process_path %></p>
+	<p><%= link_to "New Business Process" , new_business_process_path, :class=>"button" %></p>
 </div>

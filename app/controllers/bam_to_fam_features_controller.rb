@@ -24,7 +24,8 @@ class BamToFamFeaturesController < ApplicationController
     # @bam_to_fam_feature = @step.bam_to_fam_features.new(params[:bam_to_fam_feature])
     if @bam_to_fam_feature.save
       flash[:notice] = "Successfully created bam to fam feature."
-			render :json => @bam_to_fam_feature, :layout => false
+      render :partial => "bam_to_fam_maps/available_feature", :locals => { :mapped_feature => @bam_to_fam_feature }
+#			render :json => @bam_to_fam_feature.to_json(:include => :feature ), :layout => false
       # redirect_to @bam_to_fam_feature
     else
       render :action => 'new'

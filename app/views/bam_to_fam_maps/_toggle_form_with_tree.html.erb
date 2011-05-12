@@ -20,12 +20,11 @@ $(function () {
   					context: $(this),
 						data: { "feature_id" : data.rslt.obj.attr("id"), "step_id" : <%= @step.id %> },
 						success: function (r) {
-//  						$(data.rslt.obj).attr("id", r.bam_to_fam_feature.id);
 						  // Add it to the right side
-						  $('#right_side ul').append('<li id=' + r.bam_to_fam_feature.id + '>' + data.rslt.obj.text().trim() + '</li>')
-						  $('li[id=' + r.bam_to_fam_feature.id + ']').effect("highlight", {}, 3000);
+						  $('#right_side ul').append(r);
+						  $('#right_side li:last').effect("highlight", {}, 3000);
 						},
-						dataType: "json"
+						dataType: "html"
 					});
 					break;
 			};
@@ -121,10 +120,10 @@ $(function () {
 <div class="push-1 span-22 last">
   <div class="span-10 colborder">
 	  <div class="span-10">
-			<input type="button" class="button" value="Open All" id="open_all" style="float:left;">
-			<input type="button" class="button" value="Close All" id="close_all" style="float:left;">
-			<input type="button" class="button" value="Open Selected" id="open_current" style="float:left;">
-			<input type="button" class="button" value="Close Selected" id="close_current" style="float:left;">
+			<button class="button" id="open_all">Open All</button>
+			<button class="button" id="close_all">Close All</button>
+			<button class="button" id="open_current">Open Selected</button>
+			<button class="button" id="close_current">Close Selected</button>
 		</div>
 	  <div class="span-10">
 			<div id="lba_tree" style="overflow: auto;"></div>
@@ -136,7 +135,7 @@ $(function () {
     	<div id="right_side" class="span-8 last">
     	  <ul>
     	    <% for mapped_feature in @mapped_features %>
-    	      <li id=<%= mapped_feature.id %> ><%= mapped_feature.name||"NoName" %></li>
+    	      <%= render :partial => "available_feature", :locals => { :mapped_feature => mapped_feature } %>
     	    <% end %>
     	  </ul>
     	</div>

@@ -1,11 +1,15 @@
 <% title "Paths for " + @business_process.name, false %>
-<h3>
-	Business Process: <%= link_to @business_process.name, business_processes_path  %>
-	>> Paths
-	<% if current_user.iteration %>
-		<%= link_to image_tag('/icons/add.png', :alt=> "Add New Path") , new_business_process_path_path(@business_process), :title => 'Add New Path' %>
-	<% end %>
-</h3>
+<div class="span-24 last">
+  <ul id="breadcrumb">
+    <li class="first"><%= link_to "Business Processes", business_processes_path  %></li>
+    <li><%= @business_process.name %></li>
+  </ul>
+</div>
+
+<div class="push-1 span-22 last">
+  <span class="title_label">Paths</span>
+</div>
+
 
 <div class="push-1 span-22 last">
   <div class="span-11">
@@ -17,7 +21,7 @@
 </div>
 <div class="push-1 span-22 last">
 <% if @paths.size != 0 %>
-  <table class="pretty">
+  <table class="pretty striped">
     <tr>
 	    <th><%= sortable @paths, "name" %></th>
 	    <th><%= sortable @paths, "priority" %></th>
@@ -50,8 +54,8 @@
 <% end %>
 
   <p>
-  <%= link_to "New Path", new_business_process_path_path(@business_process) %> |
-  <%= link_to "Back to All Business Processes", business_processes_path %>
+  <%= link_to "New Path", new_business_process_path_path(@business_process), :class=>"button" %>
+  <%= link_to "Back to All Business Processes", business_processes_path, :class=>"button" %>
   </p>
 
 </div>
