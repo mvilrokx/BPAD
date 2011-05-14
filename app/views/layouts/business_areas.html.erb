@@ -1,3 +1,8 @@
+<% content_for :head do %>
+  <%= javascript_include_tag '../jwysiwyg/jquery.wysiwyg.js' %>
+  <%= stylesheet_link_tag '../jwysiwyg/jquery.wysiwyg.css' %>
+<% end %>
+
 <% content_for :active_menu_item do %>
 	Functional Model
 <% end %>
@@ -5,4 +10,5 @@
 <% content_for :content do %>
   <%= yield %>
 <% end %>
+
 <%= render :file => 'layouts/application' %>

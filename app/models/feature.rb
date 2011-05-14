@@ -5,6 +5,8 @@ class Feature < ActiveRecord::Base
 
   has_many :bam_to_fam_map_features #, :dependent => :destroy
   has_many :steps, :through => :bam_to_fam_map_features
+  has_many :issues, :as => :issueable, :dependent => :destroy
+  # accepts_nested_attributes_for :issues, :allow_destroy => true
 
   PRIORITY = ["Must Have", "Should Have", "Nice to Have"]
   FEATURE_TYPES = ["Business Rule", "UI", "Miscellaneous"]

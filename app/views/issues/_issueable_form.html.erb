@@ -1,0 +1,18 @@
+<div id="form">
+  <% form_for [@issueable, @issue] do |f| %>
+    <%= f.error_messages %>
+    <p>
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :description %><br />
+      <%= f.text_area :description %>
+    </p>
+    <p>
+      <%= f.label :status %><br />
+		  <%= f.select :status, Issue::STATUSES %>
+    </p>
+    <%= content_tag :button, "Save Changes", :type => :submit, :class => "button" %>
+  <% end %>
+</div>

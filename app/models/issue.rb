@@ -1,3 +1,8 @@
 class Issue < ActiveRecord::Base
-  attr_accessible :name, :issueable_id, :issueable_type, :description, :status
+  belongs_to :issueable, :polymorphic => true
+  
+  STATUSES = ["Open", "Closed"]
+
+  validates_inclusion_of :status, :in => STATUSES
+
 end

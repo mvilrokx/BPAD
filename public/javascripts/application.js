@@ -112,3 +112,63 @@ function removeHTMLTags(htmlString) {
         }                           
     }
 };
+
+
+// hijack show-hide buttons
+$('#toggle_description, #toggle_issues').live('click', function(e) {
+	e.preventDefault();
+	$('#'+ this.id.toString().replace("toggle_", "")).slideToggle(200);;
+//	$('.description').slideToggle(200);
+	$(this).text($(this).text() == 'Show' ? 'Hide' : 'Show');
+});
+
+
+/**
+* opening modal Dialog
+*/
+$('.dialog_form_link').live('click', function() {
+    var $dialog = $('<div class="dialog"></div>')
+        .appendTo('body')
+        .load($(this).attr('href') + ' form', function(response, status, xhr){
+            if (status == "error") {
+                var msg = "Sorry but there was an error: ";
+                addNotice("<p>" + msg + xhr.status + " " + xhr.statusText + "</p>")
+            } else {
+                $(this).dialog({
+                    modal: true,
+    //                title: $(this).text(),
+    //                autoOpen: false,
+                    width: 'auto',
+                    height: 'auto',
+                    position: 'center',               
+                    show: {effect: 'blind', 
+                           duration: 250
+                    },
+                    hide: {effect: 'blind', duration: 250},
+                    close: function(ev, ui) { $('div.dialog').remove(); }
+                });
+            }
+        });
+//    $dialog.dialog('open');
+    // prevent the default action, e.g., following a link
+    return false;
+});
+
+// hijack refresh button
+$('#refresh_issues').live('click', function(e) {
+    e.preventDefault();
+    $('#issues').load($(this).attr('href') + ' #issues');
+});
+
+$('#new_issue').submit(function(){
+  $.ajax({
+    type: this.method,
+    url: this.action,
+    data: $(this).serialize(),
+    dataType: "html" //,
+    // success: successHandler,
+    // error: errorHandler
+  });
+  return false;
+});
+

@@ -64,9 +64,9 @@
 #active_iteration {
   text-align:center;
   background-color: #FFF;
-  border-bottom: 1px solid #51688C;
-  border-left: 1px solid #51688C;
-  border-right: 1px solid #51688C;
+  border-bottom: 2px solid #51688C;
+  border-left: 2px solid #51688C;
+  border-right: 2px solid #51688C;
   color: #51688C;
 	border-bottom-right-radius: 10px;
 	-moz-bottom-right-border-radius: 5px;
@@ -282,18 +282,18 @@ a.watching.remove.over {
 #signing_menu {
   text-align:center;
   background-color: #FFF;
-  border-bottom: 1px solid #51688C;
-  border-left: 1px solid #51688C;
-  border-right: 1px solid #51688C;
+  border-bottom: 2px solid #51688C;
+  border-left:   2px solid #51688C;
+  border-right:  2px solid #51688C;
   color: #51688C;
 	border-bottom-right-radius: 10px;
-	-moz-bottom-right-border-radius: 5px;
+	-moz-bottom-right-border-radius: 10px;
   -webkit-bottom-right-border-radius: 10px;
-  -khtml-bottom-right-border-radius: 5px;
+  -khtml-bottom-right-border-radius: 10px;
 	border-bottom-left-radius: 10px;
-	-moz-bottom-left-border-radius: 5px;
+	-moz-bottom-left-border-radius: 10px;
   -webkit-bottom-left-border-radius: 10px;
-  -khtml-bottom-left-border-radius: 5px;
+  -khtml-bottom-left-border-radius: 10px;
 }
 
 
@@ -307,7 +307,7 @@ a.watching.remove.over {
   float: left;
   background-color:#808C58;
   color: #fff;
-  text-shadow: 0px 1px 1px #000;
+  text-shadow: 0px -1px 0px #333;
   font-size:12px;
   font-weight:bold;
   margin:16px;
@@ -374,36 +374,27 @@ a.watching.remove.over {
   -webkit-border-radius:15px;
   -moz-border-radius:15px;
   -webkit-border-radius:15px;
-   
 }
 
-
-
-
-
-
-
-
-
-
-
-.breadcrumb li.last {
-  -moz-border-top-right-radius:5px;
-  -webkit-border-top-right-radius:5px;
-  -moz-border-bottom-right-radius:5px;
-  -webkit-border-bottom-right-radius:5px;
-  padding-right:15px;
+#env {
+  position: fixed; 
+  top: 45%; 
+  width: 25px;
+  height: 98px; 
+  margin: -45px 0 0 0;
 }
 
-
-.breadcrumb li.visited {
-  background-color:#B32317;
+#env span {
+    display:inline-block;
+    position:absolute;
+    left:-50px;
+    transform:rotate(-90deg); 
+    -webkit-transform: rotate(-90deg); 
+    -moz-transform: rotate(-90deg);
+    background-color: red;
+    color: #fff;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 0px 10px;
 }
-
-.breadcrumb li.visited:before {
-  border-color: #B32317 #B32317 #B32317 transparent;
-}
-.breadcrumb li.visited:after {
-  border-color: transparent transparent transparent #B32317;
-}
-
+  
