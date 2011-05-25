@@ -1,19 +1,45 @@
-<% title "Bam To Fam Features" %>
+<% title "Bam To Fam Features for " + @step.element_name, false %>
+<div class="span-24 last">
+  <ul id="breadcrumb">
+    <li class="first"><%= link_to "Business Processes", business_processes_path  %></li>
+    <li><%= link_to @step.path.business_process.name, business_process_paths_path(@step.path.business_process) %></li>
+    <li><%= link_to @step.path.name, path_steps_path(@step.path) %></li>
+    <li><%= @step.element_name %></li>
+  </ul>
+</div>
 
-<table>
-  <tr>
-    <th>Feature</th>
-    <th>Bam To Fam Map</th>
-  </tr>
-  <% for bam_to_fam_feature in @bam_to_fam_features %>
-    <tr>
-      <td><%=h bam_to_fam_feature.feature_id %></td>
-      <td><%=h bam_to_fam_feature.bam_to_fam_map_id %></td>
-      <td><%= link_to "Show", bam_to_fam_feature %></td>
-      <td><%= link_to "Edit", edit_bam_to_fam_feature_path(bam_to_fam_feature) %></td>
-      <td><%= link_to "Destroy", bam_to_fam_feature, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
+<div class="push-1 span-22 last">
+  <span class="title_label">Mapped Functional Features</span>
+</div>
+
+<div class="push-1 span-22 last">
+  <div class="span-11">
+	  <%= will_paginate @bam_to_fam_features %>
+  </div>
+  <div class="span-11 last" style="text-align:right;">
+  	<%= page_entries_info @bam_to_fam_features %>
+  </div>
+</div>
+
+<div class="push-1 span-22 last">
+  <% if @bam_to_fam_features.size != 0 %>
+    <table class="pretty striped">
+      <tr>
+        <th>Functional Features</th>
+        <th>Description</th>
+        <th>Action</th>
+      </tr>
+      <% for bam_to_fam_feature in @bam_to_fam_features %>
+        <tr>
+          <td><%=h bam_to_fam_feature.name %></td>
+          <td><%=h bam_to_fam_feature.description %></td>
+          <td><%= link_to "Map", feature_fam_to_tam_maps_path(bam_to_fam_feature.feature_id), :class => "button" %></td>
+        </tr>
+      <% end %>
+    </table>
   <% end %>
-</table>
+</div>
 
-<p><%= link_to "New Bam To Fam Feature", new_bam_to_fam_feature_path %></p>
+<p>
+  <%= link_to "Back to All Steps of the Path" , path_steps_path(@step.path), :class=>"button" %>
+</p>

@@ -397,4 +397,9 @@ a.watching.remove.over {
     font-size: 16px;
     padding: 0px 10px;
 }
+
+.tooltip {
+	display:none;
+	font-size:11px;
+}
   

@@ -11,14 +11,12 @@ $(function () {
 					break;
 				case "lba":
 					break;
-				case "fwu":
-					break;
-				case "feature":
+				case "build_feature":
 					$.ajax({
 					  type: 'POST',
-  					url: "<%= bam_to_fam_features_path %>",
+  					url: "<%= fam_to_tam_maps_path %>",
   					context: $(this),
-						data: { "feature_id" : data.rslt.obj.attr("id"), "step_id" : <%= @step.id %> },
+						data: { "fam_to_tam_map": {"build_feature_id" : data.rslt.obj.attr("id"), "feature_id" : <%= @feature.id %> }},
 						success: function (r) {
 						  // Add it to the right side
 						  $('#right_side ul').append(r);
@@ -35,18 +33,16 @@ $(function () {
 					break;
 				case "lba":
 					break;
-				case "fwu":
-					break;
-				case "feature":
+				case "build_feature":
 					$.ajax({
 						async : false,
 						type: 'DELETE',
-						url: "<%= bam_to_fam_features_path %>/-1",
-						data: { "feature_id" : data.rslt.obj.attr("id"), "step_id" : <%= @step.id %> },
+						url: "<%= fam_to_tam_maps_path %>/-1",
+						data: { "build_feature_id" : data.rslt.obj.attr("id"), "feature_id" : <%= @feature.id %> },
 						success : function (r) {
 						  // Remove it to from right side
 //						  $('#right_side ul li[id=' + r.bam_to_fam_feature.id + ']').fadeOut(200, function(){$(this).remove()});
-						  $('#right_side ul li[id=' + r.bam_to_fam_feature.id + ']').remove();
+						  $('#right_side ul li[id=' + r.fam_to_tam_map.id + ']').remove();
 						},
 						dataType: "json"
 					});
@@ -60,18 +56,18 @@ $(function () {
 				"max_depth" : -2,
 				"max_children" : -2,
 				"types" : {
-					"feature" : {
-						"valid_children" : ["none"],
+					"build_feature" : {
+						"valid_children" : ["build_feature"],
 						"icon" : {
-							"image" : "/icons/bullet_black.png"
+							"image" : "./icons/bullet_black.png"
 						}
 					}
 				}
 			},
-	    "html_data" : { data : "<li id='root' rel='root' class='jstree-closed'><a href='#'>Business Areas</a></li>",
+	    "html_data" : { data : "<li id='root' rel='root' class='jstree-closed'><a href='#'>Logical Business Areas</a></li>",
 											state: "closed",
 	  	  							ajax : {
-	  		  							url: "/step/<%= @step.id %>/bam_to_fam_map/lba_children.html",
+	  		  							url: "/lbas/lba_children.html",
 	  			  						data : function (n) {
 						  								   return { id : n.attr ? n.attr("id") : 0, rel: n.attr ? n.attr("rel") : "" };
 							  							 }
@@ -95,12 +91,7 @@ $(function () {
 							"image" : "/icons/brick.png"
 						}
 					},
-					"fwu" : {
-						"icon" : {
-							"image" : "/icons/plugin.png"
-						}
-					},
-					"feature" : {
+					"build_feature" : {
 						"icon" : {
 							"image" : "/icons/bullet_black.png"
 						}
@@ -112,11 +103,8 @@ $(function () {
 });
 </script>
 
-<% title "Mappings for #{@step.element_name}" %>
+<% title "Logical Business Areas" %>
 
-<div class="push-1 span-22 last">
-  <%=link_to "Back to Steps", path_steps_path(@step.path), :class => "button" %>
-</div>
 <div class="push-1 span-22 last">
   <div class="span-10 colborder">
 	  <div class="span-10">
@@ -125,37 +113,36 @@ $(function () {
 			<button class="button" id="open_current">Open Selected</button>
 			<button class="button" id="close_current">Close Selected</button>
 		</div>
+
 	  <div class="span-10">
 			<div id="lba_tree" style="overflow: auto;"></div>
 		</div>
+
 	</div>
+
   <div class="span-11 last">
     <div class="span-8 last">
-    	<h4>Mapped Features</h4>
+    	<h4>Mapped Technical Features</h4>
     	<div id="right_side" class="span-8 last">
     	  <ul>
-    	    <% for mapped_feature in @mapped_features %>
-    	      <%= render :partial => "available_feature", :locals => { :mapped_feature => mapped_feature } %>
+    	    <% for fam_to_tam_map in @fam_to_tam_maps %>
+    	      <%= render :partial => "mapped_feature", :locals => { :mapped_feature => fam_to_tam_map } %>
     	    <% end %>
     	  </ul>
     	</div>
     </div>
 	</div>
-</div>
-<div class="push-1 span-22 last">
-  <%= link_to "Back to Steps", path_steps_path(@step.path), :class => "button" %>
+
+	</div>
 </div>
 
 <script type="text/javascript">
 $(function () {
-	$("#add_lba, #add_lbo, #add_fwu, #add_feature").click(function () {
-	  $("#lba_tree").jstree("create", null, "last", { "attr" : { "rel" : this.id.toString().replace("add_", "") } });
+	$("#open_all").click(function () {
+	  $("#lba_tree").jstree("open_all");
   });
 	$("#remove, #rename").click(function () {
     $("#lba_tree").jstree(this.id);
-  });
-	$("#open_all").click(function () {
-	  $("#lba_tree").jstree("open_all");
   });
 	$("#close_all").click(function () {
 	  $("#lba_tree").jstree("close_all");
@@ -168,3 +155,31 @@ $(function () {
   });
 });
 </script>
+
+
+
+
+
+<% if false %>
+<% title "Fam To Tam Maps" %>
+
+<table>
+  <tr>
+    <th>Feature</th>
+    <th>Build Feature</th>
+    <th>Iteration</th>
+  </tr>
+  <% for fam_to_tam_map in @fam_to_tam_maps %>
+    <tr>
+      <td><%=h fam_to_tam_map.feature_id %></td>
+      <td><%=h fam_to_tam_map.build_feature_id %></td>
+      <td><%=h fam_to_tam_map.iteration_id %></td>
+      <td><%= link_to "Show", fam_to_tam_map %></td>
+      <td><%= link_to "Edit", edit_fam_to_tam_map_path(fam_to_tam_map) %></td>
+      <td><%= link_to "Destroy", fam_to_tam_map, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Fam To Tam Map", new_fam_to_tam_map_path %></p>
+<% end %>

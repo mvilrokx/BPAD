@@ -26,11 +26,16 @@
 
 <% if !features.nil? then %>
 	<% for feature in features %>
-	  <% if mapped_features.include?(feature) %>
+	  <% if !local_assigns[:mapped_features].nil? && mapped_features.include?(feature) %>
 	    <% checked_class = 'jstree-checked' %>
     <% else %>
 	    <% checked_class = '' %>
     <% end %>
-	  <li id=<%= feature.id %> rel="feature" class=<%= checked_class %>><%=link_to h(feature.name||"NoName"), edit_feature_path(feature), :class => 'feature' %></li>
+	  <% if local_assigns[:mapped_features].nil? %>
+	    <% link = link_to h(feature.name||"NoName"), edit_feature_path(feature), :class => 'feature' %>
+   <% else %>
+	    <% link = link_to h(feature.name||"NoName"), feature_path(feature), :class => 'feature dialog_link' %>
+   <% end %>
+	  <li id=<%= feature.id %> rel="feature" class=<%= checked_class %>><%=link %></li>
   <% end %>
 <% end %>

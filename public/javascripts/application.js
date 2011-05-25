@@ -172,3 +172,51 @@ $('#new_issue').submit(function(){
   return false;
 });
 
+/**
+* opening modal Dialog for feature description
+*/
+$('.mapped_feature').live('click', function(e) {
+    var $dialog = $('<div class="dialog"></div>')
+        .html($(this).next().html())
+        .dialog({
+          width: 700,
+          height: 'auto',
+          modal: true,
+          title: "Description",
+          show: {effect: 'blind', 
+                 duration: 250
+          },
+          hide: {effect: 'blind', duration: 250},
+          close: function(ev, ui) { $('div.dialog').remove(); }          
+        });
+    return false;
+});
+
+/**
+* opening modal Dialog
+*/
+$('.dialog_link').live('click', function() {
+    var $dialog = $('<div class="dialog"></div>')
+        .load($(this).attr('href') + ' span#description', function(response, status, xhr){
+            if (status == "error") {
+                var msg = "Sorry but there was an error: ";
+                addNotice("<p>" + msg + xhr.status + " " + xhr.statusText + "</p>")
+            } else {
+                $(this).dialog({
+                    modal: true,
+    //                title: $(this).text(),
+                    width: 'auto',
+                    height: 'auto',
+                    position: 'center',               
+                    show: {effect: 'blind', 
+                           duration: 250
+                    },
+                    hide: {effect: 'blind', duration: 250},
+                    close: function(ev, ui) { $('div.dialog').remove(); }
+                });
+            }
+        });
+    // prevent the default action, e.g., following a link
+    return false;
+});
+

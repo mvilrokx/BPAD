@@ -1,0 +1,16 @@
+<% form_for @fam_to_tam_map do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :feature_id %><br />
+    <%= f.text_field :feature_id %>
+  </p>
+  <p>
+    <%= f.label :build_feature_id %><br />
+    <%= f.text_field :build_feature_id %>
+  </p>
+  <p>
+    <%= f.label :iteration_id %><br />
+    <%= f.text_field :iteration_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

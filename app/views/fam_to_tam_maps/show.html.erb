@@ -1,0 +1,20 @@
+<% title "Fam To Tam Map" %>
+
+<p>
+  <strong>Feature:</strong>
+  <%=h @fam_to_tam_map.feature_id %>
+</p>
+<p>
+  <strong>Build Feature:</strong>
+  <%=h @fam_to_tam_map.build_feature_id %>
+</p>
+<p>
+  <strong>Iteration:</strong>
+  <%=h @fam_to_tam_map.iteration_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_fam_to_tam_map_path(@fam_to_tam_map) %> |
+  <%= link_to "Destroy", @fam_to_tam_map, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", fam_to_tam_maps_path %>
+</p>

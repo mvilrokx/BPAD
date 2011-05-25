@@ -6,6 +6,9 @@
 	  <div class="span-5 last pretty_label">
 	    Name
   	</div>
+	  <div class="span-5 last pretty_label">
+	    Description
+  	</div>
   </div>
   <div class="span-5 last">
 	  <div class="span-5 last pretty_show_field">
@@ -13,6 +16,9 @@
   	</div>
 	  <div class="span-5 last pretty_show_field">
 			<%=h @feature.name %>
+  	</div>
+	  <div class="span-5 last pretty_show_field">
+			<span id="description"><%=simple_format @feature.description %></span>
   	</div>
   </div>
 </div>

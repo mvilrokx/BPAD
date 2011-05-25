@@ -3,7 +3,7 @@ class BamToFamFeaturesController < ApplicationController
 	before_filter :login_required # , :except => [:index, :show]
 
   def index
-    @bam_to_fam_features = @step.bam_to_fam_features.all
+    @bam_to_fam_features = @step.bam_to_fam_features.paginate(:page => params[:page])
   end
 
   def show
