@@ -40,7 +40,13 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :functional_work_units, :collection => {:features => :get}
   map.resources :business_areas,
                 :collection => {:lba_children => :get}
-  map.resources :business_processes, :has_many => [:business_process_elements, :paths, :watchings]
+#  map.resources :business_processes, :has_many => [:business_process_elements, :paths, :watchings]
+  map.resources :business_processes do |business_process|
+    business_process.resources :business_process_elements
+    business_process.resources :paths, :member => {:duplicate => :get}
+    business_process.resources :watchings
+  end
+    
   map.resources :business_process_elements, :has_many => :flows
   map.resources :paths, :has_many => [:steps, :watchings]
 #  map.resources :step, :has_one => :bam_to_fam_map

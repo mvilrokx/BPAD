@@ -39,7 +39,7 @@
           <% end %>
         </td>
         <td><%=h step.element_type %></td>
-	 	    <td><%= link_to step.features.count, step_bam_to_fam_features_path(step), :title=> 'Manage Features' if step.features[0] %></td>
+	 	    <td><%= link_to step.bam_to_fam_map.bam_to_fam_features.count, step_bam_to_fam_features_path(step), :title=> 'Manage Features' if step.bam_to_fam_map %></td>
         <td><%=step.mapping_required? ? h(status_iconifier(step.status)):"Not Required" %></td>
         <td>
 	        <% if step.mapped? %>

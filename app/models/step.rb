@@ -93,5 +93,13 @@ class Step < ActiveRecord::Base
 	  @interested_parties << self.path.interested_parties
 	  @interested_parties.flatten.compact
 	end
-
+	
+  def deep_clone
+    new_step = clone
+    new_step.created_at = new_step.updated_at = Time.now
+    new_step.bam_to_fam_map = bam_to_fam_map.deep_clone if bam_to_fam_map
+    new_step.watchings = watchings.collect { |c| c.clone }
+    new_step
+  end
+  
 end

@@ -2,7 +2,7 @@ class PathsController < ApplicationController
   before_filter :find_business_process
 	before_filter :login_required # , :except => [:index, :show]
 	helper_method :sort_column, :sort_direction
-require 'ap'
+
   def index
     @paths = @business_process.paths.paginate(:page => params[:page], :order => sort_column(Path) + " " + sort_direction)
   end
@@ -43,6 +43,17 @@ require 'ap'
          @path.steps.build
       end
     end
+  end
+
+  def duplicate
+    @path = @business_process.paths.find(params[:id]).deep_clone
+    if @path.save
+      flash[:notice] = "Successfully duplicated path."
+      redirect_to business_process_paths_path(@business_process)
+    else
+    	@path.errors.each_full {|msg| puts msg}
+      render :action => 'new'
+    end   
   end
 
   def update

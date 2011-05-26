@@ -33,5 +33,12 @@ class BamToFamMap < ActiveRecord::Base
 #		    end
 #		  end
 #		end
-
+  def deep_clone
+    new_bam_to_fam_map = clone
+    new_bam_to_fam_map.created_at = new_bam_to_fam_map.updated_at = Time.now
+    new_bam_to_fam_map.bam_to_fam_features = bam_to_fam_features.collect { |c| c.clone }
+    new_bam_to_fam_map.approvals = approvals.collect { |c| c.clone }
+    new_bam_to_fam_map
+  end
+  
 end

@@ -71,4 +71,13 @@ class Path < ActiveRecord::Base
 	  @interested_parties.flatten.compact
 	end
 
+  def deep_clone
+    new_path = clone
+    new_path.created_at = new_path.updated_at = Time.now
+    new_path.name = name + '-copy'
+    new_path.steps = steps.collect { |c| c.deep_clone }
+    new_path.watchings = watchings.collect { |c| c.clone }
+    new_path
+  end
+  
 end

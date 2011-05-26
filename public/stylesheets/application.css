@@ -60,9 +60,19 @@
   background-color: #93AFD9;
   border-bottom: 3px solid #51688C;;
 }
+#top_bar {
+  background-color: #444;
+  color: #fff;
+  text-align:center;
+  font-weight: bold;
+}
+
+#top_bar a {
+  color: #fff;
+}
 
 #active_iteration {
-  text-align:center;
+/*  text-align:center;
   background-color: #FFF;
   border-bottom: 2px solid #51688C;
   border-left: 2px solid #51688C;
@@ -75,9 +85,25 @@
 	border-bottom-left-radius: 10px;
 	-moz-bottom-left-border-radius: 5px;
   -webkit-bottom-left-border-radius: 10px;
-  -khtml-bottom-left-border-radius: 5px;
+  -khtml-bottom-left-border-radius: 5px; */
 }
 
+#signing_menu {
+/*  text-align:center;
+  background-color: #FFF;
+  border-bottom: 2px solid #51688C;
+  border-left:   2px solid #51688C;
+  border-right:  2px solid #51688C;
+  color: #51688C;
+	border-bottom-right-radius: 10px;
+	-moz-bottom-right-border-radius: 10px;
+  -webkit-bottom-right-border-radius: 10px;
+  -khtml-bottom-right-border-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-moz-bottom-left-border-radius: 10px;
+  -webkit-bottom-left-border-radius: 10px;
+  -khtml-bottom-left-border-radius: 10px; */
+}
 
 ul.main_nav {
 	font-size: 18px;
@@ -278,24 +304,6 @@ a.watching.add.over {
 a.watching.remove.over {
   background: transparent url(/icons/heart_delete.png) top left no-repeat;
 }
-
-#signing_menu {
-  text-align:center;
-  background-color: #FFF;
-  border-bottom: 2px solid #51688C;
-  border-left:   2px solid #51688C;
-  border-right:  2px solid #51688C;
-  color: #51688C;
-	border-bottom-right-radius: 10px;
-	-moz-bottom-right-border-radius: 10px;
-  -webkit-bottom-right-border-radius: 10px;
-  -khtml-bottom-right-border-radius: 10px;
-	border-bottom-left-radius: 10px;
-	-moz-bottom-left-border-radius: 10px;
-  -webkit-bottom-left-border-radius: 10px;
-  -khtml-bottom-left-border-radius: 10px;
-}
-
 
 #breadcrumb {
   list-style: none;

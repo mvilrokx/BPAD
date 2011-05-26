@@ -20,8 +20,8 @@
   </head>
   <body>
     <div id="header">
-      <div class="container">
-  	    <div class="span-24 last" style="position: relative; height: 120px;">
+      <div id="top_bar">
+        <div class="container">
     	    <div class="span-24 last">
     	    
       	    <div class="span-6" id="active_iteration">
@@ -35,7 +35,7 @@
   	          <% end %>
       	    </div>
     	    
-      	    <div class="push-9 span-8 last" id="signing_menu">
+      	    <div class="prepend-9 span-8 last" id="signing_menu">
         	    <% if logged_in? %>
                 Logged in as <%= link_to current_user.username, edit_user_path(current_user) %>! Not you?
                 <%= link_to "Log out", logout_path %>
@@ -45,6 +45,10 @@
               <% end %>
       			</div>
     			</div>
+        </div>
+      </div>
+      <div class="container">
+  	    <div class="span-24 last" style="position: relative; height: 120px;">
 				  <%= render :partial => "shared/mainnav",
 								     :locals => {:active_menu_item => yield(:active_menu_item)} %>
         </div>    
@@ -78,7 +82,7 @@
 
  			<hr/>
  	    <div class="span-24 last" style="text-align:right;">
- 	    	&copy;&nbsp;<%= Time.new.year %>
+ 	    	BPAD v0.1&nbsp;&copy;&nbsp;<%= Time.new.year %>
 			</div>
     </div>
     
