@@ -23,6 +23,15 @@ class BamToFamFeature < ActiveRecord::Base
 	  feature.description
 	end
 
+  def deep_clone(step)
+    ap step
+    new_bam_to_fam_feature = clone
+    new_bam_to_fam_feature.created_at = new_bam_to_fam_feature.updated_at = Time.now
+    new_bam_to_fam_feature.step = step
+#    new_bam_to_fam_feature.step_id = step_id
+    new_bam_to_fam_feature
+  end
+
   protected
 		def reset_approvals
 			step.unmap! if step.mapped?
