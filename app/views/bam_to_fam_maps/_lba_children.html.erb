@@ -1,4 +1,4 @@
-<% if !lbas.nil? then %>
+<% if !lbas.nil? %>
   <% for lba in lbas %>
   	<% if lba.children.empty? && lba.Lbos.empty? && lba.FunctionalWorkUnits.empty? then %>
   		<li id=<%= lba.id %> rel="lba" ><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
@@ -8,13 +8,13 @@
   <% end %>
 <% end %>
 
-<% if !lbos.nil? then %>
+<% if !lbos.nil? %>
 	<% for lbo in lbos %>
  		<li id=<%= lbo.id %> rel="lbo"><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
   <% end %>
 <% end %>
 
-<% if !functional_work_units.nil? then %>
+<% if !functional_work_units.nil? %>
 	<% for fwu in functional_work_units %>
 		<% if fwu.features.empty? then %>
 	 		<li id=<%= fwu.id %> rel="fwu"><%=link_to h(fwu.name||"NoName"), fwu, :class => 'fwu' %></li>
@@ -24,7 +24,7 @@
   <% end %>
 <% end %>
 
-<% if !features.nil? then %>
+<% if !features.nil? %>
 	<% for feature in features %>
 	  <% if !local_assigns[:mapped_features].nil? && mapped_features.include?(feature) %>
 	    <% checked_class = 'jstree-checked' %>

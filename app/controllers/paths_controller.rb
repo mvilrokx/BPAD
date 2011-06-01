@@ -47,6 +47,7 @@ class PathsController < ApplicationController
 
   def duplicate
     @path = @business_process.paths.find(params[:id]).deep_clone
+    @path.priority ||= 5.to_s
     if @path.save
       flash[:notice] = "Successfully duplicated path."
       redirect_to business_process_paths_path(@business_process)

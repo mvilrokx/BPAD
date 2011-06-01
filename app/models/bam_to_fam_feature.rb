@@ -4,7 +4,8 @@ class BamToFamFeature < ActiveRecord::Base
   belongs_to :feature
   belongs_to :step
 
-  after_save :reset_approvals
+#  after_save :reset_approvals
+  after_update :reset_approvals
   after_destroy :reset_approvals
   
 

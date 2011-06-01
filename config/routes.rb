@@ -1,5 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :fam_to_tam_maps
 
   map.resources :issues
 
@@ -29,7 +28,7 @@ ActionController::Routing::Routes.draw do |map|
    map.resources :features do |feature|
      feature.resource :watchings, :member => { :change_owner => :get}
      feature.resources :issues
-     feature.resources :fam_to_tam_maps
+     feature.resources :fam_to_tam_maps, :collection => { :lba_children => :get}
    end
    
 #  map.resources :features, :has_many => [:watchings]
@@ -60,6 +59,8 @@ ActionController::Routing::Routes.draw do |map|
      step.resources :bam_to_fam_features
    end
   
+  map.resources :fam_to_tam_maps
+
   
 #  map.resources :business_process_elements
 #  map.resources :flows

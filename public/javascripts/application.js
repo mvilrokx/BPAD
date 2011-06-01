@@ -27,10 +27,21 @@ $(document).ajaxSend(function(e, xhr, options) {
 
 // hijack ajax buttons
 $('.ajax').live('submit', function(e) {
-	e.preventDefault();
-	$.post($(this).attr('action'), $(this).serialize());
-});
-
+  e.preventDefault();
+  $.ajax({
+    type: "POST",
+    url: $(this).attr('action'),
+    data: $(this).serialize(),
+    dataType: 'json',
+    context: $(this),
+    cache: false,
+    success: function(returnData){
+      $('div.dialog').remove();
+      $("#refresh_issues").trigger("click");
+    }   
+  });
+});  
+  
 
 // hijack watching links
 $('.watching').live({
@@ -157,20 +168,20 @@ $('.dialog_form_link').live('click', function() {
 // hijack refresh button
 $('#refresh_issues').live('click', function(e) {
     e.preventDefault();
-    $('#issues').load($(this).attr('href') + ' #issues');
+    $('#issues').load($(this).attr('href'));
 });
 
-$('#new_issue').submit(function(){
-  $.ajax({
-    type: this.method,
-    url: this.action,
-    data: $(this).serialize(),
-    dataType: "html" //,
-    // success: successHandler,
-    // error: errorHandler
-  });
-  return false;
-});
+//$('#new_issue').submit(function(){
+//  $.ajax({
+//    type: this.method,
+//    url: this.action,
+//    data: $(this).serialize(),
+//    dataType: "html" //,
+//    // success: successHandler,
+//    // error: errorHandler
+//  });
+//  return false;
+//});
 
 /**
 * opening modal Dialog for feature description
@@ -180,7 +191,7 @@ $('.mapped_feature').live('click', function(e) {
         .html($(this).next().html())
         .dialog({
           width: 700,
-          height: 'auto',
+          height: 700,
           modal: true,
           title: "Description",
           show: {effect: 'blind', 
@@ -204,9 +215,9 @@ $('.dialog_link').live('click', function() {
             } else {
                 $(this).dialog({
                     modal: true,
-    //                title: $(this).text(),
-                    width: 'auto',
-                    height: 'auto',
+                    title: "Description",
+                    width: 700,
+                    height: 700,
                     position: 'center',               
                     show: {effect: 'blind', 
                            duration: 250

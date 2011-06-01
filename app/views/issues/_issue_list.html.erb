@@ -1,22 +1,21 @@
-<div id="issues">
-  <table class="pretty striped">
+<table class="pretty striped">
+  <tr>
+    <th>name</th>
+    <th>status</th>
+    <th style="text-align: center;">action</th>
+  <tr>
+  <% for issue in @issues do %>
     <tr>
-      <th>name</th>
-      <th>status</th>
-      <th style="text-align: center;">action</th>
+      <td><%= issue.name %></td>
+      <td><%= issue.status %></td>
+      <td>
+        <%= link_to "Update", edit_feature_issue_path(@issueable, issue), :class => "button dialog_form_link" %>
+        <%= link_to "Delete", issue, :confirm => 'Are you sure?', :method => :delete, :class => "button negative" %>
+      </td>
     <tr>
-    <% for issue in @issues do %>
-      <tr>
-        <td><%= issue.name %></td>
-        <td><%= issue.status %></td>
-        <td>
-          <%= link_to "Update", edit_feature_issue_path(@issueable, issue), :class => "button dialog_form_link" %>
-          <%= link_to "Delete", issue, :confirm => 'Are you sure?', :method => :delete, :class => "button negative" %>
-        </td>
-      <tr>
-    <% end %>
-  </table>
-  <p>
-    <%= link_to "Add Issue", new_feature_issue_path(@issueable), :class => "button dialog_form_link" %>
-  </p>
-</div>
+  <% end %>
+</table>
+<p>
+  <%= link_to "Add Issue", new_feature_issue_path(@issueable), :class => "button dialog_form_link" %>
+</p>
+

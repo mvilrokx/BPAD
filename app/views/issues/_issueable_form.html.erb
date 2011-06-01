@@ -1,5 +1,5 @@
 <div id="form">
-  <% form_for [@issueable, @issue] do |f| %>
+  <% form_for [@issueable, @issue], :html => {:class => "ajax"} do |f| %>
     <%= f.error_messages %>
     <p>
       <%= f.label :name %><br />
@@ -16,3 +16,4 @@
     <%= content_tag :button, "Save Changes", :type => :submit, :class => "button" %>
   <% end %>
 </div>
+

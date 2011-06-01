@@ -67,7 +67,7 @@ $(function () {
 	    "html_data" : { data : "<li id='root' rel='root' class='jstree-closed'><a href='#'>Logical Business Areas</a></li>",
 											state: "closed",
 	  	  							ajax : {
-	  		  							url: "/lbas/lba_children.html",
+	  		  							url: "/features/<%= @feature.id %>/fam_to_tam_maps/lba_children.html",
 	  			  						data : function (n) {
 						  								   return { id : n.attr ? n.attr("id") : 0, rel: n.attr ? n.attr("rel") : "" };
 							  							 }

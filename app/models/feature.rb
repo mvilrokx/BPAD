@@ -3,7 +3,7 @@ class Feature < ActiveRecord::Base
 #  has_many :bam_to_fam_features
   has_many :watchings, :as => :watchable, :dependent => :destroy
 
-  has_many :bam_to_fam_map_features #, :dependent => :destroy
+  has_many :bam_to_fam_map_features, :dependent => :destroy
   has_many :steps, :through => :bam_to_fam_map_features
   has_many :issues, :as => :issueable, :dependent => :destroy
   # accepts_nested_attributes_for :issues, :allow_destroy => true
