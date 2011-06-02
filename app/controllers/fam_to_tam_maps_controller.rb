@@ -17,6 +17,7 @@ class FamToTamMapsController < ApplicationController
     	  lbo = Lbo.find(params[:id])
      	  @build_features = lbo.build_features
      	  @logical_entities = lbo.logical_entities
+        @mapped_features = @feature.build_features
     	elsif (params[:rel] == 'le') then
     	  le = LogicalEntity.find(params[:id])
      	  @logical_entity_attributes = le.logical_entity_attributes
