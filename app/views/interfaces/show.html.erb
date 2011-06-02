@@ -1,0 +1,24 @@
+<% title "Interface" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @interface.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @interface.description %>
+</p>
+<p>
+  <strong>Lba:</strong>
+  <%=h @interface.lba_id %>
+</p>
+<p>
+  <strong>Iteration:</strong>
+  <%=h @interface.iteration_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_interface_path(@interface) %> |
+  <%= link_to "Destroy", @interface, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", interfaces_path %>
+</p>

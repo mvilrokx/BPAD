@@ -8,10 +8,16 @@ class LbasController < ApplicationController
     	  lba = Lba.find(params[:id])
      	  @lbas = lba.children
      	  @lbos = lba.lbos
+     	  @interfaces = lba.interfaces
+     	  puts "DEBUG"
      	  @build_features = lba.build_features
     	elsif (params[:rel] == 'lbo') then
     	  lbo = Lbo.find(params[:id])
      	  @build_features = lbo.build_features
+     	  @logical_entities = lbo.logical_entities
+    	elsif (params[:rel] == 'le') then
+    	  le = LogicalEntity.find(params[:id])
+     	  @logical_entity_attributes = le.logical_entity_attributes
     	elsif (params[:rel] == 'build_feature') then
     	  bf = BuildFeature.find(params[:id])
      	  @build_features = bf.children
@@ -20,7 +26,10 @@ class LbasController < ApplicationController
 		respond_to do |format|
       format.html  { render :partial => 'lba_children', :locals => {:lbas => @lbas, 
                                                                     :lbos => @lbos,
-                                                                    :bfs => @build_features
+                                                                    :bfs => @build_features,
+                                                                    :les => @logical_entities,
+                                                                    :le_attributes => @logical_entity_attributes,
+                                                                    :interfaces => @interfaces
       																															}}
     end
   end

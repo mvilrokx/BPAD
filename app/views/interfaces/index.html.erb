@@ -1,0 +1,23 @@
+<% title "Interfaces" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Lba</th>
+    <th>Iteration</th>
+  </tr>
+  <% for interface in @interfaces %>
+    <tr>
+      <td><%=h interface.name %></td>
+      <td><%=h interface.description %></td>
+      <td><%=h interface.lba_id %></td>
+      <td><%=h interface.iteration_id %></td>
+      <td><%= link_to "Show", interface %></td>
+      <td><%= link_to "Edit", edit_interface_path(interface) %></td>
+      <td><%= link_to "Destroy", interface, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Interface", new_interface_path %></p>

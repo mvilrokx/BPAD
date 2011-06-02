@@ -1,0 +1,13 @@
+one:
+  name: MyString
+  mandatory: false
+  type: MyString
+  logical_entity_id: 1
+  iteration_id: 1
+
+two:
+  name: MyString
+  mandatory: false
+  type: MyString
+  logical_entity_id: 1
+  iteration_id: 1

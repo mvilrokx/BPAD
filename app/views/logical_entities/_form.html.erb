@@ -1,0 +1,28 @@
+<% form_for @logical_entity do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </p>
+  <p>
+    <%= f.label :lbo_id %><br />
+    <%= f.text_field :lbo_id %>
+  </p>
+  <p>
+    <%= f.label :iteration_id %><br />
+    <%= f.text_field :iteration_id %>
+  </p>
+  <p>
+    <%= f.label :datedness %><br />
+    <%= f.check_box :datedness %>
+  </p>
+  <p>
+    <%= f.label :translation %><br />
+    <%= f.check_box :translation %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

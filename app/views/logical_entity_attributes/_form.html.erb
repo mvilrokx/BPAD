@@ -1,0 +1,24 @@
+<% form_for @logical_entity_attribute do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :mandatory %><br />
+    <%= f.check_box :mandatory %>
+  </p>
+  <p>
+    <%= f.label :type %><br />
+    <%= f.text_field :type %>
+  </p>
+  <p>
+    <%= f.label :logical_entity_id %><br />
+    <%= f.text_field :logical_entity_id %>
+  </p>
+  <p>
+    <%= f.label :iteration_id %><br />
+    <%= f.text_field :iteration_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

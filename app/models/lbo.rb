@@ -6,6 +6,7 @@ class Lbo < ActiveRecord::Base
   
   has_many :watchings, :as => :watchable, :dependent => :destroy
   has_many :build_features, :as => :buildable
+  has_many :logical_entities, :dependent => :destroy
 
 	has_paper_trail :ignore => [:name]
 

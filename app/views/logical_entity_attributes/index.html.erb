@@ -1,0 +1,25 @@
+<% title "Logical Entity Attributes" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Mandatory</th>
+    <th>Type</th>
+    <th>Logical Entity</th>
+    <th>Iteration</th>
+  </tr>
+  <% for logical_entity_attribute in @logical_entity_attributes %>
+    <tr>
+      <td><%=h logical_entity_attribute.name %></td>
+      <td><%=h logical_entity_attribute.mandatory %></td>
+      <td><%=h logical_entity_attribute.type %></td>
+      <td><%=h logical_entity_attribute.logical_entity_id %></td>
+      <td><%=h logical_entity_attribute.iteration_id %></td>
+      <td><%= link_to "Show", logical_entity_attribute %></td>
+      <td><%= link_to "Edit", edit_logical_entity_attribute_path(logical_entity_attribute) %></td>
+      <td><%= link_to "Destroy", logical_entity_attribute, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Logical Entity Attribute", new_logical_entity_attribute_path %></p>

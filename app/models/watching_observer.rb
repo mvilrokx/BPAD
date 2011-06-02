@@ -7,6 +7,9 @@ class WatchingObserver < ActiveRecord::Observer
 	        :business_area,
 	        :functional_work_unit,
 	        :lbo,
+	        :logical_entity,
+	        :logical_entity_attribute,
+	        :interface,
 	        :feature
 
 	cattr_accessor :current_user # GLOBAL VARIABLE. RELIES ON RAILS BEING SINGLE THREADED

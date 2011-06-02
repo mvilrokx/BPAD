@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110524211501) do
+ActiveRecord::Schema.define(:version => 20110602040155) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -122,6 +122,15 @@ ActiveRecord::Schema.define(:version => 20110524211501) do
     t.integer  "iteration_id"
   end
 
+  create_table "interfaces", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "lba_id"
+    t.integer  "iteration_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "issues", :force => true do |t|
     t.string   "name"
     t.integer  "issueable_id"
@@ -153,6 +162,28 @@ ActiveRecord::Schema.define(:version => 20110524211501) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "iteration_id"
+    t.string   "description"
+  end
+
+  create_table "logical_entities", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "lbo_id"
+    t.boolean  "datedness"
+    t.boolean  "translation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "iteration_id"
+  end
+
+  create_table "logical_entity_attributes", :force => true do |t|
+    t.string   "name"
+    t.boolean  "mandatory"
+    t.string   "le_type"
+    t.integer  "logical_entity_id"
+    t.integer  "iteration_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "paths", :force => true do |t|

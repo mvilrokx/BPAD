@@ -6,11 +6,12 @@ class Lba < ActiveRecord::Base
   belongs_to :iteration
 
   has_many :lbos, :dependent => :destroy, :foreign_key => "business_area_id"
+  has_many :interfaces, :dependent => :destroy
   has_many :build_features, :as => :buildable
   
   before_save :set_parent_id_to_null_for_root
 
-	include Trackable  
+	include Trackable
 
   protected
     def set_parent_id_to_null_for_root

@@ -1,6 +1,6 @@
 <% if !lbas.nil? %>
   <% for lba in lbas %>
-  	<% if lba.children.empty? && lba.lbos.empty? %>
+  	<% if lba.children.empty? && lba.lbos.empty?  && lba.interfaces.empty?%>
   		<li id=<%= lba.id %> rel="lba" ><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
   	<% else %>
   		<li id=<%= lba.id %> rel="lba" class='jstree-closed'><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
@@ -10,7 +10,7 @@
 
 <% if !lbos.nil? %>
 	<% for lbo in lbos %>
-  	<% if lbo.build_features.empty? %>
+  	<% if lbo.build_features.empty? && lbo.logical_entities.empty? %>
    		<li id=<%= lbo.id %> rel="lbo"><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
   	<% else %>
    		<li id=<%= lbo.id %> rel="lbo" class='jstree-closed'><%=link_to h(lbo.name||"NoName"), lbo, :class => 'lbo' %></li>
@@ -25,6 +25,28 @@
   	<% else %>
   		<li id=<%= bf.id %> rel="build_feature" class='jstree-closed'><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
   	<% end %>
+  <% end %>
+<% end %>
+
+<% if !les.nil? %>
+  <% for le in les %>
+  	<% if le.logical_entity_attributes.empty? %>
+  		<li id=<%= le.id %> rel="le" ><%=link_to h(le.name||"NoName"), le, :class => 'le' %></li>
+  	<% else %>
+  		<li id=<%= le.id %> rel="le" class='jstree-closed'><%=link_to h(le.name||"NoName"), le, :class => 'le' %></li>
+  	<% end %>
+  <% end %>
+<% end %>
+
+<% if !interfaces.nil? %>
+  <% for interface in interfaces %>
+  		<li id=<%= interface.id %> rel="interface" ><%=link_to h(interface.name||"NoName"), interface, :class => 'interface' %></li>
+  <% end %>
+<% end %>
+
+<% if !le_attributes.nil? %>
+  <% for le_attribute in le_attributes %>
+  		<li id=<%= le_attribute.id %> rel="le_attribute" ><%=link_to h(le_attribute.name||"NoName"), le_attribute, :class => 'le_attribute' %></li>
   <% end %>
 <% end %>
 

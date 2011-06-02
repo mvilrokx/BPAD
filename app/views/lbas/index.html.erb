@@ -34,6 +34,42 @@ $(function () {
 						"json"
 					);
 					break;
+				case "interface":
+					$.post(
+						"<%= interfaces_path %>",
+						{ "interface" : {"lba_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.interface.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= interfaces_path %>/" + r.interface.id);
+						},
+						"json"
+					);
+					break;
+				case "le":
+					$.post(
+						"<%= logical_entities_path %>",
+						{ "logical_entity" : {"lbo_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.le.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= logical_entities_path %>/" + r.le.id);
+						},
+						"json"
+					);
+					break;
+				case "le_attribute":
+					$.post(
+						"<%= logical_entity_attributes_path %>",
+						{ "logical_entity_attribute" : {"logical_entity_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.logical_entity_attribute.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= logical_entity_attributes_path %>/" + r.logical_entity_attribute.id);
+						},
+						"json"
+					);
+					break;
 				case "build_feature":
 				  if (data.rslt.parent.attr("rel") == "build_feature"){
 						buildable_type = null;
@@ -80,6 +116,39 @@ $(function () {
 						type: 'PUT',
 						url: "<%= lbos_path %>/" + data.rslt.obj.attr("id"),
 						data: { "lbo" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "interface":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= interfaces_path %>/" + data.rslt.obj.attr("id"),
+						data: { "interface" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entities_path %>/" + data.rslt.obj.attr("id"),
+						data: { "logical_entity" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le_attribute":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entity_attributes_path %>/" + data.rslt.obj.attr("id"),
+						data: { "logical_entity_attribute" : {"name" : data.rslt.new_name}	},
 						success : function (r) {
 //							data.inst.refresh();
 						}
@@ -134,6 +203,39 @@ $(function () {
 						}
 					});
 					break;
+				case "interface":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= interfaces_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= logical_entities_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le_attribute":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= logical_entity_attributes_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
 				case "fwu":
 					$.ajax({
 						async : false,
@@ -178,6 +280,39 @@ $(function () {
 						type: 'PUT',
 						url: "<%= lbos_path %>/" + data.rslt.o.attr("id"),
 						data: { "lbo" : {"business_area_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "interface":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= interfaces_path %>/" + data.rslt.o.attr("id"),
+						data: { "interface" : {"lba_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entities_path %>/" + data.rslt.o.attr("id"),
+						data: { "logical_entity" : {"lbo_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le_attribute":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entity_attributes_path %>/" + data.rslt.o.attr("id"),
+						data: { "logical_entity_attribute" : {"logical_entity_id" : data.rslt.np.attr("id")}	},
 						success : function (r) {
 //							data.inst.refresh();
 						}
@@ -235,21 +370,39 @@ $(function () {
 						}
 					},
 					"lba" : {
-						"valid_children": ["lba", "lbo", "build_feature"],
+						"valid_children": ["lba", "lbo", "build_feature", "interface"],
 						"icon" : {
 							"image" : "/icons/package.png"
 						}
 					},
 					"lbo" : {
-						"valid_children" : ["none", "build_feature"],
+						"valid_children" : ["none", "build_feature", "le"],
 						"icon" : {
 							"image" : "./icons/brick.png"
+						}
+					},
+					"interface" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "./icons/disconnect.png"
 						}
 					},
 					"build_feature" : {
 						"valid_children" : ["build_feature"],
 						"icon" : {
 							"image" : "./icons/bullet_black.png"
+						}
+					},
+					"le" : {
+						"valid_children" : ["le_attribute"],
+						"icon" : {
+							"image" : "./icons/table.png"
+						}
+					},
+					"le_attribute" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "./icons/table_row.png"
 						}
 					},
 					"feature" : {
@@ -287,10 +440,25 @@ $(function () {
 		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "lbo" } } ); },
             	"icon"				: '/icons/brick_add.png'
             },
+     				"add_interface" : {
+            	"label"				: "Interface",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "interface" } } ); },
+            	"icon"				: '/icons/disconnect.png'
+            },
      				"add_fwu" : {
             	"label"				: "FWU",
 		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "fwu" } } ); },
             	"icon"				: '/icons/plugin_add.png'
+            },
+     				"add_le" : {
+            	"label"				: "LE",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "le" } } ); },
+            	"icon"				: '/icons/table_add.png'
+            },
+     				"add_le_attribute" : {
+            	"label"				: "LE Attribute",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "le_attribute" } } ); },
+            	"icon"				: '/icons/table_row_insert.png'
             },
      				"add_build_feature" : {
             	"label"				: "Build Feature",
