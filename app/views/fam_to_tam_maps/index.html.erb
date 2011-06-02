@@ -55,11 +55,54 @@ $(function () {
 			"types" : {
 				"max_depth" : -2,
 				"max_children" : -2,
+				"valid_children": ["root"],
 				"types" : {
+					"root" : {
+						"valid_children" : ["lba"],
+						"icon" : {
+							"image" : "/icons/application_cascade.png"
+						}
+					},
+					"lba" : {
+						"valid_children": ["lba", "lbo", "build_feature", "interface"],
+						"icon" : {
+							"image" : "/icons/package.png"
+						}
+					},
+					"lbo" : {
+						"valid_children" : ["none", "build_feature", "le"],
+						"icon" : {
+							"image" : "/icons/brick.png"
+						}
+					},
+					"interface" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "/icons/disconnect.png"
+						}
+					},
 					"build_feature" : {
 						"valid_children" : ["build_feature"],
 						"icon" : {
-							"image" : "./icons/bullet_black.png"
+							"image" : "/icons/bullet_black.png"
+						}
+					},
+					"le" : {
+						"valid_children" : ["le_attribute"],
+						"icon" : {
+							"image" : "/icons/table.png"
+						}
+					},
+					"le_attribute" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "/icons/table_row.png"
+						}
+					},
+					"feature" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "/icons/plugin.png"
 						}
 					}
 				}
@@ -73,31 +116,7 @@ $(function () {
 							  							 }
 	  						  		}
   	  },
-  	"ui" : {"select_limit" : 1},
-			"types" : {
-				"types" : {
-					"root" : {
-						"icon" : {
-							"image" : "/icons/application_cascade.png"
-						}
-					},
-					"lba" : {
-						"icon" : {
-							"image" : "/icons/package.png"
-						}
-					},
-					"lbo" : {
-						"icon" : {
-							"image" : "/icons/brick.png"
-						}
-					},
-					"build_feature" : {
-						"icon" : {
-							"image" : "/icons/bullet_black.png"
-						}
-					}
-				}
-			},
+    	"ui" : {"select_limit" : 1},
 		"plugins" : [ "themes", "html_data", "types", "ui", "checkbox" ]
 	});
 });

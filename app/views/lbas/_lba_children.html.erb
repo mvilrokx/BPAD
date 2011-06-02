@@ -20,10 +20,15 @@
 
 <% if !bfs.nil? %>
   <% for bf in bfs %>
+	  <% if !local_assigns[:mapped_features].nil? && mapped_features.include?(bf) %>
+	    <% checked_class = 'jstree-checked' %>
+    <% else %>
+	    <% checked_class = '' %>
+    <% end %>
   	<% if bf.children.empty? %>
-  		<li id=<%= bf.id %> rel="build_feature" ><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
+  		<li id=<%= bf.id %> rel="build_feature" class=<%= checked_class %>><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
   	<% else %>
-  		<li id=<%= bf.id %> rel="build_feature" class='jstree-closed'><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
+  		<li id=<%= bf.id %> rel="build_feature" class='jstree-closed <%= checked_class %>'><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
   	<% end %>
   <% end %>
 <% end %>

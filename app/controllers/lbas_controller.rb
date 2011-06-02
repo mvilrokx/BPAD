@@ -9,7 +9,6 @@ class LbasController < ApplicationController
      	  @lbas = lba.children
      	  @lbos = lba.lbos
      	  @interfaces = lba.interfaces
-     	  puts "DEBUG"
      	  @build_features = lba.build_features
     	elsif (params[:rel] == 'lbo') then
     	  lbo = Lbo.find(params[:id])
