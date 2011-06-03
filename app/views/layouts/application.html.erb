@@ -19,72 +19,9 @@
     <%= csrf_meta_tag %>
   </head>
   <body>
-    <div id="header">
-      <div id="top_bar">
-        <div class="container">
-    	    <div class="span-24 last">
-    	    
-      	    <div class="span-6" id="active_iteration">
-        	    Active Iteration:
-  	    	    <% if logged_in? && working_on_iteration? %>
-  		    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;"><%= current_user.iteration.name %>
-  		    	    </span>
-  	          <% else %>
-  		    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;">NONE!!!
-  		    	    </span>
-  	          <% end %>
-      	    </div>
-    	    
-      	    <div class="prepend-9 span-8 last" id="signing_menu">
-        	    <% if logged_in? %>
-                Logged in as <%= link_to current_user.username, edit_user_path(current_user) %>! Not you?
-                <%= link_to "Log out", logout_path %>
-              <% else %>
-                <%= link_to "Sign up", signup_path %> or
-                <%= link_to "log in", login_path %>
-              <% end %>
-      			</div>
-    			</div>
-        </div>
-      </div>
-      <div class="container">
-  	    <div class="span-24 last" style="position: relative; height: 120px;">
-				  <%= render :partial => "shared/mainnav",
-								     :locals => {:active_menu_item => yield(:active_menu_item)} %>
-        </div>    
-      </div>    
-    </div>
-
-    <div class="container">
-
-	    <div class="span-24 last" style="min-height:600px;">
-	    <hr class="space"/>
-
-   			<%= yield :subnav %>
-
-  	    <div class="span-24 last">
-  	      <%- flash.each do |name, msg| -%>
-    	      <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      	  <%- end -%>
-  			</div>
-
-  	    <div class="span-24 last">
-  	      <%- if show_title? -%>
-    	      <h3><%=h yield(:title) %></h3>
-      	  <%- end -%>
-  			</div>
-
-  	    <div class="span-24 last">
-					<%= yield(:content) or yield %>
-  			</div>
-
-			</div>
-
- 			<hr/>
- 	    <div class="span-24 last" style="text-align:right;">
- 	    	BPAD v0.2&nbsp;&copy;&nbsp;<%= Time.new.year %>
-			</div>
-    </div>
+    <%= render :partial => "layouts/header" %>
+    <%= render :partial => "layouts/body" %>
+    <%= render :partial => "layouts/footer" %>
     
     <div id="env">
       <span><%= RAILS_ENV %></span>

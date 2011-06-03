@@ -4,10 +4,9 @@ class BamToFamFeature < ActiveRecord::Base
   belongs_to :feature
   belongs_to :step
 
-#  after_save :reset_approvals
-  after_update :reset_approvals
+  after_save :reset_approvals
+#  after_update :reset_approvals
   after_destroy :reset_approvals
-  
 
 	def interested_parties
   	@interested_parties = []
@@ -25,13 +24,18 @@ class BamToFamFeature < ActiveRecord::Base
 	end
 
   def deep_clone(step)
-    ap step
     new_bam_to_fam_feature = clone
     new_bam_to_fam_feature.created_at = new_bam_to_fam_feature.updated_at = Time.now
     new_bam_to_fam_feature.step = step
 #    new_bam_to_fam_feature.step_id = step_id
     new_bam_to_fam_feature
   end
+
+	def recreate_approvals
+    for watching in interested_parties
+ 			bam_to_fam_map.approvals.find_or_create_by_user_id(watching[:user_id]) if watching[:user_id]
+    end
+	end
 
   protected
 		def reset_approvals
@@ -41,9 +45,13 @@ class BamToFamFeature < ActiveRecord::Base
 		    approval.destroy
 	    end		    
 		  # Add New approvers
-	    for watching in interested_parties
-   			bam_to_fam_map.approvals.find_or_create_by_user_id(watching[:user_id]) if watching[:user_id]
+		  if any_mapped_features_left?
+	      recreate_approvals
 	    end
 		end
-
+		
+		def any_mapped_features_left?
+		  bam_to_fam_map.bam_to_fam_features.size != 0
+		end
+		
 end

@@ -60,6 +60,13 @@
   background-color: #93AFD9;
   border-bottom: 3px solid #51688C;;
 }
+
+#footer {
+  background-color: #ddd;
+  border-top: 3px solid #333;
+  min-height: 140px;
+}
+
 #top_bar {
   background-color: #444;
   color: #fff;
