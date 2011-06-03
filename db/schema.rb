@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110602040155) do
+ActiveRecord::Schema.define(:version => 20110603045316) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -21,10 +21,16 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "updated_at"
   end
 
+  add_index "approvals", ["approvable_id", "approvable_type"], :name => "approvable_ix"
+  add_index "approvals", ["user_id"], :name => "user_id_ix"
+
   create_table "assignments", :force => true do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
+
+  add_index "assignments", ["role_id"], :name => "role_id_ix"
+  add_index "assignments", ["user_id"], :name => "user_id_ix"
 
   create_table "bam_to_fam_features", :force => true do |t|
     t.integer  "feature_id"
@@ -34,6 +40,10 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "step_id"
   end
 
+  add_index "bam_to_fam_features", ["bam_to_fam_map_id"], :name => "bam_to_fam_map_id_ix"
+  add_index "bam_to_fam_features", ["feature_id"], :name => "feature_id_ix"
+  add_index "bam_to_fam_features", ["step_id"], :name => "step_id_ix"
+
   create_table "bam_to_fam_maps", :force => true do |t|
     t.integer  "step_id"
     t.integer  "functional_work_unit_id"
@@ -42,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "updated_at"
     t.integer  "iteration_id"
   end
+
+  add_index "bam_to_fam_maps", ["step_id"], :name => "step_id_ix"
 
   create_table "build_features", :force => true do |t|
     t.string   "name"
@@ -54,6 +66,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "parent_id"
   end
 
+  add_index "build_features", ["buildable_id", "buildable_type"], :name => "buildable_ix"
+
   create_table "business_areas", :force => true do |t|
     t.string   "name"
     t.integer  "parent_id"
@@ -61,6 +75,9 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "updated_at"
     t.integer  "iteration_id"
   end
+
+  add_index "business_areas", ["iteration_id"], :name => "iteration_id_ix"
+  add_index "business_areas", ["parent_id"], :name => "parent_id_ix"
 
   create_table "business_process_elements", :force => true do |t|
     t.integer  "business_process_id"
@@ -71,6 +88,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "iteration_id"
     t.string   "xml_element_id"
   end
+
+  add_index "business_process_elements", ["business_process_id"], :name => "business_process_id_ix"
 
   create_table "business_processes", :force => true do |t|
     t.string   "name"
@@ -84,6 +103,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.string   "priority"
   end
 
+  add_index "business_processes", ["iteration_id"], :name => "iteration_id_ix"
+
   create_table "fam_to_tam_maps", :force => true do |t|
     t.integer  "feature_id"
     t.integer  "build_feature_id"
@@ -91,6 +112,9 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "fam_to_tam_maps", ["build_feature_id"], :name => "build_feature_id_ix"
+  add_index "fam_to_tam_maps", ["feature_id"], :name => "feature_id_ix"
 
   create_table "features", :force => true do |t|
     t.integer  "functional_work_unit_id"
@@ -104,6 +128,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.string   "feature_type"
   end
 
+  add_index "features", ["functional_work_unit_id"], :name => "functional_work_unit_id_ix"
+
   create_table "flows", :force => true do |t|
     t.integer  "business_process_element_id"
     t.integer  "target_element_id"
@@ -112,6 +138,9 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "iteration_id"
     t.string   "xml_element_id"
   end
+
+  add_index "flows", ["business_process_element_id"], :name => "business_process_element_id_ix"
+  add_index "flows", ["target_element_id"], :name => "target_element_id_ix"
 
   create_table "functional_work_units", :force => true do |t|
     t.string   "name"
@@ -122,6 +151,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "iteration_id"
   end
 
+  add_index "functional_work_units", ["business_area_id"], :name => "business_area_id_ix"
+
   create_table "interfaces", :force => true do |t|
     t.string   "name"
     t.string   "description"
@@ -130,6 +161,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "interfaces", ["lba_id"], :name => "lba_id_ix"
 
   create_table "issues", :force => true do |t|
     t.string   "name"
@@ -140,6 +173,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "issues", ["issueable_id", "issueable_type"], :name => "issueable_ix"
 
   create_table "iterations", :force => true do |t|
     t.string   "name"
@@ -156,6 +191,9 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "updated_at"
   end
 
+  add_index "lbas", ["iteration_id"], :name => "iteration_id_ix"
+  add_index "lbas", ["parent_id"], :name => "parent_id_ix"
+
   create_table "lbos", :force => true do |t|
     t.integer  "business_area_id"
     t.string   "name"
@@ -164,6 +202,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "iteration_id"
     t.string   "description"
   end
+
+  add_index "lbos", ["business_area_id"], :name => "business_area_id_ix"
 
   create_table "logical_entities", :force => true do |t|
     t.string   "name"
@@ -176,6 +216,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "iteration_id"
   end
 
+  add_index "logical_entities", ["lbo_id"], :name => "lbo_id_ix"
+
   create_table "logical_entity_attributes", :force => true do |t|
     t.string   "name"
     t.boolean  "mandatory"
@@ -185,6 +227,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "logical_entity_attributes", ["logical_entity_id"], :name => "logical_entity_id_ix"
 
   create_table "paths", :force => true do |t|
     t.integer  "business_process_id"
@@ -196,6 +240,9 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.string   "status"
     t.string   "priority"
   end
+
+  add_index "paths", ["business_process_id"], :name => "business_process_id_ix"
+  add_index "paths", ["iteration_id"], :name => "iteration_id_ix"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -212,6 +259,10 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.integer  "iteration_id"
     t.string   "status"
   end
+
+  add_index "steps", ["business_process_element_id"], :name => "business_process_element_id_ix"
+  add_index "steps", ["iteration_id"], :name => "iteration_id_ix"
+  add_index "steps", ["path_id"], :name => "path_id_ix"
 
   create_table "users", :force => true do |t|
     t.string   "username"
@@ -242,5 +293,8 @@ ActiveRecord::Schema.define(:version => 20110602040155) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "watchings", ["user_id"], :name => "user_id_ix"
+  add_index "watchings", ["watchable_id", "watchable_type"], :name => "watchable_ix"
 
 end

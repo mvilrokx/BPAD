@@ -319,7 +319,7 @@ $(function () {
 </script>
 
 <% title "Business Areas", false %>
-<h3>Business Areas <%= link_to image_tag('/icons/add.png', :alt=> 'Add New Business Area') , new_business_area_path, :title => 'Add New Business Area' %></h3>
+<h3>Business Areas</h3>
 
 <div class="push-1 span-22 last">
   <div class="span-10 colborder">
@@ -333,8 +333,8 @@ $(function () {
 			<div id="lba_tree" style="overflow: auto;"></div>
 		</div>
 	</div>
-  <div class="span-11 last details">
-	</div>
+  <div class="span-11 last details" style="height: 500px; overflow: auto; position: fixed">
+  </div>
 </div>
 
 <script type="text/javascript">

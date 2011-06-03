@@ -7,6 +7,7 @@ class BusinessAreasController < ApplicationController
   	  @business_areas = BusinessArea.find(params[:id]).children.paginate(:page => params[:page], :order => sort_column(BusinessArea) + " " + sort_direction)
     else
 	    @business_areas = BusinessArea.roots.paginate(:page => params[:page], :order => sort_column(BusinessArea) + " " + sort_direction)
+ap @business_areas
     end
 		respond_to do |format|
       format.html # index.html.erb
