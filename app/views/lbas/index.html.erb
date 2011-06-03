@@ -474,7 +474,7 @@ $(function () {
       	},
 				"remove" : {
   	    	"label"				: "Delete",
-    	  	"action"			: function (obj) { this.remove(obj); },
+    	  	"action"			: function (obj) { if (confirm('Are you sure you want to delete this?')) { this.remove(obj);};  },
       		"icon"				: '/icons/delete.png'
       	},
 				"ccp" : {

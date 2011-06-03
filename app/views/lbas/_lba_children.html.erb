@@ -25,7 +25,7 @@
     <% else %>
 	    <% css_classes = '' %>
     <% end %>
-  	<% if bf.children.empty? %>
+  	<% if !bf.children.empty? %>
 	    <% css_classes += ' jstree-closed' %>
   	<% end %>
  		<li id=<%= bf.id %> rel="build_feature" class=<%= css_classes %>><%=link_to h(bf.name||"NoName"), bf, :class => 'bf' %></li>
