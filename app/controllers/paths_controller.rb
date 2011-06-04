@@ -1,6 +1,6 @@
 class PathsController < ApplicationController
   before_filter :find_business_process
-	before_filter :login_required # , :except => [:index, :show]
+	before_filter :login_required
 	helper_method :sort_column, :sort_direction
 
   def index
@@ -74,6 +74,14 @@ class PathsController < ApplicationController
     @path.destroy
     flash[:notice] = "Successfully destroyed path."
     redirect_to business_process_paths_url
+  end
+
+  def inform_functional_approvers
+    for approver in Path.find(params[:id]).non_approvers
+      UserMailer.deliver_approval_email(approver)
+    end
+    flash[:notice] = "Emails were send."
+    redirect_to path_steps_path(@business_process.paths.find(params[:id]))
   end
 
   private

@@ -48,7 +48,7 @@ ActionController::Routing::Routes.draw do |map|
 #  map.resources :business_processes, :has_many => [:business_process_elements, :paths, :watchings]
   map.resources :business_processes do |business_process|
     business_process.resources :business_process_elements
-    business_process.resources :paths, :member => {:duplicate => :get}
+    business_process.resources :paths, :member => {:duplicate => :get, :inform_functional_approvers => :get}
     business_process.resources :watchings
   end
     

@@ -80,4 +80,14 @@ class Path < ActiveRecord::Base
     new_path
   end
   
+	def non_approvers
+	  @non_approvers = []
+	  for step in steps
+  	  for approval in step.approvals.flatten.compact
+   	    @non_approvers << approval.user if approval[:status]=='not_approved'
+  	  end
+	  end
+	  @non_approvers.uniq{|x| x}
+  end
+
 end

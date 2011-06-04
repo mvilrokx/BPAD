@@ -13,6 +13,7 @@ class Step < ActiveRecord::Base
 #  accepts_nested_attributes_for :bam_to_fam_features
 
   has_many :features, :through => :bam_to_fam_features
+  has_many :approvals, :through => :bam_to_fam_map
 
   has_many :watchings, :as => :watchable, :dependent => :destroy
 
