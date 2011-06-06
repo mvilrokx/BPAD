@@ -4,10 +4,12 @@
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
-    <h1>Welcome to example.com, <%=h @user.username %></h1>
+    <h4>Hi <%=h @user.username %>,</h4>
     <p>
-      To login to the site, just follow this link: <%=h @url %>.
+      <%=h @requester.username %> has requested for you to approve the mappings of path "<%=link_to h(@path.name), path_steps_url(@path, :host => "rws65855fwks.us.oracle.com:3002") %>".
     </p>
-    <p>Thanks for joining and have a great day!</p>
+    <p>Thanks!</p>
+    <p>BPAD</p>
   </body>
 </html>
+

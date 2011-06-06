@@ -58,7 +58,7 @@ module ApplicationHelper
       link = objects
     end
     if user.iteration == objects[0].iteration || objects[0].iteration.nil?
-    	link_to (image_tag(action_image_tags[action][:enabled],
+    	link_to(image_tag(action_image_tags[action][:enabled],
     	                   :mouseover => (action_image_tags[action][:mouseover] if action_image_tags[action][:mouseover]),
     	                   :alt=> action),
     	         link,

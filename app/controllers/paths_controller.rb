@@ -54,7 +54,7 @@ class PathsController < ApplicationController
     else
     	@path.errors.each_full {|msg| puts msg}
       render :action => 'new'
-    end   
+    end
   end
 
   def update
@@ -77,8 +77,9 @@ class PathsController < ApplicationController
   end
 
   def inform_functional_approvers
+    @path = @business_process.paths.find(params[:id])
     for approver in Path.find(params[:id]).non_approvers
-      UserMailer.deliver_approval_email(approver)
+      UserMailer.deliver_approval_email(approver, current_user, @business_process, @path)
     end
     flash[:notice] = "Emails were send."
     redirect_to path_steps_path(@business_process.paths.find(params[:id]))
@@ -90,3 +91,4 @@ class PathsController < ApplicationController
     end
 
 end
+

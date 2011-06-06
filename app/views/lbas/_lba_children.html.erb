@@ -1,6 +1,6 @@
 <% if !lbas.nil? %>
   <% for lba in lbas %>
-  	<% if lba.children.empty? && lba.lbos.empty?  && lba.interfaces.empty?%>
+  	<% if lba.children.empty? && lba.lbos.empty?  && lba.interfaces.empty? && lba.build_features.empty? %>
   		<li id=<%= lba.id %> rel="lba" ><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
   	<% else %>
   		<li id=<%= lba.id %> rel="lba" class='jstree-closed'><%=link_to h(lba.name||"NoName"), lba, :class => 'lba' %></li>
