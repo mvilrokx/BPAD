@@ -13,7 +13,7 @@ $(document).ready(function () {
 });
 
 // hijack jstree links
-$('.lba, .lbo, .fwu, .feature, .bf').live('click', function() {
+$('.lba, .lbo, .fwu, .feature, .build_feature').live('click', function() {
 	$('.tree-details').load($(this).attr('href'));
 	return false;
 });

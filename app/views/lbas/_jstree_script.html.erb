@@ -83,9 +83,9 @@ $(function () {
 						                     "parent_id" : parent_id,
 						                     "name" : data.rslt.name}	},
 						function (r) {
-							$(data.rslt.obj).attr("id", r.build_features.id);
+							$(data.rslt.obj).attr("id", r.build_feature.id);
 							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
-							$(data.rslt.obj).children("a").attr("href", "<%= build_features_path %>/" + r.build_features.id);
+							$(data.rslt.obj).children("a").attr("href", "<%= build_features_path %>/" + r.build_feature.id + '/edit');
 						},
 						"json"
 					);

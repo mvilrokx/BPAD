@@ -1,10 +1,17 @@
 class BuildFeaturesController < ApplicationController
+	before_filter :login_required
+
   def index
     @build_features = BuildFeature.all
   end
 
   def show
     @build_feature = BuildFeature.find(params[:id])
+    if (request.xhr?)
+    	render :partial => 'show_details'
+    else
+    	render :show
+    end
   end
 
   def new
@@ -15,7 +22,8 @@ class BuildFeaturesController < ApplicationController
     @build_feature = BuildFeature.new(params[:build_feature])
     if @build_feature.save
       flash[:notice] = "Successfully created build feature."
-      redirect_to @build_feature
+			render :json => @build_feature, :layout => false
+#      redirect_to @build_feature
     else
       render :action => 'new'
     end
