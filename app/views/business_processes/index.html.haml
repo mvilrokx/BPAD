@@ -1,0 +1,39 @@
+- title "Business Processes", false
+
+%ul{:id => "breadcrumb"}
+  %li{:class => "first"}
+    Business Processes
+
+#title
+  %span
+    Business Processes
+
+.pagination
+  = will_paginate @business_processes
+
+.content
+  %table{:class => ["pretty", "striped"]}
+    %tr
+      %th= sortable @business_processes, "name"
+      %th= sortable @business_processes, "bpmn_file_name", "File Name"
+      %th= sortable @business_processes, "updated_at", "Last Updated"
+      %th Iteration
+      - if current_user.iteration
+        %th{:colspan =>4, :style => "text-align: center;"}
+          Actions
+
+    -for business_process in @business_processes
+      %tr
+        %td= h business_process.name
+        %td= h business_process.file_name
+        %td= h business_process.updated_at.in_time_zone("Pacific Time (US & Canada)").strftime("%d-%b-%Y %H:%M")
+        %td= h business_process.iteration.try(:name)||''
+        - if current_user.iteration
+
+          %td= action(current_user, :edit, business_process)
+          %td= action(current_user, :delete, business_process)
+          %td= action(current_user, :paths, business_process, Path.new)
+          %td= watching business_process, current_user
+
+  %p= link_to "New Business Process" , new_business_process_path, :class=>"button"
+

@@ -1,0 +1,14 @@
+- content_for :title do
+  Mappings for Step "#{@step.element_name}"
+
+- content_for :back_link do
+  = link_to "Back to Steps", path_steps_path(@step.path), :class => "button"
+
+- content_for :right_column do
+  %ul{:id => "feature-list"}
+    - for mapped_feature in @mapped_features
+      = render :partial => "available_feature", :locals => { :mapped_feature => mapped_feature }
+
+- content_for :jstree_js do
+  = render :partial => "jstree_script"
+

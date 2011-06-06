@@ -1,0 +1,14 @@
+- content_for :title do
+  Mapping for Feature "#{@feature.name}"
+
+/ - content_for :back_link do
+/  =link_to "Back to All Mapped Functional Features", "#", :class => "button"
+
+- content_for :right_column do
+  %ul
+    - for fam_to_tam_map in @fam_to_tam_maps
+      = render :partial => "mapped_feature", :locals => { :mapped_feature => fam_to_tam_map }
+
+- content_for :jstree_js do
+  = render :partial => "jstree_script"
+

@@ -1,0 +1,8 @@
+<% content_for :active_menu_item do %>
+	Business Model
+<% end %>
+
+<% content_for :content do %>
+  <%= yield %>
+<% end %>
+<%= render :file => 'layouts/application' %>

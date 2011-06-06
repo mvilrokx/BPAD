@@ -31,10 +31,10 @@ class FamToTamMapsController < ApplicationController
     ap @build_features
     puts "mapped_features"
     ap @mapped_features
-    
+
 		respond_to do |format|
-      format.html  { render :partial => 'lbas/lba_children', 
-                            :locals => {:lbas => @lbas, 
+      format.html  { render :partial => 'lbas/lba_children',
+                            :locals => {:lbas => @lbas,
                                         :lbos => @lbos,
                                         :bfs => @build_features,
                                   			:mapped_features => @mapped_features,
@@ -44,10 +44,11 @@ class FamToTamMapsController < ApplicationController
       																	}}
     end
   end
-  
+
   def index
     @fam_to_tam_maps = @feature.fam_to_tam_maps.all
     @build_features = BuildFeature.all
+    render :layout => 'tree_with_two_columns'
   end
 
   def show
@@ -104,3 +105,4 @@ class FamToTamMapsController < ApplicationController
 
 
 end
+

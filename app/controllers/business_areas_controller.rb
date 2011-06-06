@@ -10,7 +10,7 @@ class BusinessAreasController < ApplicationController
 ap @business_areas
     end
 		respond_to do |format|
-      format.html # index.html.erb
+      format.html {render :layout => 'tree_with_two_columns'}
       format.json  { render :json => @business_areas}
     end
   end
@@ -91,3 +91,4 @@ p @business_area
     redirect_to business_areas_url
   end
 end
+

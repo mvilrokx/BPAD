@@ -1,0 +1,486 @@
+<script type="text/javascript">
+$(function () {
+	$("#lba_tree")
+//	  .bind("loaded.jstree", function (event, data) {
+//      $("#lba_tree").jstree("open_all");
+//    })
+		.bind("create.jstree", function (e, data) {
+			switch(data.rslt.obj.attr("rel")) {
+				case "lba":
+					$.post(
+						"<%= lbas_path %>",
+						{ "lba" : {"parent_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.lba.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= lbas_path %>/" + r.lba.id);
+						},
+						"json"
+					);
+					break;
+				case "lbo":
+					$.post(
+						"<%= lbos_path %>",
+						{ "lbo" : {"business_area_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.lbo.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= lbos_path %>/" + r.lbo.id);
+						},
+						"json"
+					);
+					break;
+				case "interface":
+					$.post(
+						"<%= interfaces_path %>",
+						{ "interface" : {"lba_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.interface.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= interfaces_path %>/" + r.interface.id);
+						},
+						"json"
+					);
+					break;
+				case "le":
+					$.post(
+						"<%= logical_entities_path %>",
+						{ "logical_entity" : {"lbo_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.le.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= logical_entities_path %>/" + r.le.id);
+						},
+						"json"
+					);
+					break;
+				case "le_attribute":
+					$.post(
+						"<%= logical_entity_attributes_path %>",
+						{ "logical_entity_attribute" : {"logical_entity_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.logical_entity_attribute.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= logical_entity_attributes_path %>/" + r.logical_entity_attribute.id);
+						},
+						"json"
+					);
+					break;
+				case "build_feature":
+				  if (data.rslt.parent.attr("rel") == "build_feature"){
+						buildable_type = null;
+            buildable_id = null;
+            parent_id = data.rslt.parent.attr("id");
+				  } else {
+						buildable_type = data.rslt.parent.attr("rel");
+            buildable_id = data.rslt.parent.attr("id");
+            parent_id = null;
+				  }
+					$.post(
+						"<%= build_features_path %>",
+						{ "build_feature" : {"buildable_type" : buildable_type,
+						                     "buildable_id" : buildable_id,
+						                     "parent_id" : parent_id,
+						                     "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.build_features.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= build_features_path %>/" + r.build_features.id);
+						},
+						"json"
+					);
+					break;
+				case "feature":
+					$.post(
+						"<%= features_path %>",
+						{ "feature" : {"functional_work_unit_id" : data.rslt.parent.attr("id"), "name" : data.rslt.name}	},
+						function (r) {
+							$(data.rslt.obj).attr("id", r.feature.id);
+							$(data.rslt.obj).children("a").addClass(data.rslt.obj.attr("rel"));
+							$(data.rslt.obj).children("a").attr("href", "<%= features_path %>/" + r.feature.id + '/edit');
+						},
+						"json"
+					);
+					break;
+			};
+		})
+		.bind("rename.jstree", function (e, data) {
+			switch(data.rslt.obj.attr("rel")) {
+				case "lbo":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= lbos_path %>/" + data.rslt.obj.attr("id"),
+						data: { "lbo" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "interface":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= interfaces_path %>/" + data.rslt.obj.attr("id"),
+						data: { "interface" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entities_path %>/" + data.rslt.obj.attr("id"),
+						data: { "logical_entity" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le_attribute":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entity_attributes_path %>/" + data.rslt.obj.attr("id"),
+						data: { "logical_entity_attribute" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "fwu":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= functional_work_units_path %>/" + data.rslt.obj.attr("id"),
+						data: { "functional_work_unit" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "build_feature":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= build_features_path %>/" + data.rslt.obj.attr("id"),
+						data: { "build_feature" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "lba":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= lbas_path %>/" + data.rslt.obj.attr("id"),
+						data: { "lba" : {"name" : data.rslt.new_name}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+			};
+		})
+
+		.bind("remove.jstree", function (e, data) {
+			switch(data.rslt.obj.attr("rel")) {
+				case "lbo":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= lbos_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "interface":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= interfaces_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= logical_entities_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le_attribute":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= logical_entity_attributes_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "fwu":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= functional_work_units_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "build_feature":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= build_features_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "lba":
+					$.ajax({
+						async : false,
+						type: 'DELETE',
+						url: "<%= lbas_path %>/" + data.rslt.obj.attr("id"),
+						data: { "id" : data.rslt.obj.attr("id")},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+			};
+		})
+
+		.bind("move_node.jstree", function (e, data) {
+			switch(data.rslt.o.attr("rel")) {
+				case "lbo":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= lbos_path %>/" + data.rslt.o.attr("id"),
+						data: { "lbo" : {"business_area_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "interface":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= interfaces_path %>/" + data.rslt.o.attr("id"),
+						data: { "interface" : {"lba_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entities_path %>/" + data.rslt.o.attr("id"),
+						data: { "logical_entity" : {"lbo_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "le_attribute":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= logical_entity_attributes_path %>/" + data.rslt.o.attr("id"),
+						data: { "logical_entity_attribute" : {"logical_entity_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "fwu":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= functional_work_units_path %>/" + data.rslt.o.attr("id"),
+						data: { "functional_work_unit" : {"business_area_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "feature":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= features_path %>/" + data.rslt.o.attr("id"),
+						data: { "feature" : {"functional_work_unit_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+				case "lba":
+					$.ajax({
+						async : false,
+						type: 'PUT',
+						url: "<%= lbas_path %>/" + data.rslt.o.attr("id"),
+						data: { "lba" : {"parent_id" : data.rslt.np.attr("id")}	},
+						success : function (r) {
+//							data.inst.refresh();
+						}
+					});
+					break;
+			};
+		})
+
+
+		.jstree({
+			"core" : {"animation" : 100,
+								"initially_open" : ["root"] },
+			"types" : {
+				"max_depth" : -2,
+				"max_children" : -2,
+				"valid_children": ["root"],
+				"types" : {
+					"root" : {
+						"valid_children" : ["lba"],
+						"icon" : {
+							"image" : "/icons/application_cascade.png"
+						}
+					},
+					"lba" : {
+						"valid_children": ["lba", "lbo", "build_feature", "interface"],
+						"icon" : {
+							"image" : "/icons/package.png"
+						}
+					},
+					"lbo" : {
+						"valid_children" : ["none", "build_feature", "le"],
+						"icon" : {
+							"image" : "./icons/brick.png"
+						}
+					},
+					"interface" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "./icons/disconnect.png"
+						}
+					},
+					"build_feature" : {
+						"valid_children" : ["build_feature"],
+						"icon" : {
+							"image" : "./icons/bullet_black.png"
+						}
+					},
+					"le" : {
+						"valid_children" : ["le_attribute"],
+						"icon" : {
+							"image" : "./icons/table.png"
+						}
+					},
+					"le_attribute" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "./icons/table_row.png"
+						}
+					},
+					"feature" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "./icons/plugin.png"
+						}
+					}
+				}
+			},
+	    "html_data" : { data : "<li id='root' rel='root' class='jstree-closed'><a href='#'>Logical Business Areas</a></li>",
+											state: "closed",
+	  	  							ajax : {
+	  		  							url: "/lbas/lba_children.html",
+	  			  						data : function (n) {
+						  								   return { id : n.attr ? n.attr("id") : 0, rel: n.attr ? n.attr("rel") : "" };
+							  							 }
+	  						  		}
+  	  },
+  	"ui" : {"select_limit" : 1},
+  	"contextmenu" : {
+  		"items" : {
+ 				"create" : {
+        	"label"				: "Create",
+    	  	"action"			: function (obj) { return false; },
+        	"icon"				: '/icons/add.png',
+        	"submenu"			: {
+     				"add_lba" : {
+            	"label"				: "LBA",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "lba" } } ); },
+            	"icon"				: '/icons/package_add.png'
+            },
+     				"add_lbo" : {
+            	"label"				: "LBO",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "lbo" } } ); },
+            	"icon"				: '/icons/brick_add.png'
+            },
+     				"add_interface" : {
+            	"label"				: "Interface",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "interface" } } ); },
+            	"icon"				: '/icons/disconnect.png'
+            },
+     				"add_fwu" : {
+            	"label"				: "FWU",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "fwu" } } ); },
+            	"icon"				: '/icons/plugin_add.png'
+            },
+     				"add_le" : {
+            	"label"				: "LE",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "le" } } ); },
+            	"icon"				: '/icons/table_add.png'
+            },
+     				"add_le_attribute" : {
+            	"label"				: "LE Attribute",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "le_attribute" } } ); },
+            	"icon"				: '/icons/table_row_insert.png'
+            },
+     				"add_build_feature" : {
+            	"label"				: "Build Feature",
+		        	"action"			: function (obj) { this.create(obj, "last", { "attr" : { "rel" : "build_feature" } } ); },
+            	"icon"				: '/icons/bullet_black.png'
+            }
+        	}
+        },
+				"rename" : {
+  	    	"label"				: "Rename",
+    	  	"action"			: function (obj) { this.rename(obj); },
+      		"icon"				: '/icons/pencil.png'
+      	},
+				"remove" : {
+  	    	"label"				: "Delete",
+    	  	"action"			: function (obj) { if (confirm('Are you sure you want to delete this?')) { this.remove(obj);};  },
+      		"icon"				: '/icons/delete.png'
+      	},
+				"ccp" : {
+  	    	"label"				: "Edit",
+  	    	"_disabled"   : true
+      	}
+  		}
+  	},
+		"plugins" : [ "themes", "html_data", "types", "ui", "crrm", "dnd", "contextmenu" ]
+	});
+});
+</script>
+

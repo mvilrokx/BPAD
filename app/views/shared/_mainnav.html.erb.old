@@ -1,0 +1,19 @@
+<% menu_items ||= [["Business Model", business_processes_path],
+									 ["Functional Model", business_areas_path],
+									 ["Technical Model", lbas_path],
+									 ["Reports", root_path],
+									 ["Transactions", iterations_path]] %>
+
+<div class="span-24 last" style="position: absolute; bottom: 0; left: 0;">
+	<ul class="main_nav">
+		<% menu_items.each do |menu_item| -%>
+			<li
+			<% if menu_item[0] == (active_menu_item ? active_menu_item.strip : "Business Processes") -%>
+				class="active">
+			<% else -%>
+				>
+			<% end -%>
+			<%= link_to menu_item[0], menu_item[1] -%></li>
+		<% end -%>
+	</ul>
+</div>

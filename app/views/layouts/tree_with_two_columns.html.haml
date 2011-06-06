@@ -1,0 +1,32 @@
+- content_for :head do
+  = javascript_include_tag 'jstree-read-only/jquery.jstree.js'
+
+- content_for :content do
+  - title = yield(:title), false
+
+  #title
+    %span
+      = yield(:title)
+
+  .content
+    = yield(:back_link)
+
+  .content
+    #left_column
+      #button_bar
+        %button{:class => "button", :id => "open_current"} Open Selected
+        %button{:class => "button", :id => "close_current"} Close Selected
+        %button{:class => "button", :id => "open_all"} Open All
+        %button{:class => "button", :id => "close_all"} Close All
+      #lba_tree
+
+    #right_column
+      = yield(:right_column)
+
+  .content
+    = yield(:back_link)
+
+  = yield(:jstree_js)
+
+= render :file => 'layouts/application'
+

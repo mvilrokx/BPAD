@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
 	config.gem 'paper_trail', :version => '~> 1'
 	config.gem 'aasm', :version => '~> 2'
   config.gem "compass", :version => '>= 0.11.1'
+  config.gem "haml"
 
 	# Only needed in DEV
 	config.gem 'awesome_print', :as => 'ap'

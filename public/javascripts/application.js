@@ -13,8 +13,8 @@ $(document).ready(function () {
 });
 
 // hijack jstree links
-$('.lba, .lbo, .fwu, .feature').live('click', function() {
-	$('.details').load($(this).attr('href'));
+$('.lba, .lbo, .fwu, .feature, .bf').live('click', function() {
+	$('.tree-details').load($(this).attr('href'));
 	return false;
 });
 
@@ -38,10 +38,10 @@ $('.ajax').live('submit', function(e) {
     success: function(returnData){
       $('div.dialog').remove();
       $("#refresh_issues").trigger("click");
-    }   
+    }
   });
-});  
-  
+});
+
 
 // hijack watching links
 $('.watching').live({
@@ -116,11 +116,11 @@ function removeHTMLTags(htmlString) {
         if (document.all) // IE Stuff
         {
             return mydiv.innerText;
-        }   
+        }
         else // Mozilla does not work with innerText
         {
             return mydiv.textContent.replace(/\>+(?= )/g,'');
-        }                           
+        }
     }
 };
 
@@ -151,8 +151,8 @@ $('.dialog_form_link').live('click', function() {
     //                autoOpen: false,
                     width: 'auto',
                     height: 'auto',
-                    position: 'center',               
-                    show: {effect: 'blind', 
+                    position: 'center',
+                    show: {effect: 'blind',
                            duration: 250
                     },
                     hide: {effect: 'blind', duration: 250},
@@ -193,12 +193,12 @@ $('.mapped_feature').live('click', function(e) {
           width: 700,
           height: 700,
           modal: true,
-          title: "Description",
-          show: {effect: 'blind', 
+          title: "Details",
+          show: {effect: 'blind',
                  duration: 250
           },
           hide: {effect: 'blind', duration: 250},
-          close: function(ev, ui) { $('div.dialog').remove(); }          
+          close: function(ev, ui) { $('div.dialog').remove(); }
         });
     return false;
 });
@@ -215,11 +215,11 @@ $('.dialog_link').live('click', function() {
             } else {
                 $(this).dialog({
                     modal: true,
-                    title: "Description",
+                    title: "Details",
                     width: 700,
                     height: 700,
-                    position: 'center',               
-                    show: {effect: 'blind', 
+                    position: 'center',
+                    show: {effect: 'blind',
                            duration: 250
                     },
                     hide: {effect: 'blind', duration: 250},
@@ -229,5 +229,29 @@ $('.dialog_link').live('click', function() {
         });
     // prevent the default action, e.g., following a link
     return false;
+});
+
+/**
+* JSTree Supporting code
+*/
+$(function () {
+	$("#add_lba, #add_lbo, #add_fwu, #add_feature").click(function () {
+	  $("#lba_tree").jstree("create", null, "last", { "attr" : { "rel" : this.id.toString().replace("add_", "") } });
+  });
+	$("#remove, #rename").click(function () {
+    $("#lba_tree").jstree(this.id);
+  });
+	$("#open_all").click(function () {
+	  $("#lba_tree").jstree("open_all");
+  });
+	$("#close_all").click(function () {
+	  $("#lba_tree").jstree("close_all");
+  });
+	$("#open_current").click(function (e,data) {
+	  $("#lba_tree").jstree("open_all", ".jstree-clicked");
+  });
+	$("#close_current").click(function (e,data) {
+	  $("#lba_tree").jstree("close_all", ".jstree-clicked");
+  });
 });
 

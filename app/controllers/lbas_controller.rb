@@ -23,7 +23,7 @@ class LbasController < ApplicationController
       end
     end
 		respond_to do |format|
-      format.html  { render :partial => 'lba_children', :locals => {:lbas => @lbas, 
+      format.html  { render :partial => 'lba_children', :locals => {:lbas => @lbas,
                                                                     :lbos => @lbos,
                                                                     :bfs => @build_features,
                                                                     :les => @logical_entities,
@@ -34,6 +34,7 @@ class LbasController < ApplicationController
   end
 
   def index
+    render :layout => 'tree_with_two_columns'
   end
 
   def show
@@ -44,7 +45,7 @@ class LbasController < ApplicationController
     	render :show
     end
   end
-  
+
   def create
     @lba = Lba.new(params[:lba])
     ap @lba
@@ -73,3 +74,4 @@ class LbasController < ApplicationController
     render :nothing => true
   end
 end
+

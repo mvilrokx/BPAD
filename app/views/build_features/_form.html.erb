@@ -1,24 +1,15 @@
-<% form_for @build_feature do |f| %>
+<% form_for @build_feature, :html => {:class => defined?(call_type) ? call_type : ""} do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
   <p>
-    <%= f.label :buildable_id %><br />
-    <%= f.text_field :buildable_id %>
-  </p>
-  <p>
-    <%= f.label :buildable_type %><br />
-    <%= f.text_field :buildable_type %>
-  </p>
-  <p>
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </p>
   <p>
-    <%= f.label :iteration_id %><br />
-    <%= f.text_field :iteration_id %>
+    <%= content_tag :button, "Save Changes", :type => :submit, :class => "button" %>
   </p>
-  <p><%= f.submit %></p>
 <% end %>
+

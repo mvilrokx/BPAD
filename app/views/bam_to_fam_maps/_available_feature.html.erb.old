@@ -1,0 +1,7 @@
+<li class="mapped_feature" id=<%= mapped_feature.id %> ><%= mapped_feature.name||"NoName" %>
+  <%= image_tag '/icons/comment.png', :alt=> "Click to see description", :title=>  "Click to see description" if mapped_feature.description %>
+</li>
+<div class="tooltip">
+  <%= simple_format mapped_feature.description if mapped_feature.description %>
+</div>
+

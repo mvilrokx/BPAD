@@ -4,8 +4,7 @@
 
 <%= render :partial => "jstree_script" %>
 
-<% title "Business Areas", false %>
-<h3>Business Areas</h3>
+<% title "Logical Business Areas" %>
 
 <div class="push-1 span-22 last">
   <div class="span-10 colborder">
@@ -15,11 +14,15 @@
 			<button class="button" id="open_current">Open Selected</button>
 			<button class="button" id="close_current">Close Selected</button>
 		</div>
+
 	  <div class="span-10">
 			<div id="lba_tree" style="overflow: auto;"></div>
 		</div>
+
 	</div>
-  <div class="span-11 last details" style="height: 500px; overflow: auto; position: fixed">
-  </div>
+
+  <div class="span-11 last details">
+
+	</div>
 </div>
 
