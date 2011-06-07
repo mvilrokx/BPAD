@@ -1,15 +1,14 @@
 <% form_for @build_feature, :html => {:class => defined?(call_type) ? call_type : ""} do |f| %>
   <%= f.error_messages %>
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
+  <h5><%= f.label :name %>:</h5>
+  <%= @build_feature.name %>
   </p>
-  <p>
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </p>
+  <h5><%= f.label :description %>:</h5>
+  <%= f.text_area :description %>
   <p>
     <%= content_tag :button, "Save Changes", :type => :submit, :class => "button" %>
   </p>
 <% end %>
+
+<%= render :partial => "shared/cleditor_script" %>
 

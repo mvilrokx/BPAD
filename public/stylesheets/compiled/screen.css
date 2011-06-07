@@ -797,7 +797,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
 }
 
 /* line 252, ../../../app/stylesheets/partials/_page.scss */
-.dialog h5 {
+.dialog h5, form h5 {
   margin-bottom: 0px;
   border-bottom: 1px solid #ddd;
 }
