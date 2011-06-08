@@ -14,6 +14,8 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :reports
+  map.resources :manage_priorities,
+		:collection => {:prioritize_paths => :get}
 
   map.signup 'signup', :controller => 'users', :action => 'new'
   map.logout 'logout', :controller => 'sessions', :action => 'destroy'
