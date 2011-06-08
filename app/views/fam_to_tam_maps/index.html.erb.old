@@ -55,11 +55,54 @@ $(function () {
 			"types" : {
 				"max_depth" : -2,
 				"max_children" : -2,
+				"valid_children": ["root"],
 				"types" : {
+					"root" : {
+						"valid_children" : ["lba"],
+						"icon" : {
+							"image" : "/icons/application_cascade.png"
+						}
+					},
+					"lba" : {
+						"valid_children": ["lba", "lbo", "build_feature", "interface"],
+						"icon" : {
+							"image" : "/icons/package.png"
+						}
+					},
+					"lbo" : {
+						"valid_children" : ["none", "build_feature", "le"],
+						"icon" : {
+							"image" : "/icons/brick.png"
+						}
+					},
+					"interface" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "/icons/disconnect.png"
+						}
+					},
 					"build_feature" : {
 						"valid_children" : ["build_feature"],
 						"icon" : {
-							"image" : "./icons/bullet_black.png"
+							"image" : "/icons/bullet_black.png"
+						}
+					},
+					"le" : {
+						"valid_children" : ["le_attribute"],
+						"icon" : {
+							"image" : "/icons/table.png"
+						}
+					},
+					"le_attribute" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "/icons/table_row.png"
+						}
+					},
+					"feature" : {
+						"valid_children" : ["none"],
+						"icon" : {
+							"image" : "/icons/plugin.png"
 						}
 					}
 				}
@@ -73,31 +116,7 @@ $(function () {
 							  							 }
 	  						  		}
   	  },
-  	"ui" : {"select_limit" : 1},
-			"types" : {
-				"types" : {
-					"root" : {
-						"icon" : {
-							"image" : "/icons/application_cascade.png"
-						}
-					},
-					"lba" : {
-						"icon" : {
-							"image" : "/icons/package.png"
-						}
-					},
-					"lbo" : {
-						"icon" : {
-							"image" : "/icons/brick.png"
-						}
-					},
-					"build_feature" : {
-						"icon" : {
-							"image" : "/icons/bullet_black.png"
-						}
-					}
-				}
-			},
+    	"ui" : {"select_limit" : 1},
 		"plugins" : [ "themes", "html_data", "types", "ui", "checkbox" ]
 	});
 });
@@ -136,50 +155,3 @@ $(function () {
 	</div>
 </div>
 
-<script type="text/javascript">
-$(function () {
-	$("#open_all").click(function () {
-	  $("#lba_tree").jstree("open_all");
-  });
-	$("#remove, #rename").click(function () {
-    $("#lba_tree").jstree(this.id);
-  });
-	$("#close_all").click(function () {
-	  $("#lba_tree").jstree("close_all");
-  });
-	$("#open_current").click(function (e,data) {
-	  $("#lba_tree").jstree("open_all", ".jstree-clicked");
-  });
-	$("#close_current").click(function (e,data) {
-	  $("#lba_tree").jstree("close_all", ".jstree-clicked");
-  });
-});
-</script>
-
-
-
-
-
-<% if false %>
-<% title "Fam To Tam Maps" %>
-
-<table>
-  <tr>
-    <th>Feature</th>
-    <th>Build Feature</th>
-    <th>Iteration</th>
-  </tr>
-  <% for fam_to_tam_map in @fam_to_tam_maps %>
-    <tr>
-      <td><%=h fam_to_tam_map.feature_id %></td>
-      <td><%=h fam_to_tam_map.build_feature_id %></td>
-      <td><%=h fam_to_tam_map.iteration_id %></td>
-      <td><%= link_to "Show", fam_to_tam_map %></td>
-      <td><%= link_to "Edit", edit_fam_to_tam_map_path(fam_to_tam_map) %></td>
-      <td><%= link_to "Destroy", fam_to_tam_map, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
-
-<p><%= link_to "New Fam To Tam Map", new_fam_to_tam_map_path %></p>
-<% end %>

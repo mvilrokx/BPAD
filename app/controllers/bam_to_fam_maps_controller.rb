@@ -4,11 +4,18 @@ class BamToFamMapsController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
   def index
-    @bam_to_fam_maps = @step.bam_to_fam_map.all
+    @bam_to_fam_maps = @step.bam_to_fam_map
   end
 
   def show
-    @bam_to_fam_map = @step.bam_to_fam_map
+    if @step.bam_to_fam_map
+      @bam_to_fam_map = @step.bam_to_fam_map
+      @mapped_features = @bam_to_fam_map.bam_to_fam_features
+    else
+      @bam_to_fam_map = @step.build_bam_to_fam_map
+      @mapped_features = []
+    end
+    render :layout => 'tree_with_two_columns'
   end
 
   def new
@@ -120,3 +127,4 @@ class BamToFamMapsController < ApplicationController
     end
 
 end
+

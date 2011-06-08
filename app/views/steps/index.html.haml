@@ -1,0 +1,45 @@
+- title "Steps for " + @path.name, false
+
+%ul{:id => "breadcrumb"}
+  %li{:class => "first"}= link_to "Business Processes", business_processes_path
+  %li= link_to @path.business_process.name, business_process_paths_path(@path.business_process)
+  %li= @path.name
+
+#title
+  %span
+    Steps
+
+.pagination
+  = will_paginate @steps
+
+.content
+  %table{:class => ["pretty", "striped"]}
+    %tr
+      %th Steps
+      %th Type
+      %th # Features
+      %th Map Status
+      %th Signoffs
+      %th Actions
+    -for step in @steps
+      %tr
+        %td
+          = h step.element_name
+          -if !step.comment.blank?
+            = image_tag '/icons/comment.png', :alt=> step.comment, :title=> step.comment
+        %td=h step.element_type
+        %td= link_to step.bam_to_fam_map.bam_to_fam_features.count, step_bam_to_fam_features_path(step), :title=> 'Manage Features' if step.bam_to_fam_map
+        %td= step.mapping_required? ? h(status_iconifier(step.status)):"Not Required"
+        %td
+          - if step.mapped?
+            = render :partial => "approvals", :locals => {:object => step.bam_to_fam_map}
+        %td
+          - if step.mapping_required?
+            = link_to image_tag('/icons/plugin_add.png', :alt=> "Add Features"), step_bam_to_fam_map_path(step), :title=> 'Add Features'
+          - else
+            = image_tag '/icons/plugin_disabled.png', :alt=> "Disabled", :title=> 'Disabled'
+
+  %p
+    = link_to "Back to All Paths of the Business Process", business_process_paths_path(@path.business_process), :class=>"button"
+    = link_to "Inform Approvers", inform_functional_approvers_business_process_path_path(@path.business_process, @path), :class=>"button"
+

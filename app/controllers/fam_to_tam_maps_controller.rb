@@ -10,29 +10,45 @@ class FamToTamMapsController < ApplicationController
     	  lba = Lba.find(params[:id])
      	  @lbas = lba.children
      	  @lbos = lba.lbos
+     	  @interfaces = lba.interfaces
      	  @build_features = lba.build_features
+        @mapped_features = @feature.build_features
     	elsif (params[:rel] == 'lbo') then
     	  lbo = Lbo.find(params[:id])
      	  @build_features = lbo.build_features
+     	  @logical_entities = lbo.logical_entities
+        @mapped_features = @feature.build_features
+    	elsif (params[:rel] == 'le') then
+    	  le = LogicalEntity.find(params[:id])
+     	  @logical_entity_attributes = le.logical_entity_attributes
     	elsif (params[:rel] == 'build_feature') then
     	  bf = BuildFeature.find(params[:id])
      	  @build_features = bf.children
-        @mapped_features = @feature.build_features
+        # @mapped_features = @feature.build_features
       end
     end
+    puts "build_features"
+    ap @build_features
+    puts "mapped_features"
+    ap @mapped_features
+
 		respond_to do |format|
-      format.html  { render :partial => 'lbas/lba_children', 
-                            :locals => {:lbas => @lbas, 
+      format.html  { render :partial => 'lbas/lba_children',
+                            :locals => {:lbas => @lbas,
                                         :lbos => @lbos,
                                         :bfs => @build_features,
-                                  			:mapped_features => @mapped_features
+                                  			:mapped_features => @mapped_features,
+                                        :les => @logical_entities,
+                                        :le_attributes => @logical_entity_attributes,
+                                        :interfaces => @interfaces
       																	}}
     end
   end
-  
+
   def index
     @fam_to_tam_maps = @feature.fam_to_tam_maps.all
     @build_features = BuildFeature.all
+    render :layout => 'tree_with_two_columns'
   end
 
   def show
@@ -70,10 +86,16 @@ class FamToTamMapsController < ApplicationController
   end
 
   def destroy
-    @fam_to_tam_map = FamToTamMap.find(params[:id])
+    if params[:id] = -1
+      @fam_to_tam_map = @feature.fam_to_tam_maps.find_by_feature_id_and_build_feature_id(params[:feature_id], params[:build_feature_id])
+    else
+      @fam_to_tam_map = @feature.fam_to_tam_maps.find(params[:id])
+    end
+#    @fam_to_tam_map = FamToTamMap.find(params[:id])
     @fam_to_tam_map.destroy
     flash[:notice] = "Successfully destroyed fam to tam map."
-    redirect_to fam_to_tam_maps_url
+    render :json => @fam_to_tam_map, :layout => false
+#    redirect_to fam_to_tam_maps_url
   end
 
   private
@@ -83,3 +105,4 @@ class FamToTamMapsController < ApplicationController
 
 
 end
+

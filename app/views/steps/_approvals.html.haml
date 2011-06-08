@@ -1,0 +1,11 @@
+%table{:class => "nested"}
+  - for approval in object.approvals
+    %tr
+      %td{:style => "width: 50px;"}
+        -if approval.user == current_user
+          = link_to approval.user.username, edit_bam_to_fam_map_approval_path(object, approval)
+        -else
+          = approval.user.username
+      %td{:style => "width: 16px;"}= h(status_iconifier(approval.status, false))
+      %td{:style => "width: 60px;"}= h approval.approval_date.strftime("%d-%b-%Y") if approval.approval_date
+

@@ -1,0 +1,20 @@
+%li{:class => "mapped_feature", :id => mapped_feature.id}
+  = mapped_feature.name||"NoName"
+  = image_tag '/icons/comment.png', :alt=> "Click to see details", :title=>  "Click to see details"
+
+.tooltip
+  %h5{:class => "hierarchy"} Hierarchy
+  = feature_hierarchy(mapped_feature.feature)
+  .spacer
+  %h5 Priority
+  = mapped_feature.feature.priority
+  .spacer
+  %h5 Scope
+  = mapped_feature.feature.scope
+  .spacer
+  %h5 Feature Type
+  = mapped_feature.feature.feature_type
+  .spacer
+  %h5 Description
+  = simple_format mapped_feature.description if mapped_feature.description
+

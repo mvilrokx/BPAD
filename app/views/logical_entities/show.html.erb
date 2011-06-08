@@ -1,0 +1,32 @@
+<% title "Logical Entity" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @logical_entity.name %>
+</p>
+<p>
+  <strong>Description:</strong>
+  <%=h @logical_entity.description %>
+</p>
+<p>
+  <strong>Lbo:</strong>
+  <%=h @logical_entity.lbo_id %>
+</p>
+<p>
+  <strong>Iteration:</strong>
+  <%=h @logical_entity.iteration_id %>
+</p>
+<p>
+  <strong>Datedness:</strong>
+  <%=h @logical_entity.datedness %>
+</p>
+<p>
+  <strong>Translation:</strong>
+  <%=h @logical_entity.translation %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_logical_entity_path(@logical_entity) %> |
+  <%= link_to "Destroy", @logical_entity, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", logical_entities_path %>
+</p>

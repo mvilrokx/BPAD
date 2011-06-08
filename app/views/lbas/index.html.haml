@@ -1,0 +1,16 @@
+- content_for :head do
+  = javascript_include_tag '../cleditor/jquery.cleditor.min.js'
+  = stylesheet_link_tag '../cleditor/jquery.cleditor.css', :media => 'screen, projection'
+
+- content_for :active_menu_item do
+  Technical Model
+
+- content_for :title do
+  Logical Business Areas
+
+- content_for :right_column do
+  .tree-details
+
+- content_for :jstree_js do
+  = render :partial => "jstree_script"
+

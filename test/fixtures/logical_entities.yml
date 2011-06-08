@@ -1,0 +1,15 @@
+one:
+  name: MyString
+  description: MyString
+  lbo_id: 1
+  iteration_id: 
+  datedness: false
+  translation: false
+
+two:
+  name: MyString
+  description: MyString
+  lbo_id: 1
+  iteration_id: 
+  datedness: false
+  translation: false

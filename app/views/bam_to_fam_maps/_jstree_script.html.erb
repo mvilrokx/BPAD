@@ -1,0 +1,110 @@
+<script type="text/javascript">
+  $(function () {
+    $("#lba_tree")
+      .bind("check_node.jstree", function (e, data) {
+        switch(data.rslt.obj.attr("rel")) {
+          case "lbo":
+            break;
+          case "lba":
+            break;
+          case "fwu":
+            break;
+          case "feature":
+            $.ajax({
+              type: 'POST',
+              url: "<%= bam_to_fam_features_path %>",
+              context: $(this),
+              data: { "feature_id" : data.rslt.obj.attr("id"), "step_id" : <%= @step.id %> },
+              success: function (r) {
+                // Add it to the right side
+                $('#right_column ul').append(r);
+                $('#right_column li:last').effect("highlight", {}, 3000);
+              },
+              dataType: "html"
+            });
+            break;
+        };
+      })
+      .bind("uncheck_node.jstree", function (e, data) {
+        switch(data.rslt.obj.attr("rel")) {
+          case "lbo":
+            break;
+          case "lba":
+            break;
+          case "fwu":
+            break;
+          case "feature":
+            $.ajax({
+              async : false,
+              type: 'DELETE',
+              url: "<%= bam_to_fam_features_path %>/-1",
+              data: { "feature_id" : data.rslt.obj.attr("id"), "step_id" : <%= @step.id %> },
+              success : function (r) {
+                // Remove it to from right side
+  //              $('#right_side ul li[id=' + r.bam_to_fam_feature.id + ']').fadeOut(200, function(){$(this).remove()});
+                $('#right_column ul li[id=' + r.bam_to_fam_feature.id + ']').remove();
+              },
+              dataType: "json"
+            });
+            break;
+        };
+      })
+      .jstree({
+        "core" : {"animation" : 100,
+                  "initially_open" : ["root"] },
+        "types" : {
+          "max_depth" : -2,
+          "max_children" : -2,
+          "types" : {
+            "feature" : {
+              "valid_children" : ["none"],
+              "icon" : {
+                "image" : "/icons/bullet_black.png"
+              }
+            }
+          }
+        },
+        "html_data" : { data : "<li id='root' rel='root' class='jstree-closed'><a href='#'>Business Areas</a></li>",
+                        state: "closed",
+                        ajax : {
+                          url: "/step/<%= @step.id %>/bam_to_fam_map/lba_children.html",
+                          data : function (n) {
+                                   return { id : n.attr ? n.attr("id") : 0, rel: n.attr ? n.attr("rel") : "" };
+                                 }
+                        }
+        },
+      "ui" : {"select_limit" : 1},
+        "types" : {
+          "types" : {
+            "root" : {
+              "icon" : {
+                "image" : "/icons/application_cascade.png"
+              }
+            },
+            "lba" : {
+              "icon" : {
+                "image" : "/icons/package.png"
+              }
+            },
+            "lbo" : {
+              "icon" : {
+                "image" : "/icons/brick.png"
+              }
+            },
+            "fwu" : {
+              "icon" : {
+                "image" : "/icons/plugin.png"
+              }
+            },
+            "feature" : {
+              "icon" : {
+                "image" : "/icons/bullet_black.png"
+              }
+            }
+          }
+        },
+      "plugins" : [ "themes", "html_data", "types", "ui", "checkbox" ]
+    });
+  });
+</script>
+

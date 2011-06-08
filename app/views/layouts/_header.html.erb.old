@@ -1,0 +1,37 @@
+<div id="header">
+  <div id="top_bar">
+    <div class="container">
+	    <div class="span-24 last">
+	    
+  	    <div class="span-6" id="active_iteration">
+    	    Active Iteration:
+    	    <% if logged_in? && working_on_iteration? %>
+	    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;"><%= current_user.iteration.name %>
+	    	    </span>
+          <% else %>
+	    	    <span style="color:white; font-weight:bold; background-color: red; padding: 0px 5px 0px 5px;">NONE!!!
+	    	    </span>
+          <% end %>
+  	    </div>
+	    
+  	    <div class="prepend-9 span-8 last" id="signing_menu">
+    	    <% if logged_in? %>
+            Logged in as <%= link_to current_user.username, edit_user_path(current_user) %>! Not you?
+            <%= link_to "Log out", logout_path %>
+          <% else %>
+            <%= link_to "Sign up", signup_path %> or
+            <%= link_to "log in", login_path %>
+          <% end %>
+  			</div>
+
+			</div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="span-24 last" style="position: relative; height: 120px;">
+		  <%= render :partial => "shared/mainnav",
+						     :locals => {:active_menu_item => yield(:active_menu_item)} %>
+    </div>    
+  </div>    
+</div>
+

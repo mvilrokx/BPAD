@@ -1,0 +1,331 @@
+// Import the non-default scaffolding module to help us get started.
+// @import "blueprint/scaffolding";
+
+// This configuration will only apply the
+// blueprint styles to pages with a body class of "bp"
+// This makes it easier to have pages without blueprint styles
+// when you're using a single/combined stylesheet.
+
+
+@include blueprint-typography;
+@include blueprint-utilities;
+@include blueprint-debug;
+@include blueprint-interaction;
+
+  // Remove the scaffolding when you're ready to start doing visual design.
+  // Or leave it in if you're happy with how blueprint looks out-of-the-box
+//  @include blueprint-scaffolding;
+
+.container {
+  @include container;
+}
+
+.rel_container {
+  @include container;
+  position: relative;
+}
+
+.content {
+  @include prepend-top(3em);
+  @include prepend(1);
+  @include column(23, true);
+}
+
+#header {
+  @include append-bottom;
+  background-color: $base-color;
+  border-bottom: 3px solid $color2;
+  #top-bar {
+    background-color: $top-bar-background;
+    color: invert($top-bar-background);
+    text-align:center;
+    font-weight: bold;
+    a {
+      color: invert($top-bar-background);
+      &:hover {
+        color: lighten(invert($top-bar-background),15%);
+      }
+    }
+    #active-iteration {
+      @include column(6);
+    }
+    #signin-menu {
+      @include prepend(9);
+      @include column(8, true);
+    }
+  }
+  #main-nav {
+    #menu {
+      @include column(24, true);
+      position: relative;
+      height: 120px;
+      ul {
+	      font-size: 18px;
+	      font-weight: bold;
+	      li {
+          float: left;
+          list-style: none;
+          border-right: 1px solid #ccc;
+          a {
+            display:block;
+            color:#fff;
+            padding:14px;
+            text-decoration: none;
+            &:hover {
+              background:$color5;
+            }
+          }
+          &.active {
+          background:$color2;
+          }
+        }
+      }
+    }
+  }
+}
+
+#body {
+  @include container;
+  min-height: 600px;
+}
+
+#breadcrumb {
+  $text-color: #fff;
+  $arrow-width: 14px;
+  list-style: none;
+  overflow: hidden;
+  li {
+    float: left;
+    background-color:$color5;
+    color: $text-color;
+    font-weight:bold;
+    padding: 5px 8px 5px 0px;
+    position:relative;
+    text-align:center;
+    margin:$arrow-width+1;
+    &:not(.last):after {
+      @include arrow(out, $color5, $arrow-width);
+    }
+    &:not(.first):before {
+      @include arrow(in, $color5, $arrow-width);
+    }
+    &.first {
+      @include border-top-left-radius;
+      @include border-bottom-left-radius;
+      padding-left:$arrow-width;
+    }
+    a {
+      display:block;
+      color:$text-color;
+      &:hover {
+        color:$text-color;
+      }
+    }
+  }
+}
+
+#env {
+  $tag-width: 100px;
+  position: fixed;
+  top: 50%;
+  text-align: center;
+  span {
+    position:absolute;
+    width: $tag-width;
+    left:-$tag-width/2;
+    @include rotate(-90deg);
+    @include border-bottom-left-radius;
+    @include border-bottom-right-radius;
+    background-color: red;
+    font: {
+      weight: bold;
+      size: 16px;
+    }
+      color: #fff;
+    padding: 0px 10px;
+  }
+}
+
+#title {
+  border-bottom: 3px solid $color2;
+  span {
+    color:$color2;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+//    border: 2px solid $color2;
+//    @include border-radius(10px);
+  }
+}
+
+.pagination {
+
+}
+
+a.watching {
+  display: block;
+  min-height: 16px;
+  min-width: 16px;
+  &.loading {
+    background: transparent url(/icons/ajax-loader.gif) top left no-repeat;
+  }
+  &.add {
+    background: transparent url(/icons/heart_disabled.png) top left no-repeat;
+    &.over {
+      background: transparent url(/icons/heart_add.png) top left no-repeat;
+    }
+  }
+  &.remove {
+    background: transparent url(/icons/heart.png) top left no-repeat;
+    &.over {
+      background: transparent url(/icons/heart_delete.png) top left no-repeat;
+    }
+  }
+}
+
+table.pretty {
+  $font_color: #fff;
+	border-bottom: 2px solid black;
+  th {
+	  background-color: $color2;
+    color: $font_color;
+    a {
+      color: $font_color;
+    }
+    .current {
+      padding-right: 12px;
+      background-repeat: no-repeat;
+      background-position: right center;
+    }
+    .asc {
+      background-image: url(/icons/arrow_up.png);
+    }
+    .desc {
+      background-image: url(/icons/arrow_down.png);
+    }
+  }
+  td {
+	  padding: 2px 4px 2px 4px;
+	  border-right: 2px solid white;
+  }
+	tr:hover td {
+	  background-color: $color5;
+    color: $font_color;
+  }
+  tr:nth-child(even):hover td, table tr.even:hover td {
+	  background-color: $color5;
+    color: $font_color;
+  }
+}
+
+.image_text {
+  float: right;
+//  margin-top: -22px;
+}
+
+#footer {
+  @include prepend-top;
+  text-align:right;
+  background-color: #ddd;
+  border-top: 3px solid #333;
+  min-height: 140px;
+}
+
+#left_column {
+  @include column(10);
+  @include colborder;
+}
+
+#right_column {
+  @include column(11, true);
+}
+
+#lba_tree {
+  overflow: auto;
+}
+
+.tooltip {
+	display:none;
+	font-size:11px;
+}
+
+.dialog h5, form h5 {
+  margin-bottom: 0px;
+  border-bottom: 1px solid #ddd;
+}
+
+.spacer {
+  @include colspacer;
+}
+
+.ruler {
+  @include colruler;
+}
+
+.tree-details {
+  @include column(11, true);
+  height: 500px;
+  overflow: auto;
+  position: fixed;
+}
+
+
+/* Below this line I still need to Sass'ize */
+#flash_notice, #flash_error, #flash_warning {
+  padding: 5px 8px;
+  margin: 10px 0;
+}
+
+#flash_notice {
+  background-color: #CFC;
+  border: solid 1px #6C6;
+}
+
+#flash_warning {
+  background-color: #FAAC58;
+  border: 1px solid #FF8000;
+}
+
+#flash_error {
+  background-color: #FCC;
+  border: solid 1px #C66;
+}
+
+.fieldWithErrors {
+  display: inline;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 8px;
+}
+
+#errorExplanation ul {
+  margin: 2px 24px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: disc;
+}
+
