@@ -17,7 +17,7 @@ class Path < ActiveRecord::Base
   @@per_page = 30
 
   PRIORITY = ["1", "2", "3", "4", "5"]
-  validates_inclusion_of :priority, :in => PRIORITY
+#  validates_inclusion_of :priority, :in => PRIORITY
 
 	include AASM
 
