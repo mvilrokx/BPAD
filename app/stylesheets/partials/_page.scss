@@ -12,6 +12,8 @@
 @include blueprint-debug;
 @include blueprint-interaction;
 
+@include fancy-type;
+
   // Remove the scaffolding when you're ready to start doing visual design.
   // Or leave it in if you're happy with how blueprint looks out-of-the-box
 //  @include blueprint-scaffolding;
@@ -29,6 +31,7 @@
   @include prepend-top(3em);
   @include prepend(1);
   @include column(23, true);
+  overflow: auto;
 }
 
 #header {
@@ -238,6 +241,7 @@ table.pretty {
 
 #right_column {
   @include column(11, true);
+  position: relative;
 }
 
 #lba_tree {
@@ -264,9 +268,14 @@ table.pretty {
 
 .tree-details {
   @include column(11, true);
-  height: 500px;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+/*  height: 500px;
   overflow: auto;
-  position: fixed;
+  position: fixed; */
+/*  position: absolute; */
+
 }
 
 

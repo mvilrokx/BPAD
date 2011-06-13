@@ -42,4 +42,5 @@
   %p
     = link_to "Back to All Paths of the Business Process", business_process_paths_path(@path.business_process), :class=>"button"
     = link_to "Inform Approvers", inform_functional_approvers_business_process_path_path(@path.business_process, @path), :class=>"button"
+    = link_to "Send to Development", send_to_agilefant_business_process_path_path(@path.business_process, @path), :class=>"button"
 

@@ -40,6 +40,12 @@ class BusinessProcess < ActiveRecord::Base
 	  @interested_parties.flatten.compact
 	end
 
+	def exists_in_agilefant?
+    AfBacklog.first(:conditions => ["description LIKE ?", "%@@@business_process.id=#{id}@@@%"])
+  end
+
+  alias_method :agilefant_backlog, :exists_in_agilefant?
+
 	protected
 		def parse_xml
 			p self.changed
@@ -99,3 +105,4 @@ class BusinessProcess < ActiveRecord::Base
 
 	end
 end
+

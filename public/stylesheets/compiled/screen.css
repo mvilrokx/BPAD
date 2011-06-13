@@ -429,7 +429,50 @@ caption {
   color: white;
 }
 
-/* line 19, ../../../app/stylesheets/partials/_page.scss */
+/* line 75, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_fancy-type.scss */
+p + p {
+  text-indent: 2em;
+  margin-top: -1.5em;
+  /* Don't want this in forms. */
+}
+/* line 85, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_fancy-type.scss */
+form p + p {
+  text-indent: 0;
+}
+
+/* line 77, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_fancy-type.scss */
+p.incr,
+.incr p {
+  font-size: 0.833em;
+  line-height: 1.44em;
+  margin-bottom: 1.5em;
+}
+
+/* line 12, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_fancy-type.scss */
+.caps {
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  text-transform: lowercase;
+  font-size: 1.2em;
+  line-height: 1%;
+  font-weight: bold;
+  padding: 0 2px;
+}
+
+/* line 13, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_fancy-type.scss */
+.dquo {
+  margin-left: -0.5em;
+}
+
+/* line 14, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_fancy-type.scss */
+.alt {
+  color: #666666;
+  font-family: "Warnock Pro", "Goudy Old Style", "Palatino", "Book Antiqua", Georgia, serif;
+  font-style: italic;
+  font-weight: normal;
+}
+
+/* line 21, ../../../app/stylesheets/partials/_page.scss */
 .container {
   width: 950px;
   margin: 0 auto;
@@ -437,7 +480,7 @@ caption {
   *zoom: 1;
 }
 
-/* line 23, ../../../app/stylesheets/partials/_page.scss */
+/* line 25, ../../../app/stylesheets/partials/_page.scss */
 .rel_container {
   width: 950px;
   margin: 0 auto;
@@ -446,7 +489,7 @@ caption {
   position: relative;
 }
 
-/* line 28, ../../../app/stylesheets/partials/_page.scss */
+/* line 30, ../../../app/stylesheets/partials/_page.scss */
 .content {
   margin-top: 3em;
   padding-left: 40px;
@@ -454,34 +497,35 @@ caption {
   float: left;
   margin-right: 0;
   width: 910px;
+  overflow: auto;
 }
 /* line 147, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html .content {
   overflow-x: hidden;
 }
 
-/* line 34, ../../../app/stylesheets/partials/_page.scss */
+/* line 37, ../../../app/stylesheets/partials/_page.scss */
 #header {
   margin-bottom: 1.5em;
   background-color: #93afd9;
   border-bottom: 3px solid #51688c;
 }
-/* line 38, ../../../app/stylesheets/partials/_page.scss */
+/* line 41, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar {
   background-color: #333333;
   color: #cccccc;
   text-align: center;
   font-weight: bold;
 }
-/* line 43, ../../../app/stylesheets/partials/_page.scss */
+/* line 46, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar a {
   color: #cccccc;
 }
-/* line 45, ../../../app/stylesheets/partials/_page.scss */
+/* line 48, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar a:hover {
   color: #f2f2f2;
 }
-/* line 49, ../../../app/stylesheets/partials/_page.scss */
+/* line 52, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar #active-iteration {
   display: inline;
   float: left;
@@ -492,7 +536,7 @@ caption {
 * html #header #top-bar #active-iteration {
   overflow-x: hidden;
 }
-/* line 52, ../../../app/stylesheets/partials/_page.scss */
+/* line 55, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar #signin-menu {
   padding-left: 360px;
   display: inline;
@@ -504,7 +548,7 @@ caption {
 * html #header #top-bar #signin-menu {
   overflow-x: hidden;
 }
-/* line 58, ../../../app/stylesheets/partials/_page.scss */
+/* line 61, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu {
   display: inline;
   float: left;
@@ -517,34 +561,34 @@ caption {
 * html #header #main-nav #menu {
   overflow-x: hidden;
 }
-/* line 62, ../../../app/stylesheets/partials/_page.scss */
+/* line 65, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul {
   font-size: 18px;
   font-weight: bold;
 }
-/* line 65, ../../../app/stylesheets/partials/_page.scss */
+/* line 68, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li {
   float: left;
   list-style: none;
   border-right: 1px solid #ccc;
 }
-/* line 69, ../../../app/stylesheets/partials/_page.scss */
+/* line 72, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li a {
   display: block;
   color: #fff;
   padding: 14px;
   text-decoration: none;
 }
-/* line 74, ../../../app/stylesheets/partials/_page.scss */
+/* line 77, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li a:hover {
   background: #808c58;
 }
-/* line 78, ../../../app/stylesheets/partials/_page.scss */
+/* line 81, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li.active {
   background: #51688c;
 }
 
-/* line 87, ../../../app/stylesheets/partials/_page.scss */
+/* line 90, ../../../app/stylesheets/partials/_page.scss */
 #body {
   width: 950px;
   margin: 0 auto;
@@ -553,12 +597,12 @@ caption {
   min-height: 600px;
 }
 
-/* line 92, ../../../app/stylesheets/partials/_page.scss */
+/* line 95, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb {
   list-style: none;
   overflow: hidden;
 }
-/* line 97, ../../../app/stylesheets/partials/_page.scss */
+/* line 100, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li {
   float: left;
   background-color: #808c58;
@@ -569,7 +613,7 @@ caption {
   text-align: center;
   margin: 15px;
 }
-/* line 106, ../../../app/stylesheets/partials/_page.scss */
+/* line 109, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li:not(.last):after {
   content: " ";
   display: block;
@@ -585,7 +629,7 @@ caption {
   width: 14px;
   style: solid;
 }
-/* line 109, ../../../app/stylesheets/partials/_page.scss */
+/* line 112, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li:not(.first):before {
   content: " ";
   display: block;
@@ -601,7 +645,7 @@ caption {
   style: solid;
   margin-left: -28px;
 }
-/* line 112, ../../../app/stylesheets/partials/_page.scss */
+/* line 115, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li.first {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
@@ -617,23 +661,23 @@ caption {
   border-bottom-left-radius: 5px;
   padding-left: 14px;
 }
-/* line 117, ../../../app/stylesheets/partials/_page.scss */
+/* line 120, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li a {
   display: block;
   color: white;
 }
-/* line 120, ../../../app/stylesheets/partials/_page.scss */
+/* line 123, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li a:hover {
   color: white;
 }
 
-/* line 127, ../../../app/stylesheets/partials/_page.scss */
+/* line 130, ../../../app/stylesheets/partials/_page.scss */
 #env {
   position: fixed;
   top: 50%;
   text-align: center;
 }
-/* line 132, ../../../app/stylesheets/partials/_page.scss */
+/* line 135, ../../../app/stylesheets/partials/_page.scss */
 #env span {
   position: absolute;
   width: 100px;
@@ -662,11 +706,11 @@ caption {
   padding: 0px 10px;
 }
 
-/* line 149, ../../../app/stylesheets/partials/_page.scss */
+/* line 152, ../../../app/stylesheets/partials/_page.scss */
 #title {
   border-bottom: 3px solid #51688c;
 }
-/* line 151, ../../../app/stylesheets/partials/_page.scss */
+/* line 154, ../../../app/stylesheets/partials/_page.scss */
 #title span {
   color: #51688c;
   padding: 10px;
@@ -674,82 +718,82 @@ caption {
   font-weight: bold;
 }
 
-/* line 165, ../../../app/stylesheets/partials/_page.scss */
+/* line 168, ../../../app/stylesheets/partials/_page.scss */
 a.watching {
   display: block;
   min-height: 16px;
   min-width: 16px;
 }
-/* line 169, ../../../app/stylesheets/partials/_page.scss */
+/* line 172, ../../../app/stylesheets/partials/_page.scss */
 a.watching.loading {
   background: transparent url(/icons/ajax-loader.gif) top left no-repeat;
 }
-/* line 172, ../../../app/stylesheets/partials/_page.scss */
+/* line 175, ../../../app/stylesheets/partials/_page.scss */
 a.watching.add {
   background: transparent url(/icons/heart_disabled.png) top left no-repeat;
 }
-/* line 174, ../../../app/stylesheets/partials/_page.scss */
+/* line 177, ../../../app/stylesheets/partials/_page.scss */
 a.watching.add.over {
   background: transparent url(/icons/heart_add.png) top left no-repeat;
 }
-/* line 178, ../../../app/stylesheets/partials/_page.scss */
+/* line 181, ../../../app/stylesheets/partials/_page.scss */
 a.watching.remove {
   background: transparent url(/icons/heart.png) top left no-repeat;
 }
-/* line 180, ../../../app/stylesheets/partials/_page.scss */
+/* line 183, ../../../app/stylesheets/partials/_page.scss */
 a.watching.remove.over {
   background: transparent url(/icons/heart_delete.png) top left no-repeat;
 }
 
-/* line 186, ../../../app/stylesheets/partials/_page.scss */
+/* line 189, ../../../app/stylesheets/partials/_page.scss */
 table.pretty {
   border-bottom: 2px solid black;
 }
-/* line 189, ../../../app/stylesheets/partials/_page.scss */
+/* line 192, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th {
   background-color: #51688c;
   color: white;
 }
-/* line 192, ../../../app/stylesheets/partials/_page.scss */
+/* line 195, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th a {
   color: white;
 }
-/* line 195, ../../../app/stylesheets/partials/_page.scss */
+/* line 198, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th .current {
   padding-right: 12px;
   background-repeat: no-repeat;
   background-position: right center;
 }
-/* line 200, ../../../app/stylesheets/partials/_page.scss */
+/* line 203, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th .asc {
   background-image: url(/icons/arrow_up.png);
 }
-/* line 203, ../../../app/stylesheets/partials/_page.scss */
+/* line 206, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th .desc {
   background-image: url(/icons/arrow_down.png);
 }
-/* line 207, ../../../app/stylesheets/partials/_page.scss */
+/* line 210, ../../../app/stylesheets/partials/_page.scss */
 table.pretty td {
   padding: 2px 4px 2px 4px;
   border-right: 2px solid white;
 }
-/* line 211, ../../../app/stylesheets/partials/_page.scss */
+/* line 214, ../../../app/stylesheets/partials/_page.scss */
 table.pretty tr:hover td {
   background-color: #808c58;
   color: white;
 }
-/* line 215, ../../../app/stylesheets/partials/_page.scss */
+/* line 218, ../../../app/stylesheets/partials/_page.scss */
 table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   background-color: #808c58;
   color: white;
 }
 
-/* line 221, ../../../app/stylesheets/partials/_page.scss */
+/* line 224, ../../../app/stylesheets/partials/_page.scss */
 .image_text {
   float: right;
 }
 
-/* line 226, ../../../app/stylesheets/partials/_page.scss */
+/* line 229, ../../../app/stylesheets/partials/_page.scss */
 #footer {
   margin-top: 1.5em;
   text-align: right;
@@ -758,7 +802,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   min-height: 140px;
 }
 
-/* line 234, ../../../app/stylesheets/partials/_page.scss */
+/* line 237, ../../../app/stylesheets/partials/_page.scss */
 #left_column {
   display: inline;
   float: left;
@@ -773,36 +817,37 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   overflow-x: hidden;
 }
 
-/* line 239, ../../../app/stylesheets/partials/_page.scss */
+/* line 242, ../../../app/stylesheets/partials/_page.scss */
 #right_column {
   display: inline;
   float: left;
   margin-right: 0;
   width: 430px;
+  position: relative;
 }
 /* line 147, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html #right_column {
   overflow-x: hidden;
 }
 
-/* line 243, ../../../app/stylesheets/partials/_page.scss */
+/* line 247, ../../../app/stylesheets/partials/_page.scss */
 #lba_tree {
   overflow: auto;
 }
 
-/* line 247, ../../../app/stylesheets/partials/_page.scss */
+/* line 251, ../../../app/stylesheets/partials/_page.scss */
 .tooltip {
   display: none;
   font-size: 11px;
 }
 
-/* line 252, ../../../app/stylesheets/partials/_page.scss */
+/* line 256, ../../../app/stylesheets/partials/_page.scss */
 .dialog h5, form h5 {
   margin-bottom: 0px;
   border-bottom: 1px solid #ddd;
 }
 
-/* line 257, ../../../app/stylesheets/partials/_page.scss */
+/* line 261, ../../../app/stylesheets/partials/_page.scss */
 .spacer {
   background: #dddddd;
   color: #dddddd;
@@ -817,7 +862,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   visibility: hidden;
 }
 
-/* line 261, ../../../app/stylesheets/partials/_page.scss */
+/* line 265, ../../../app/stylesheets/partials/_page.scss */
 .ruler {
   background: #dddddd;
   color: #dddddd;
@@ -829,15 +874,19 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   border: none;
 }
 
-/* line 265, ../../../app/stylesheets/partials/_page.scss */
+/* line 269, ../../../app/stylesheets/partials/_page.scss */
 .tree-details {
   display: inline;
   float: left;
   margin-right: 0;
   width: 430px;
-  height: 500px;
-  overflow: auto;
-  position: fixed;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  /*  height: 500px;
+    overflow: auto;
+    position: fixed; */
+  /*  position: absolute; */
 }
 /* line 147, ../../../../../.rvm/gems/ruby-1.8.7-p334@rails2311/gems/compass-0.11.1/frameworks/blueprint/stylesheets/blueprint/_grid.scss */
 * html .tree-details {
@@ -845,36 +894,36 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
 }
 
 /* Below this line I still need to Sass'ize */
-/* line 274, ../../../app/stylesheets/partials/_page.scss */
+/* line 283, ../../../app/stylesheets/partials/_page.scss */
 #flash_notice, #flash_error, #flash_warning {
   padding: 5px 8px;
   margin: 10px 0;
 }
 
-/* line 279, ../../../app/stylesheets/partials/_page.scss */
+/* line 288, ../../../app/stylesheets/partials/_page.scss */
 #flash_notice {
   background-color: #CFC;
   border: solid 1px #6C6;
 }
 
-/* line 284, ../../../app/stylesheets/partials/_page.scss */
+/* line 293, ../../../app/stylesheets/partials/_page.scss */
 #flash_warning {
   background-color: #FAAC58;
   border: 1px solid #FF8000;
 }
 
-/* line 289, ../../../app/stylesheets/partials/_page.scss */
+/* line 298, ../../../app/stylesheets/partials/_page.scss */
 #flash_error {
   background-color: #FCC;
   border: solid 1px #C66;
 }
 
-/* line 294, ../../../app/stylesheets/partials/_page.scss */
+/* line 303, ../../../app/stylesheets/partials/_page.scss */
 .fieldWithErrors {
   display: inline;
 }
 
-/* line 298, ../../../app/stylesheets/partials/_page.scss */
+/* line 307, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation {
   width: 400px;
   border: 2px solid #CF0000;
@@ -884,7 +933,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   background-color: #f0f0f0;
 }
 
-/* line 307, ../../../app/stylesheets/partials/_page.scss */
+/* line 316, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation h2 {
   text-align: left;
   font-weight: bold;
@@ -895,19 +944,19 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   color: #fff;
 }
 
-/* line 317, ../../../app/stylesheets/partials/_page.scss */
+/* line 326, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation p {
   color: #333;
   margin-bottom: 0;
   padding: 8px;
 }
 
-/* line 323, ../../../app/stylesheets/partials/_page.scss */
+/* line 332, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation ul {
   margin: 2px 24px;
 }
 
-/* line 327, ../../../app/stylesheets/partials/_page.scss */
+/* line 336, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation ul li {
   font-size: 12px;
   list-style: disc;

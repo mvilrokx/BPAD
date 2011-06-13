@@ -85,6 +85,22 @@ class PathsController < ApplicationController
     redirect_to path_steps_path(@business_process.paths.find(params[:id]))
   end
 
+  def send_to_agilefant
+    @path = @business_process.paths.find(params[:id])
+    @bp_backlog = AfBacklog.find_from_or_create_in_agilefant(@business_process)
+    @path_story = AfStory.find_from_or_create_in_agilefant(@path)
+    if @path_story.backlog_id != @bp_backlog.id
+      @path_story.update_attribute(:backlog_id, @bp_backlog.id)
+    end
+    for bf in @path.build_features
+      @bf_story = @path_story.children.new
+      @bf_story.initialize_from_bpad(bf)
+      @bf_story.save!
+    end
+    flash[:notice] = "Agilefant has been updated."
+    redirect_to path_steps_path(@business_process.paths.find(params[:id]))
+  end
+
   private
     def find_business_process
         @business_process = BusinessProcess.find(params[:business_process_id])

@@ -1,5 +1,5 @@
-<p><label>Issues</label> &nbsp;&nbsp; <%= link_to "Show", "#", :class => "button", :id => "toggle_issues" %><%= link_to "Refresh", feature_issues_path(@feature), :class => "button", :id => "refresh_issues" %><br /><p>
-<div id="issues" style='display:none;'>
+<p><label>Issues</label> &nbsp;&nbsp; <%= link_to "Hide", "#", :class => "button", :id => "toggle_issues" %><%= link_to "Refresh", feature_issues_path(@feature), :class => "button", :id => "refresh_issues" %><br /><p>
+<div id="issues">
   <table class="pretty striped">
     <tr>
       <th>name</th>

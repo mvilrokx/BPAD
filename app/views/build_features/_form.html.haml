@@ -1,0 +1,13 @@
+- form_for @build_feature, :html => {:class => defined?(call_type) ? call_type : ""} do |f|
+  = f.error_messages
+  %h5= f.label :name
+  = @build_feature.name
+  %p
+  %h5= f.label :description
+  = f.text_area :description
+  %p
+    = content_tag :button, "Save Changes", :type => :submit, :class => "button"
+
+= render :partial => "shared/cleditor_script"
+= render :partial => "shared/set_detail_position"
+

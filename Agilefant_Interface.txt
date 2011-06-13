@@ -1,0 +1,49 @@
+WHAT HAPPENS WHEN THE INTERFACE TO AGILEFANT KICKS OFF
+======================================================
+
+Business Process
+================
+
+BPAD      Agilefant
+----      ---------
+New    -> New Project Backlog gets created under a Product
+Update -> Name will get updated, overriding these values in Agilefant (BPAD =
+          source of thruth)!
+Delete -> ? If anything, we need to warn people this is already in Agilefant and
+          will impact it.  In fact I think we should prevent any deletion in
+          BPAD if it exists in Agilefant cause the ramifications would be pretty
+          significant, wipping out everything in Agilefant.
+
+
+Paths
+=====
+
+BPAD      Agilefant
+----      ---------
+New    -> New Story gets created in the Business Process' Product Backlog
+Update -> Name, Description will get updated overriding these values in
+          Agilefant (BPAD = Source of Thruth)!
+Delete -> ? If anything, we need to warn people this is already in Agilefant and
+          will impact it.  In fact I think we should prevent any deletion in
+          BPAD if it exists in Agilefant cause the ramifications would be pretty
+          significant, wipping out everything in Agilefant.
+
+
+Mapped Build Features
+=====================
+
+BPAD      Agilefant
+----      ---------
+Map    -> New Story gets created under the Path's Story
+Update -> Name, Description will get updated overriding these values in
+          Agilefant (BPAD = Source of Thruth)!
+Move   -> Move Story to different Path's Story
+Unmap  -> If the Story has not been "used" yet, it could get deleted.
+          "used" in this case means if it has any tasks associated to it.
+          If it has tasks, we would move them to the Product Backlog.  This will
+          preserve them and all their data and we can put them back under a
+          Story if they get re-mapped (see below)
+Re-map -> Move from Product Backlog to Story in Project Backlog
+Delete -> ? If anything, we need to warn people this is already in Agilefant and
+          will impact it.
+

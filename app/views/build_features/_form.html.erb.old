@@ -11,4 +11,5 @@
 <% end %>
 
 <%= render :partial => "shared/cleditor_script" %>
+<%= render :partial => "shared/set_detail_position" %>
 

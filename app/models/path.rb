@@ -90,5 +90,30 @@ class Path < ActiveRecord::Base
 	  @non_approvers.uniq{|x| x}
   end
 
+	def features
+	  @features = []
+	  for step in steps
+   	    @features << step.features
+	  end
+	  @features.flatten
+  end
+
+	def build_features
+	  @build_features = []
+	  for step in steps
+  	  for feature in step.features
+   	    @build_features << feature.build_features
+  	  end
+	  end
+	  @build_features.flatten
+  end
+
+	def exists_in_agilefant?
+	  AfStory.find_from_bpad_object(self)
+  end
+
+  alias_method :agilefant_story, :exists_in_agilefant?
+
+
 end
 

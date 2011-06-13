@@ -11,7 +11,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :build_features
 
   map.resources :lbas, :collection => { :lba_children => :get}
-  
+
   map.resources :iterations
   map.resources :watchings
   map.resources :bam_to_fam_features
@@ -36,7 +36,7 @@ ActionController::Routing::Routes.draw do |map|
      feature.resources :issues
      feature.resources :fam_to_tam_maps, :collection => { :lba_children => :get}
    end
-   
+
 #  map.resources :features, :has_many => [:watchings]
 
 
@@ -48,10 +48,13 @@ ActionController::Routing::Routes.draw do |map|
 #  map.resources :business_processes, :has_many => [:business_process_elements, :paths, :watchings]
   map.resources :business_processes do |business_process|
     business_process.resources :business_process_elements
-    business_process.resources :paths, :member => {:duplicate => :get, :inform_functional_approvers => :get}
+    business_process.resources :paths,
+                               :member => {:duplicate => :get,
+                                           :send_to_agilefant => :get,
+                                           :inform_functional_approvers => :get}
     business_process.resources :watchings
   end
-    
+
   map.resources :business_process_elements, :has_many => :flows
   map.resources :paths, :has_many => [:steps, :watchings]
 #  map.resources :step, :has_one => :bam_to_fam_map
@@ -64,10 +67,10 @@ ActionController::Routing::Routes.draw do |map|
 #       step.resources :has_one => :bam_to_fam_map, :collection => { :lba_children => :get}
      step.resources :bam_to_fam_features
    end
-  
+
   map.resources :fam_to_tam_maps
 
-  
+
 #  map.resources :business_process_elements
 #  map.resources :flows
 #  map.resources :paths
@@ -117,3 +120,4 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end
+
