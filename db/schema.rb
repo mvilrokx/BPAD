@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110603045316) do
+ActiveRecord::Schema.define(:version => 20110613192844) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -238,7 +238,7 @@ ActiveRecord::Schema.define(:version => 20110603045316) do
     t.datetime "updated_at"
     t.integer  "iteration_id"
     t.string   "status"
-    t.string   "priority"
+    t.integer  "priority"
   end
 
   add_index "paths", ["business_process_id"], :name => "business_process_id_ix"
