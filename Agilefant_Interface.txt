@@ -14,6 +14,8 @@ Delete -> ? If anything, we need to warn people this is already in Agilefant and
           BPAD if it exists in Agilefant cause the ramifications would be pretty
           significant, wipping out everything in Agilefant.
 
+          Stop delete if it has gone to Agilefant!!!
+
 
 Paths
 =====
@@ -27,6 +29,8 @@ Delete -> ? If anything, we need to warn people this is already in Agilefant and
           will impact it.  In fact I think we should prevent any deletion in
           BPAD if it exists in Agilefant cause the ramifications would be pretty
           significant, wipping out everything in Agilefant.
+
+          Stop delete if it has gone to Agilefant!!!
 
 
 Mapped Build Features
@@ -43,6 +47,9 @@ Unmap  -> If the Story has not been "used" yet, it could get deleted.
           If it has tasks, we would move them to the Product Backlog.  This will
           preserve them and all their data and we can put them back under a
           Story if they get re-mapped (see below)
+
+          Stop unmapping if it has gone to Agilefant!!!
+
 Re-map -> Move from Product Backlog to Story in Project Backlog
 Delete -> ? If anything, we need to warn people this is already in Agilefant and
           will impact it.
