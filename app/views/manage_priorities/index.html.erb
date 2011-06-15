@@ -46,6 +46,13 @@
         <%=h (path.priority.to_s()+ '-'*3 +  path.name) %>
         <%end%> 
 	</li>
-    <% end %>		
+    <% end %>
+    <% 	if @other_paths != nil%>
+      <% for path in @other_paths %>
+	<li id="path_<%= path.id -%>">
+	  <%=h ('-'*7 +  path.name) %>
+	</li>
+      <%end%>
+    <%end%>		
 </ul>
 </div>

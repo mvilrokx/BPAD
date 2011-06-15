@@ -2,7 +2,8 @@ class ManagePrioritiesController < ApplicationController
 	before_filter :login_required
 
 	def index
-	     @all_paths = Path.find :all, :order => 'priority'
+	      @all_paths = Path.find :all, :order => 'priority', :conditions => "priority IS NOT NULL"
+	      @other_paths = Path.find :all, :conditions => "priority IS NULL"
 	end
 
 	def prioritize_paths
