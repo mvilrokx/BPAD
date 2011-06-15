@@ -1,0 +1,51 @@
+<% title "Manage Priority", false %>
+
+
+<style>
+	#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+	#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 18px; }
+	#sortable li span { position: absolute; margin-left: -1.3em; }
+</style>
+	<script>
+	$(function() {
+		$( "#sortable" ).sortable(
+		{
+		   update: function(){
+<!--			alert("Hello:" + $("#sortable").sortable('serialize')); -->
+			$.ajax({
+			   type: 'post',
+			   data: $("#sortable").sortable('serialize'),
+			   dataType: 'script',
+			   complete: function(request){
+				$("#sortable").effect('highlight');
+			     },
+			   url: '/manage_priorities/prioritize_paths'})
+		   }
+		});
+		$( "#sortable" ).disableSelection();
+	});
+	</script>
+
+
+
+
+
+<div class="push-1 span-22 last">
+  <span class="title_label">Paths</span>
+</div>
+<div class="push-1 span-22 last">
+<ul id="sortable">
+    
+    <% for path in @all_paths %>
+	<li id="path_<%= path.id -%>">
+	<% if path.priority < 10%>
+        <%=h (path.priority.to_s() + '-'*5 +  path.name) %>         
+	<% elsif path.priority < 100%>
+        <%=h (path.priority.to_s()+ '-'*4 +  path.name) %>	
+        <%else%>
+        <%=h (path.priority.to_s()+ '-'*3 +  path.name) %>
+        <%end%> 
+	</li>
+    <% end %>		
+</ul>
+</div>
