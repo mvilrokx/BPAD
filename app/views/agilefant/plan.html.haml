@@ -1,0 +1,17 @@
+Outline_Level,WBS,Name,Scheduled_Work,Percent_Complete,Start_Date,Finish_Date,Resource_Names,Activity,Deliverable_Type,Product,Hyperlink,Notes,Release_Version
+%br
+/1,P-9, "OTL - Rules Templates",912.0,31%,Sun 02/21/10,Fri 03/09/12,,,,HXT,,,V1.3
+/%br
+-for project in @projects
+  1, P-#{project.id}, "#{project.name}",,,,,,,,HXT,,,V1.3
+  %br
+  -for story in project.stories
+    2, T-#{story.id}, "#{story.name}",,,,,,,,HXT,,,V1.3
+    %br
+    -for sub_story in story.children
+      3, T-#{sub_story.id}, "#{sub_story.name}",,,,,,,,HXT,,,V1.3
+      %br
+      -for task in sub_story.tasks
+        4, T-#{task.id}, "#{task.name}",#{task.originalestimate/60},#{((task.originalestimate-task.effortleft)/task.originalestimate)*100},#{task.story.backlog.startDate.strftime("%m/%d/%Y")},#{task.story.backlog.endDate.strftime("%m/%d/%Y")},"#{task.developers.join(',')}",,,HXT,,,V1.3
+        %br
+
