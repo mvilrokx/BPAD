@@ -12,7 +12,7 @@ class AfBacklog < ActiveRecord::Base
 
   after_create :audit_create
 #  after_update :audit_update
-#  after_destroy :audit_destroy
+#  after_destroy :audit_destroyfin
 
   def self.find_from_business_process(business_process)
     AfBacklog.first(:conditions => ["description LIKE ?", "%@@@business_process.id=#{business_process.id}@@@%"])

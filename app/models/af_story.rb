@@ -6,6 +6,7 @@ class AfStory < ActiveRecord::Base
 
   belongs_to :backlog, :class_name => "AfBacklog", :foreign_key => "backlog_id"
   has_many :labels, :class_name => "AfLabel", :foreign_key => "story_id"
+  has_many :tasks, :class_name => "AfTask", :foreign_key => "story_id"
 
   accepts_nested_attributes_for :labels
 
@@ -41,7 +42,7 @@ class AfStory < ActiveRecord::Base
       story.save
     else
       # This is to avoid a READONLY issue caused by using :join in previous select
-      story = AfStory.first(story.id)
+      story = AfStory.find(story.id)
     end
     story
   end
@@ -61,11 +62,10 @@ class AfStory < ActiveRecord::Base
     self.state = STORY_STATES[:not_started]
     if object.instance_of?(Path)
       self.treeRank = object.priority||0
-      self.backlog_id = AfBacklog.product_backlog_id
+      self.backlog_id = AfBacklog.product_backlog_id unless backlog && backlog.backlogtype == 'Iteration'
     elsif object.instance_of?(BuildFeature)
-      self.backlog_id = parent.backlog_id
+      self.backlog_id = parent.backlog_id unless backlog && backlog.backlogtype == 'Iteration'
     end
-    ap "Debug = story.backlog_id = #{backlog_id}"
 #    self.af_labels_attributes = [{:name => object.class.name.downcase + '.id=' + object.id.to_s,
 #                                  :displayName => object.class.name.downcase + '.id=' + object.id.to_s,
 #                                  :creator_id => 1,
@@ -80,7 +80,7 @@ protected
   end
 
   # !!! WARNING: THIS ONLY WORKS IF YOU DELETE THE FK REFERENCE FROM THE
-  # LABEL TABLE TO THE STORY TABLE !!!
+  # AGILEFANT LABEL TABLE TO THE STORY TABLE !!!
   def add_label
     @label = AfLabel.new(:name => bpad_object.class.name.underscore + '.id=' + bpad_object.id.to_s,
                          :displayName => bpad_object.class.name.underscore + '.id=' + bpad_object.id.to_s,
