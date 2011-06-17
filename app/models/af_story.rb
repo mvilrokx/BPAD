@@ -6,6 +6,7 @@ class AfStory < ActiveRecord::Base
 
   belongs_to :backlog, :class_name => "AfBacklog", :foreign_key => "backlog_id"
   has_many :labels, :class_name => "AfLabel", :foreign_key => "story_id"
+  has_many :tasks, :class_name => "AfTask", :foreign_key => "story_id"
 
   accepts_nested_attributes_for :labels
 
@@ -29,15 +30,19 @@ class AfStory < ActiveRecord::Base
     story = AfStory.first(:joins => :labels,  :conditions => condition)
   end
 
-  def self.find_from_or_create_in_agilefant(object)
+  def self.find_from_or_create_in_agilefant(object, parent = nil)
     story = find_from_bpad_object(object)
     if !story
-      story = AfStory.new
-      story.initialize_from_bpad(object)
+      if parent
+        story = parent.children.new
+      else
+        story = AfStory.new
+      end
+      story.initialize_from_bpad(object, parent)
       story.save
     else
       # This is to avoid a READONLY issue caused by using :join in previous select
-      story = AfStory.first(story.id)
+      story = AfStory.find(story.id)
     end
     story
   end
@@ -50,18 +55,17 @@ class AfStory < ActiveRecord::Base
     labels.first.scan(/^build_feature.id=(\d+)/)
   end
 
-  def initialize_from_bpad(object)
+  def initialize_from_bpad(object, parent = nil)
     self.bpad_object = object
     self.name = object.name
     self.description = object.description
     self.state = STORY_STATES[:not_started]
     if object.instance_of?(Path)
-      self.treeRank = object.priority
-      self.backlog_id = AfBacklog.product_backlog_id
+      self.treeRank = object.priority||0
+      self.backlog_id = AfBacklog.product_backlog_id unless backlog && backlog.backlogtype == 'Iteration'
     elsif object.instance_of?(BuildFeature)
-      self.backlog_id = self.parent.backlog_id
+      self.backlog_id = parent.backlog_id unless backlog && backlog.backlogtype == 'Iteration'
     end
-    ap "Debug = story.backlog_id = #{backlog_id}"
 #    self.af_labels_attributes = [{:name => object.class.name.downcase + '.id=' + object.id.to_s,
 #                                  :displayName => object.class.name.downcase + '.id=' + object.id.to_s,
 #                                  :creator_id => 1,
@@ -76,10 +80,10 @@ protected
   end
 
   # !!! WARNING: THIS ONLY WORKS IF YOU DELETE THE FK REFERENCE FROM THE
-  # LABEL TABLE TO THE STORY TABLE !!!
+  # AGILEFANT LABEL TABLE TO THE STORY TABLE !!!
   def add_label
-    @label = AfLabel.new(:name => bpad_object.class.name.downcase + '.id=' + bpad_object.id.to_s,
-                         :displayName => bpad_object.class.name.downcase + '.id=' + bpad_object.id.to_s,
+    @label = AfLabel.new(:name => bpad_object.class.name.underscore + '.id=' + bpad_object.id.to_s,
+                         :displayName => bpad_object.class.name.underscore + '.id=' + bpad_object.id.to_s,
                          :creator_id => 1,
                          :timestamp => Time.now)
 

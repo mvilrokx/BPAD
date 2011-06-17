@@ -35,11 +35,25 @@
 </div>
 <div class="push-1 span-22 last">
 <ul id="sortable">
-    
+
     <% for path in @all_paths %>
 	<li id="path_<%= path.id -%>">
-	<%=h path.name %>
+	<% if path.priority < 10%>
+        <%=h (path.priority.to_s() + '-'*5 +  path.name) %>
+	<% elsif path.priority < 100%>
+        <%=h (path.priority.to_s()+ '-'*4 +  path.name) %>
+        <%else%>
+        <%=h (path.priority.to_s()+ '-'*3 +  path.name) %>
+        <%end%>
 	</li>
-    <% end %>		
+    <% end %>
+    <% 	if @other_paths != nil%>
+      <% for path in @other_paths %>
+	<li id="path_<%= path.id -%>">
+	  <%=h ('-'*7 +  path.name) %>
+	</li>
+      <%end%>
+    <%end%>
 </ul>
 </div>
+
