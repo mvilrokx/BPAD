@@ -12,6 +12,13 @@ Outline_Level,WBS,Name,Scheduled_Work,Percent_Complete,Start_Date,Finish_Date,Re
       3, T-#{sub_story.id}, "#{sub_story.name}",,,,,,,,HXT,,,V1.3
       %br
       -for task in sub_story.tasks
-        4, T-#{task.id}, "#{task.name}",#{task.originalestimate/60},#{((task.originalestimate-task.effortleft)/task.originalestimate)*100},#{task.story.backlog.startDate.strftime("%m/%d/%Y")},#{task.story.backlog.endDate.strftime("%m/%d/%Y")},"#{task.developers.join(',')}",,,HXT,,,V1.3
+        4,
+        T-#{task.id},
+        "#{task.name}",
+        #{(task.originalestimate||0)/60},
+        #{(((((task.originalestimate||0)-(task.effortleft||0)).to_f/(task.originalestimate||1))).to_f)*100},
+        #{task.story.backlog.startDate.strftime("%m/%d/%Y")},
+        #{task.story.backlog.endDate.strftime("%m/%d/%Y")},
+        "#{task.developers.join(',')}",,,HXT,,,V1.3
         %br
 

@@ -28,6 +28,7 @@ Rails::Initializer.run do |config|
 	config.gem 'aasm', :version => '~> 2'
   config.gem "compass", :version => '>= 0.11.1'
   config.gem "haml"
+  config.gem "fastercsv", :version => "~> 1.5.4"
 
 	# Only needed in DEV
 	config.gem 'awesome_print', :as => 'ap'
@@ -52,3 +53,4 @@ Rails::Initializer.run do |config|
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
 end
+
