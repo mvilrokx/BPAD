@@ -1,0 +1,15 @@
+- title "Manage Path Priorities", false
+
+#title
+  %span
+    Path Priorities List
+
+.content
+  %ul{:id =>"sortable"}
+    - for path in @all_paths
+      %li{:id => "path_#{path.id}"}
+        %div{:class => "priority-number"}
+          = path.priority ? path.priority.to_s() : 999999
+        %div{:class => "path-name"}
+          = path.name
+

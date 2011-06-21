@@ -338,3 +338,25 @@ table.pretty {
   list-style: disc;
 }
 
+#sortable {
+  list-style-type: none;
+  font-weight: bold;
+	li {
+    cursor: move;
+	  margin-bottom: 8px;
+	  padding: 4px;
+    border: 2px solid $color2;
+    @include border-radius(5px);
+  }
+  .priority-number {
+    text-align: center;
+    float: left;
+    min-width: 30px;
+	  margin-right: 10px;
+    background: $color2;
+    color: #fff;
+    @include border-radius(15px);
+	  padding: 0px 4px;
+  }
+}
+

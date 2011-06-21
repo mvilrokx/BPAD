@@ -255,3 +255,26 @@ $(function () {
   });
 });
 
+/**
+* Support for Sortable Lists
+*/
+$(document).ready(function() {
+	$( "#sortable" ).sortable( {
+  	opacity: 0.6,
+  	scroll: true,
+    update: function() {
+      $.ajax({
+        type: 'post',
+        data: $("#sortable").sortable('serialize'),
+        success: function(r){
+          $('li > div.priority-number').each(function(i) {
+            $(this).text(i+1);
+          });
+        },
+        url: '/manage_priorities/prioritize_paths'
+      })
+    }
+  });
+	$( "#sortable" ).disableSelection();
+});
+
