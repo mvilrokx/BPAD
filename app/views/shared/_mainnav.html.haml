@@ -1,16 +1,36 @@
 - menu_items ||= [["Business Model", business_processes_path],
                   ["Functional Model", business_areas_path],
                   ["Technical Model", lbas_path],
-                  ["Reports", root_path],
-                  ["Admin", manage_priorities_path],
+                  ["Dashboard", manage_priorities_path, [["Manage Priorities", manage_priorities_path],
+                                ["Other Dashboardy things", manage_priorities_path]]],
                   ["Transactions", iterations_path]]
 
-%ul
-  - menu_items.each do |menu_item|
-    - class_val = ""
-    - if menu_item[0] == (active_menu_item ? active_menu_item.strip : "Business Model")
-      - class_val = "active"
+- active_menu_items = active_menu_item.split(',')
+- ap active_menu_items
+.container
+  #menu
+    %ul
+      - sub_menu_items = []
+      - menu_items.each do |menu_item|
+        - class_val = ""
+        - if menu_item[0] == (active_menu_items[0] ? active_menu_items[0].strip : "Business Model")
+          - class_val = "active"
+          - if menu_item[2].kind_of?(Array)
+            - sub_menu_items = menu_item[2]
 
-    %li{:class => class_val}
-      = link_to(menu_item[0], menu_item[1])
+        %li{:class => class_val}
+          = link_to(menu_item[0], menu_item[1])
+
+
+- if !sub_menu_items.empty?
+  .container
+    #sub-menu
+      %ul
+        - sub_menu_items.each do |sub_menu_item|
+          - class_val = ""
+          - if sub_menu_item[0] == active_menu_items[1].strip
+            - class_val = "active"
+
+          %li{:class => class_val}
+            = link_to(sub_menu_item[0], sub_menu_item[1])
 

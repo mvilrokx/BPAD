@@ -14,7 +14,5 @@
           #{link_to "Sign up", signup_path} or #{link_to "log in", login_path}
 
   #main-nav
-    .container
-      #menu
-        %div{:style => "position: absolute; bottom: 0; left: 0;"}
-          = render :partial => "shared/mainnav", :locals => {:active_menu_item => yield(:active_menu_item)}
+    = render :partial => "shared/mainnav", :locals => {:active_menu_item => yield(:active_menu_item)}
+

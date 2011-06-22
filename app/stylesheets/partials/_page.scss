@@ -60,8 +60,8 @@
   #main-nav {
     #menu {
       @include column(24, true);
-      position: relative;
-      height: 120px;
+//      position: relative;
+//      height: 120px;
       ul {
 	      font-size: 18px;
 	      font-weight: bold;
@@ -79,7 +79,39 @@
             }
           }
           &.active {
-          background:$color2;
+            background:$color2;
+          }
+        }
+      }
+    }
+    #sub-menu {
+      margin-bottom: 0px;
+      @include column(24);
+      background: $color2;
+      border-top: 3px solid $color2;
+      ul {
+	      font-size: 13px;
+	      font-weight: bold;
+	      li {
+          float: left;
+          list-style: none;
+          @include border-radius(3px);
+          a {
+            display:block;
+            color:#fff;
+            padding:2px 14px;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          &.active {
+            text-decoration: none;
+            color:$color2;
+            background:#fff;
+            a {
+              color:$color2;
+            }
           }
         }
       }
