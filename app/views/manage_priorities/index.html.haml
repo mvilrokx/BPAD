@@ -17,6 +17,8 @@
   $('#sortable li').each(function(i) {
     for (i=0;i<=$(this).attr("data-percentcomplete");i++) {
       $(this).css({ 'background': '-webkit-linear-gradient(left, #f2c3bc ' + i + '%, #ffffff ' + i + '%)' });
+      $(this).css({ 'background': '-moz-linear-gradient(left, #f2c3bc ' + i + '%, #ffffff ' + i + '%)' });
+      $(this).css({ 'background': 'linear-gradient(left, #f2c3bc ' + i + '%, #ffffff ' + i + '%)' });
     }
   });
 
