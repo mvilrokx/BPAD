@@ -7,9 +7,16 @@
 .content
   %ul{:id =>"sortable"}
     - for path in @all_paths
-      %li{:id => "path_#{path.id}"}
-        %div{:class => "priority-number"}
+      %li{:id => "path_#{path.id}", :class => "transition-0", :data => {:percentcomplete => "#{path.percent_complete}"}}
+        .priority-number
           = path.priority ? path.priority.to_s() : 999999
-        %div{:class => "path-name"}
+        .path-name
           = path.name
+
+:javascript
+  $('#sortable li').each(function(i) {
+    for (i=0;i<=$(this).attr("data-percentcomplete");i++) {
+      $(this).css({ 'background': '-webkit-linear-gradient(left, #f2c3bc ' + i + '%, #ffffff ' + i + '%)' });
+    }
+  });
 

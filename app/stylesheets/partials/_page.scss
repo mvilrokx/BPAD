@@ -343,10 +343,17 @@ table.pretty {
   font-weight: bold;
 	li {
     cursor: move;
-	  margin-bottom: 8px;
 	  padding: 4px;
+	  margin-bottom: 8px;
     border: 2px solid $color2;
     @include border-radius(5px);
+//    @include linear-gradient(color-stops($color1 0%, white 0.1%), left);
+  }
+  .transition-0 {
+      @include linear-gradient(color-stops($color1 0%, white 0.1%), left);
+  }
+  .transition-100 {
+      @include linear-gradient(color-stops($color1 100%, white 100%), left);
   }
   .priority-number {
     text-align: center;

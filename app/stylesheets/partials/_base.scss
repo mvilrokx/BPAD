@@ -18,8 +18,7 @@ $color5: #808C58;
 $top-bar-background: #333;
 
 // Import compass mixins
-@import "compass/css3/border-radius";
-@import "compass/css3/transform";
+@import "compass/css3";
 
 @mixin arrow ($type, $color, $width) {
   content: " ";

@@ -267,7 +267,7 @@ $(document).ready(function() {
         type: 'post',
         data: $("#sortable").sortable('serialize'),
         success: function(r){
-          $('li > div.priority-number').each(function(i) {
+          $('.priority-number').each(function(i) {
             $(this).text(i+1);
           });
         },

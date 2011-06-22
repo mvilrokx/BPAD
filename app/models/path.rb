@@ -114,6 +114,20 @@ class Path < ActiveRecord::Base
 
   alias_method :agilefant_story, :exists_in_agilefant?
 
+	def percent_complete
+	  if exists_in_agilefant?
+      path_story_oe = path_story_el = 0
+      agilefant_story.children(:include => :tasks).each do |bf_story|
+        bf_story.tasks.each do |task|
+          path_story_oe = path_story_oe + (task.originalestimate||0)
+          path_story_el = path_story_el + (task.effortleft||0)
+        end
+      end
+      return ((path_story_oe - path_story_el)/path_story_oe.to_f)*100
+    else
+      return 0
+    end
+  end
 
 end
 

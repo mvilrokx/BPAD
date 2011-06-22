@@ -970,8 +970,8 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
 /* line 344, ../../../app/stylesheets/partials/_page.scss */
 #sortable li {
   cursor: move;
-  margin-bottom: 8px;
   padding: 4px;
+  margin-bottom: 8px;
   border: 2px solid #51688c;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -980,7 +980,23 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   -khtml-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 351, ../../../app/stylesheets/partials/_page.scss */
+/* line 352, ../../../app/stylesheets/partials/_page.scss */
+#sortable .transition-0 {
+  background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #f2c3bc), color-stop(0.1%, #ffffff));
+  background-image: -webkit-linear-gradient(left, #f2c3bc 0%, #ffffff 0.1%);
+  background-image: -moz-linear-gradient(left, #f2c3bc 0%, #ffffff 0.1%);
+  background-image: -o-linear-gradient(left, #f2c3bc 0%, #ffffff 0.1%);
+  background-image: linear-gradient(left, #f2c3bc 0%, #ffffff 0.1%);
+}
+/* line 355, ../../../app/stylesheets/partials/_page.scss */
+#sortable .transition-100 {
+  background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(100%, #f2c3bc), color-stop(100%, #ffffff));
+  background-image: -webkit-linear-gradient(left, #f2c3bc 100%, #ffffff 100%);
+  background-image: -moz-linear-gradient(left, #f2c3bc 100%, #ffffff 100%);
+  background-image: -o-linear-gradient(left, #f2c3bc 100%, #ffffff 100%);
+  background-image: linear-gradient(left, #f2c3bc 100%, #ffffff 100%);
+}
+/* line 358, ../../../app/stylesheets/partials/_page.scss */
 #sortable .priority-number {
   text-align: center;
   float: left;
