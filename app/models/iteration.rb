@@ -33,10 +33,10 @@ class Iteration < ActiveRecord::Base
     private
 
     def check_for_children
-	    puts "TEST"
 #      if business_processes.count > 0 || business_process_elements.count > 0 || paths.count > 0
         raise InUse unless business_processes.count == 0 && business_process_elements.count == 0 && paths.count == 0
 #      end
     end
 
 end
+

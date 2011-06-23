@@ -75,10 +75,8 @@ class BusinessProcess < ActiveRecord::Base
           element.name = bp_element['name']
 
           if element.save!
-              puts "Successfully created business process elements."
               bp_elements[bp_element['id']] = element
           else
-              puts "Error."
               element.errors.each_full { |msg| puts msg }
           end
       end

@@ -17,7 +17,6 @@ class BamToFamMap < ActiveRecord::Base
 
 #	protected
 #		def unmap_and_unapprove
-#			puts "unmap_and_unapprove"
 #			step.unmap! if step.mapped?
 #			approvals.each do |a|
 #				a.unapprove!
@@ -40,5 +39,6 @@ class BamToFamMap < ActiveRecord::Base
     new_bam_to_fam_map.approvals = approvals.collect { |c| c.clone }
     new_bam_to_fam_map
   end
-  
+
 end
+

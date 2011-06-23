@@ -55,7 +55,6 @@ class AfBacklog < ActiveRecord::Base
 #                  :treeRank => path.priority,
 #                  :state => AfStory::STORY_STATES[:not_started]}
 #    end
-#    ap stories
 #    self.af_stories_attributes = stories
   end
 

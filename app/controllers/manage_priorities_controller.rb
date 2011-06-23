@@ -7,7 +7,6 @@ class ManagePrioritiesController < ApplicationController
 	end
 
 	def prioritize_paths
-	  ap params
     for path in Path.all
      	path.priority = params['path'].index(path.id.to_s) + 1
       path.save

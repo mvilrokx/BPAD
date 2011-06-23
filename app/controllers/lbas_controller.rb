@@ -48,7 +48,6 @@ class LbasController < ApplicationController
 
   def create
     @lba = Lba.new(params[:lba])
-    ap @lba
     if @lba.save
       flash[:notice] = "Successfully created lba."
  			render :json => @lba, :layout => false

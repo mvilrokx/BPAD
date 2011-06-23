@@ -49,7 +49,6 @@ module ApplicationHelper
     if action == :delete
       options[:confirm] = 'Are you sure?'
       options[:method] = :delete
-      ap options
     end
 
     if action == :edit || action == :duplicate

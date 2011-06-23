@@ -69,9 +69,6 @@ class BamToFamMapsController < ApplicationController
   		# Remove features
       @bam_to_fam_map.bam_to_fam_features.all.each do |mapped_feature|
       	if !params[:bam_to_fam_features_attributes][:feature_id].include?(mapped_feature.feature_id.to_s)
-      		ap params[:bam_to_fam_features_attributes][:feature_id]
-      		puts "not found"
-      		puts mapped_feature.feature_id
       		# DELETE
   	    	@bam_to_fam_map.bam_to_fam_features_attributes = [{:id => mapped_feature.id, '_destroy' => '1'}]
      		end

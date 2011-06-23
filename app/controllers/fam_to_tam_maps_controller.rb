@@ -27,10 +27,6 @@ class FamToTamMapsController < ApplicationController
         # @mapped_features = @feature.build_features
       end
     end
-    puts "build_features"
-    ap @build_features
-    puts "mapped_features"
-    ap @mapped_features
 
 		respond_to do |format|
       format.html  { render :partial => 'lbas/lba_children',

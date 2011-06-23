@@ -53,9 +53,7 @@ class Path < ActiveRecord::Base
 
   def all_steps_mapped?
     steps.all(:conditions => {:status => 'not_mapped'}).each do |unmapped_step|
-      ap unmapped_step
       if unmapped_step.mapping_required?
-       puts "Mapping Required!"
        return false
       end
     end

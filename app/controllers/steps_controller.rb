@@ -40,7 +40,6 @@ class StepsController < ApplicationController
   end
 
   def destroy
-	  puts "!!! Entering Destroy Step"
     @step = @path.steps.find(params[:id])
     @step.destroy
     flash[:notice] = "Successfully destroyed step."
@@ -53,3 +52,4 @@ class StepsController < ApplicationController
     end
 
 end
+
