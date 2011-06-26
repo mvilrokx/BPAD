@@ -30,4 +30,19 @@ class BusinessProcessElement < ActiveRecord::Base
 
 	include Trackable
 
+  named_scope :start_element, :conditions => "element_type = 'startEvent'"
+
+  def next_elements
+  	target_elements.all(:conditions => "element_type <> 'intermediateThrowEvent'")
+	end
+
+  def produced_data_objects
+  	target_elements.all(:conditions => "element_type = 'intermediateThrowEvent'")
+	end
+
+  def consumed_data_objects
+    BusinessProcessElement.all(:joins => :flows, :conditions => "element_type = 'intermediateThrowEvent' AND flows.target_element_id = #{id}")
+	end
+
 end
+

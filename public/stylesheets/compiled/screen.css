@@ -472,7 +472,12 @@ p.incr,
   font-weight: normal;
 }
 
-/* line 21, ../../../app/stylesheets/partials/_page.scss */
+@font-face {
+  font-family: "GoodDogRegular";
+  src: url('/fonts/GoodDog-webfont.ttf') format('truetype'), url('/fonts/GoodDog-webfont.eot') format('opentype'), url('/fonts/GoodDog-webfont.woff') format('woff'), url('/fonts/GoodDog-webfont.eot?#iefix') format('embedded-opentype'), url('/fonts/GoodDog-webfont.svg#GoodDogRegular') format('svg');
+}
+
+/* line 26, ../../../app/stylesheets/partials/_page.scss */
 .container {
   width: 950px;
   margin: 0 auto;
@@ -480,7 +485,7 @@ p.incr,
   *zoom: 1;
 }
 
-/* line 25, ../../../app/stylesheets/partials/_page.scss */
+/* line 30, ../../../app/stylesheets/partials/_page.scss */
 .rel_container {
   width: 950px;
   margin: 0 auto;
@@ -489,7 +494,7 @@ p.incr,
   position: relative;
 }
 
-/* line 30, ../../../app/stylesheets/partials/_page.scss */
+/* line 35, ../../../app/stylesheets/partials/_page.scss */
 .content {
   margin-top: 3em;
   padding-left: 40px;
@@ -504,28 +509,38 @@ p.incr,
   overflow-x: hidden;
 }
 
-/* line 37, ../../../app/stylesheets/partials/_page.scss */
+/* line 42, ../../../app/stylesheets/partials/_page.scss */
+#logo {
+  font-family: "GoodDogRegular";
+  font-size: 50px;
+  color: #fff;
+  line-height: 0.1em;
+  margin-left: 10px;
+  text-shadow: rgba(0, 0, 0, 0.2) 1px 1px 0, rgba(0, 0, 0, 0.2) 2px 2px 0, rgba(0, 0, 0, 0.2) 3px 3px 0;
+}
+
+/* line 51, ../../../app/stylesheets/partials/_page.scss */
 #header {
   margin-bottom: 1.5em;
   background-color: #93afd9;
   border-bottom: 3px solid #51688c;
 }
-/* line 41, ../../../app/stylesheets/partials/_page.scss */
+/* line 55, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar {
   background-color: #333333;
   color: #cccccc;
   text-align: center;
   font-weight: bold;
 }
-/* line 46, ../../../app/stylesheets/partials/_page.scss */
+/* line 60, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar a {
   color: #cccccc;
 }
-/* line 48, ../../../app/stylesheets/partials/_page.scss */
+/* line 62, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar a:hover {
   color: #f2f2f2;
 }
-/* line 52, ../../../app/stylesheets/partials/_page.scss */
+/* line 66, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar #active-iteration {
   display: inline;
   float: left;
@@ -536,7 +551,7 @@ p.incr,
 * html #header #top-bar #active-iteration {
   overflow-x: hidden;
 }
-/* line 55, ../../../app/stylesheets/partials/_page.scss */
+/* line 69, ../../../app/stylesheets/partials/_page.scss */
 #header #top-bar #signin-menu {
   padding-left: 360px;
   display: inline;
@@ -548,7 +563,7 @@ p.incr,
 * html #header #top-bar #signin-menu {
   overflow-x: hidden;
 }
-/* line 61, ../../../app/stylesheets/partials/_page.scss */
+/* line 75, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu {
   display: inline;
   float: left;
@@ -559,33 +574,33 @@ p.incr,
 * html #header #main-nav #menu {
   overflow-x: hidden;
 }
-/* line 65, ../../../app/stylesheets/partials/_page.scss */
+/* line 79, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul {
   font-size: 18px;
   font-weight: bold;
 }
-/* line 68, ../../../app/stylesheets/partials/_page.scss */
+/* line 82, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li {
   float: left;
   list-style: none;
   border-right: 1px solid #ccc;
 }
-/* line 72, ../../../app/stylesheets/partials/_page.scss */
+/* line 86, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li a {
   display: block;
   color: #fff;
   padding: 14px;
   text-decoration: none;
 }
-/* line 77, ../../../app/stylesheets/partials/_page.scss */
+/* line 91, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li a:hover {
   background: #808c58;
 }
-/* line 81, ../../../app/stylesheets/partials/_page.scss */
+/* line 95, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #menu ul li.active {
   background: #51688c;
 }
-/* line 87, ../../../app/stylesheets/partials/_page.scss */
+/* line 101, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #sub-menu {
   margin-bottom: 0px;
   display: inline;
@@ -599,12 +614,12 @@ p.incr,
 * html #header #main-nav #sub-menu {
   overflow-x: hidden;
 }
-/* line 92, ../../../app/stylesheets/partials/_page.scss */
+/* line 106, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #sub-menu ul {
   font-size: 13px;
   font-weight: bold;
 }
-/* line 95, ../../../app/stylesheets/partials/_page.scss */
+/* line 109, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #sub-menu ul li {
   float: left;
   list-style: none;
@@ -615,29 +630,29 @@ p.incr,
   -khtml-border-radius: 3px;
   border-radius: 3px;
 }
-/* line 99, ../../../app/stylesheets/partials/_page.scss */
+/* line 113, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #sub-menu ul li a {
   display: block;
   color: #fff;
   padding: 2px 14px;
   text-decoration: none;
 }
-/* line 104, ../../../app/stylesheets/partials/_page.scss */
+/* line 118, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #sub-menu ul li a:hover {
   text-decoration: underline;
 }
-/* line 108, ../../../app/stylesheets/partials/_page.scss */
+/* line 122, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #sub-menu ul li.active {
   text-decoration: none;
   color: #51688c;
   background: #fff;
 }
-/* line 112, ../../../app/stylesheets/partials/_page.scss */
+/* line 126, ../../../app/stylesheets/partials/_page.scss */
 #header #main-nav #sub-menu ul li.active a {
   color: #51688c;
 }
 
-/* line 122, ../../../app/stylesheets/partials/_page.scss */
+/* line 136, ../../../app/stylesheets/partials/_page.scss */
 #body {
   width: 950px;
   margin: 0 auto;
@@ -646,12 +661,12 @@ p.incr,
   min-height: 600px;
 }
 
-/* line 127, ../../../app/stylesheets/partials/_page.scss */
+/* line 141, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb {
   list-style: none;
   overflow: hidden;
 }
-/* line 132, ../../../app/stylesheets/partials/_page.scss */
+/* line 146, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li {
   float: left;
   background-color: #808c58;
@@ -662,7 +677,7 @@ p.incr,
   text-align: center;
   margin: 15px;
 }
-/* line 141, ../../../app/stylesheets/partials/_page.scss */
+/* line 155, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li:not(.last):after {
   content: " ";
   display: block;
@@ -678,7 +693,7 @@ p.incr,
   width: 14px;
   style: solid;
 }
-/* line 144, ../../../app/stylesheets/partials/_page.scss */
+/* line 158, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li:not(.first):before {
   content: " ";
   display: block;
@@ -694,7 +709,7 @@ p.incr,
   style: solid;
   margin-left: -28px;
 }
-/* line 147, ../../../app/stylesheets/partials/_page.scss */
+/* line 161, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li.first {
   -moz-border-radius-topleft: 5px;
   -webkit-border-top-left-radius: 5px;
@@ -710,23 +725,23 @@ p.incr,
   border-bottom-left-radius: 5px;
   padding-left: 14px;
 }
-/* line 152, ../../../app/stylesheets/partials/_page.scss */
+/* line 166, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li a {
   display: block;
   color: white;
 }
-/* line 155, ../../../app/stylesheets/partials/_page.scss */
+/* line 169, ../../../app/stylesheets/partials/_page.scss */
 #breadcrumb li a:hover {
   color: white;
 }
 
-/* line 162, ../../../app/stylesheets/partials/_page.scss */
+/* line 176, ../../../app/stylesheets/partials/_page.scss */
 #env {
   position: fixed;
   top: 50%;
   text-align: center;
 }
-/* line 167, ../../../app/stylesheets/partials/_page.scss */
+/* line 181, ../../../app/stylesheets/partials/_page.scss */
 #env span {
   position: absolute;
   width: 100px;
@@ -755,11 +770,11 @@ p.incr,
   padding: 0px 10px;
 }
 
-/* line 184, ../../../app/stylesheets/partials/_page.scss */
+/* line 198, ../../../app/stylesheets/partials/_page.scss */
 #title {
   border-bottom: 3px solid #51688c;
 }
-/* line 186, ../../../app/stylesheets/partials/_page.scss */
+/* line 200, ../../../app/stylesheets/partials/_page.scss */
 #title span {
   color: #51688c;
   padding: 10px;
@@ -767,82 +782,82 @@ p.incr,
   font-weight: bold;
 }
 
-/* line 200, ../../../app/stylesheets/partials/_page.scss */
+/* line 214, ../../../app/stylesheets/partials/_page.scss */
 a.watching {
   display: block;
   min-height: 16px;
   min-width: 16px;
 }
-/* line 204, ../../../app/stylesheets/partials/_page.scss */
+/* line 218, ../../../app/stylesheets/partials/_page.scss */
 a.watching.loading {
   background: transparent url(/icons/ajax-loader.gif) top left no-repeat;
 }
-/* line 207, ../../../app/stylesheets/partials/_page.scss */
+/* line 221, ../../../app/stylesheets/partials/_page.scss */
 a.watching.add {
   background: transparent url(/icons/heart_disabled.png) top left no-repeat;
 }
-/* line 209, ../../../app/stylesheets/partials/_page.scss */
+/* line 223, ../../../app/stylesheets/partials/_page.scss */
 a.watching.add.over {
   background: transparent url(/icons/heart_add.png) top left no-repeat;
 }
-/* line 213, ../../../app/stylesheets/partials/_page.scss */
+/* line 227, ../../../app/stylesheets/partials/_page.scss */
 a.watching.remove {
   background: transparent url(/icons/heart.png) top left no-repeat;
 }
-/* line 215, ../../../app/stylesheets/partials/_page.scss */
+/* line 229, ../../../app/stylesheets/partials/_page.scss */
 a.watching.remove.over {
   background: transparent url(/icons/heart_delete.png) top left no-repeat;
 }
 
-/* line 221, ../../../app/stylesheets/partials/_page.scss */
+/* line 235, ../../../app/stylesheets/partials/_page.scss */
 table.pretty {
   border-bottom: 2px solid black;
 }
-/* line 224, ../../../app/stylesheets/partials/_page.scss */
+/* line 238, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th {
   background-color: #51688c;
   color: white;
 }
-/* line 227, ../../../app/stylesheets/partials/_page.scss */
+/* line 241, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th a {
   color: white;
 }
-/* line 230, ../../../app/stylesheets/partials/_page.scss */
+/* line 244, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th .current {
   padding-right: 12px;
   background-repeat: no-repeat;
   background-position: right center;
 }
-/* line 235, ../../../app/stylesheets/partials/_page.scss */
+/* line 249, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th .asc {
   background-image: url(/icons/arrow_up.png);
 }
-/* line 238, ../../../app/stylesheets/partials/_page.scss */
+/* line 252, ../../../app/stylesheets/partials/_page.scss */
 table.pretty th .desc {
   background-image: url(/icons/arrow_down.png);
 }
-/* line 242, ../../../app/stylesheets/partials/_page.scss */
+/* line 256, ../../../app/stylesheets/partials/_page.scss */
 table.pretty td {
   padding: 2px 4px 2px 4px;
   border-right: 2px solid white;
 }
-/* line 246, ../../../app/stylesheets/partials/_page.scss */
+/* line 260, ../../../app/stylesheets/partials/_page.scss */
 table.pretty tr:hover td {
   background-color: #808c58;
   color: white;
 }
-/* line 250, ../../../app/stylesheets/partials/_page.scss */
+/* line 264, ../../../app/stylesheets/partials/_page.scss */
 table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   background-color: #808c58;
   color: white;
 }
 
-/* line 256, ../../../app/stylesheets/partials/_page.scss */
+/* line 270, ../../../app/stylesheets/partials/_page.scss */
 .image_text {
   float: right;
 }
 
-/* line 261, ../../../app/stylesheets/partials/_page.scss */
+/* line 275, ../../../app/stylesheets/partials/_page.scss */
 #footer {
   margin-top: 1.5em;
   text-align: right;
@@ -851,7 +866,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   min-height: 140px;
 }
 
-/* line 269, ../../../app/stylesheets/partials/_page.scss */
+/* line 283, ../../../app/stylesheets/partials/_page.scss */
 #left_column {
   display: inline;
   float: left;
@@ -866,7 +881,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   overflow-x: hidden;
 }
 
-/* line 274, ../../../app/stylesheets/partials/_page.scss */
+/* line 288, ../../../app/stylesheets/partials/_page.scss */
 #right_column {
   display: inline;
   float: left;
@@ -879,24 +894,24 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   overflow-x: hidden;
 }
 
-/* line 279, ../../../app/stylesheets/partials/_page.scss */
+/* line 293, ../../../app/stylesheets/partials/_page.scss */
 #lba_tree {
   overflow: auto;
 }
 
-/* line 283, ../../../app/stylesheets/partials/_page.scss */
+/* line 297, ../../../app/stylesheets/partials/_page.scss */
 .tooltip {
   display: none;
   font-size: 11px;
 }
 
-/* line 288, ../../../app/stylesheets/partials/_page.scss */
+/* line 302, ../../../app/stylesheets/partials/_page.scss */
 .dialog h5, form h5 {
   margin-bottom: 0px;
   border-bottom: 1px solid #ddd;
 }
 
-/* line 293, ../../../app/stylesheets/partials/_page.scss */
+/* line 307, ../../../app/stylesheets/partials/_page.scss */
 .spacer {
   background: #dddddd;
   color: #dddddd;
@@ -911,7 +926,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   visibility: hidden;
 }
 
-/* line 297, ../../../app/stylesheets/partials/_page.scss */
+/* line 311, ../../../app/stylesheets/partials/_page.scss */
 .ruler {
   background: #dddddd;
   color: #dddddd;
@@ -923,7 +938,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   border: none;
 }
 
-/* line 301, ../../../app/stylesheets/partials/_page.scss */
+/* line 315, ../../../app/stylesheets/partials/_page.scss */
 .tree-details {
   display: inline;
   float: left;
@@ -943,36 +958,36 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
 }
 
 /* Below this line I still need to Sass'ize */
-/* line 315, ../../../app/stylesheets/partials/_page.scss */
+/* line 329, ../../../app/stylesheets/partials/_page.scss */
 #flash_notice, #flash_error, #flash_warning {
   padding: 5px 8px;
   margin: 10px 0;
 }
 
-/* line 320, ../../../app/stylesheets/partials/_page.scss */
+/* line 334, ../../../app/stylesheets/partials/_page.scss */
 #flash_notice {
   background-color: #CFC;
   border: solid 1px #6C6;
 }
 
-/* line 325, ../../../app/stylesheets/partials/_page.scss */
+/* line 339, ../../../app/stylesheets/partials/_page.scss */
 #flash_warning {
   background-color: #FAAC58;
   border: 1px solid #FF8000;
 }
 
-/* line 330, ../../../app/stylesheets/partials/_page.scss */
+/* line 344, ../../../app/stylesheets/partials/_page.scss */
 #flash_error {
   background-color: #FCC;
   border: solid 1px #C66;
 }
 
-/* line 335, ../../../app/stylesheets/partials/_page.scss */
+/* line 349, ../../../app/stylesheets/partials/_page.scss */
 .fieldWithErrors {
   display: inline;
 }
 
-/* line 339, ../../../app/stylesheets/partials/_page.scss */
+/* line 353, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation {
   width: 400px;
   border: 2px solid #CF0000;
@@ -982,7 +997,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   background-color: #f0f0f0;
 }
 
-/* line 348, ../../../app/stylesheets/partials/_page.scss */
+/* line 362, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation h2 {
   text-align: left;
   font-weight: bold;
@@ -993,30 +1008,30 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   color: #fff;
 }
 
-/* line 358, ../../../app/stylesheets/partials/_page.scss */
+/* line 372, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation p {
   color: #333;
   margin-bottom: 0;
   padding: 8px;
 }
 
-/* line 364, ../../../app/stylesheets/partials/_page.scss */
+/* line 378, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation ul {
   margin: 2px 24px;
 }
 
-/* line 368, ../../../app/stylesheets/partials/_page.scss */
+/* line 382, ../../../app/stylesheets/partials/_page.scss */
 #errorExplanation ul li {
   font-size: 12px;
   list-style: disc;
 }
 
-/* line 373, ../../../app/stylesheets/partials/_page.scss */
+/* line 387, ../../../app/stylesheets/partials/_page.scss */
 #sortable {
   list-style-type: none;
   font-weight: bold;
 }
-/* line 376, ../../../app/stylesheets/partials/_page.scss */
+/* line 390, ../../../app/stylesheets/partials/_page.scss */
 #sortable li {
   cursor: move;
   padding: 4px;
@@ -1029,7 +1044,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   -khtml-border-radius: 5px;
   border-radius: 5px;
 }
-/* line 384, ../../../app/stylesheets/partials/_page.scss */
+/* line 398, ../../../app/stylesheets/partials/_page.scss */
 #sortable .transition-0 {
   background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #f2c3bc), color-stop(0.1%, #ffffff));
   background-image: -webkit-linear-gradient(left, #f2c3bc 0%, #ffffff 0.1%);
@@ -1037,7 +1052,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   background-image: -o-linear-gradient(left, #f2c3bc 0%, #ffffff 0.1%);
   background-image: linear-gradient(left, #f2c3bc 0%, #ffffff 0.1%);
 }
-/* line 387, ../../../app/stylesheets/partials/_page.scss */
+/* line 401, ../../../app/stylesheets/partials/_page.scss */
 #sortable .transition-100 {
   background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(100%, #f2c3bc), color-stop(100%, #ffffff));
   background-image: -webkit-linear-gradient(left, #f2c3bc 100%, #ffffff 100%);
@@ -1045,7 +1060,7 @@ table.pretty tr:nth-child(even):hover td, table.pretty table tr.even:hover td {
   background-image: -o-linear-gradient(left, #f2c3bc 100%, #ffffff 100%);
   background-image: linear-gradient(left, #f2c3bc 100%, #ffffff 100%);
 }
-/* line 390, ../../../app/stylesheets/partials/_page.scss */
+/* line 404, ../../../app/stylesheets/partials/_page.scss */
 #sortable .priority-number {
   text-align: center;
   float: left;

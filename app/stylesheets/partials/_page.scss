@@ -13,6 +13,11 @@
 @include blueprint-interaction;
 
 @include fancy-type;
+@include font-face("GoodDogRegular", font-files("GoodDog-webfont.ttf", truetype,
+                                                "GoodDog-webfont.eot", opentype,
+                                                "GoodDog-webfont.woff", woff,
+                                                "GoodDog-webfont.eot?#iefix", embedded-opentype,
+                                                "GoodDog-webfont.svg#GoodDogRegular",svg ));
 
   // Remove the scaffolding when you're ready to start doing visual design.
   // Or leave it in if you're happy with how blueprint looks out-of-the-box
@@ -32,6 +37,15 @@
   @include prepend(1);
   @include column(23, true);
   overflow: auto;
+}
+
+#logo {
+  font-family: "GoodDogRegular";
+  font-size: 50px;
+  color: #fff;
+  line-height: 0.1em;
+  margin-left: 10px;
+  @include text-shadow(rgba(black, 0.2) 1px 1px 0, rgba(black, 0.2) 2px 2px 0, rgba(black, 0.2) 3px 3px 0);
 }
 
 #header {

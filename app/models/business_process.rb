@@ -48,7 +48,7 @@ class BusinessProcess < ActiveRecord::Base
 
 	protected
 		def parse_xml
-			p self.changed
+#			p self.changed
       bp_elements = Hash.new
       xml = Nokogiri::XML(File.new(self.bpmn.path))
 
