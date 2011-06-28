@@ -46,6 +46,10 @@ class BusinessProcess < ActiveRecord::Base
 
   alias_method :agilefant_backlog, :exists_in_agilefant?
 
+  def start_element
+  	business_process_elements.start_element
+	end
+
 	protected
 		def parse_xml
 #			p self.changed

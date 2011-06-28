@@ -13,9 +13,7 @@ class PathsController < ApplicationController
 
   def new
     @path = @business_process.paths.new
-#    Show list of value that is either startEvent OR based on previous step
-    @available_steps = @business_process.business_process_elements.all(:conditions => "element_type = 'startEvent'")
-
+    @available_steps = @business_process.start_element
     @path.steps.build
   end
 
@@ -33,15 +31,20 @@ class PathsController < ApplicationController
 
   def edit
     @path = @business_process.paths.find(params[:id])
-    last_existing_step = Step.find_by_id(@path.steps.maximum("id"))
+    last_existing_step = @path.last_step
     if last_existing_step.nil?
-      @available_steps = @business_process.business_process_elements.all(:conditions => "element_type = 'startEvent'")
+      @available_steps = @business_process.start_element
       @path.steps.build
     else
-      @available_steps = last_existing_step.business_process_element.target_elements
+      @available_steps = last_existing_step.business_process_element.next_elements
       if !@available_steps.blank?
-         @path.steps.build
+        step = @path.steps.build
+        @produced_data_objects = last_existing_step.business_process_element.produced_data_objects
+        for produced_data_object in @produced_data_objects
+           step.data_object_instances.build
+        end
       end
+
     end
   end
 

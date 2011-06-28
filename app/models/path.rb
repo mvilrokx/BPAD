@@ -127,5 +127,9 @@ class Path < ActiveRecord::Base
     end
   end
 
+	def last_step
+	  Step.find_by_id(steps.maximum("id"))
+  end
+
 end
 

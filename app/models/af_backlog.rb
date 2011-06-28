@@ -20,11 +20,13 @@ class AfBacklog < ActiveRecord::Base
 
   def self.find_from_or_create_in_agilefant(business_process)
     backlog = find_from_business_process(business_process)
-    if !backlog
+    if backlog
+      backlog.name = business_process.name
+    else
       backlog = AfBacklog.new
       backlog.initialize_from_bpad(business_process)
-      backlog.save
     end
+    backlog.save
     backlog
   end
 

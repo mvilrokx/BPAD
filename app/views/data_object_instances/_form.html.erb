@@ -1,0 +1,20 @@
+<% form_for @data_object_instance do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :step_id %><br />
+    <%= f.text_field :step_id %>
+  </p>
+  <p>
+    <%= f.label :business_process_element_id %><br />
+    <%= f.text_field :business_process_element_id %>
+  </p>
+  <p>
+    <%= f.label :iteration_id %><br />
+    <%= f.text_field :iteration_id %>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

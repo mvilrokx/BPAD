@@ -32,6 +32,10 @@ class BusinessProcessElement < ActiveRecord::Base
 
   named_scope :start_element, :conditions => "element_type = 'startEvent'"
 
+  def start_element
+  	target_elements.all(:conditions => "element_type = 'startEvent'")
+	end
+
   def next_elements
   	target_elements.all(:conditions => "element_type <> 'intermediateThrowEvent'")
 	end

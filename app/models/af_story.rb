@@ -32,18 +32,20 @@ class AfStory < ActiveRecord::Base
 
   def self.find_from_or_create_in_agilefant(object, parent = nil)
     story = find_from_bpad_object(object)
-    if !story
+    if story
+      # This is to avoid a READONLY issue caused by using :join in previous select
+      story = AfStory.find(story.id)
+      story.name = object.name
+      story.description = object.description
+    else
       if parent
         story = parent.children.new
       else
         story = AfStory.new
       end
       story.initialize_from_bpad(object, parent)
-      story.save
-    else
-      # This is to avoid a READONLY issue caused by using :join in previous select
-      story = AfStory.find(story.id)
     end
+    story.save
     story
   end
 

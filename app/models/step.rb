@@ -11,6 +11,8 @@ class Step < ActiveRecord::Base
 
   has_many :bam_to_fam_features, :dependent => :destroy
 #  accepts_nested_attributes_for :bam_to_fam_features
+  has_many :data_object_instances, :dependent => :destroy
+  accepts_nested_attributes_for :data_object_instances
 
   has_many :features, :through => :bam_to_fam_features
   has_many :approvals, :through => :bam_to_fam_map
@@ -94,7 +96,7 @@ class Step < ActiveRecord::Base
 	  @interested_parties << self.path.interested_parties
 	  @interested_parties.flatten.compact
 	end
-	
+
   def deep_clone
     new_step = clone
     new_step.created_at = new_step.updated_at = Time.now
@@ -102,5 +104,6 @@ class Step < ActiveRecord::Base
 #    new_step.watchings = watchings.collect { |c| c.clone }
     new_step
   end
-  
+
 end
+

@@ -1,0 +1,24 @@
+<% title "Data Object Instance" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @data_object_instance.name %>
+</p>
+<p>
+  <strong>Step:</strong>
+  <%=h @data_object_instance.step_id %>
+</p>
+<p>
+  <strong>Business Process Element:</strong>
+  <%=h @data_object_instance.business_process_element_id %>
+</p>
+<p>
+  <strong>Iteration:</strong>
+  <%=h @data_object_instance.iteration_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_data_object_instance_path(@data_object_instance) %> |
+  <%= link_to "Destroy", @data_object_instance, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", data_object_instances_path %>
+</p>
