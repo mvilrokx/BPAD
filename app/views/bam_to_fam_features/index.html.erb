@@ -32,7 +32,7 @@
       <% for bam_to_fam_feature in @bam_to_fam_features %>
         <tr>
           <td><%=h bam_to_fam_feature.name %></td>
-          <td><%=h bam_to_fam_feature.description %></td>
+          <td><%=simple_format  bam_to_fam_feature.description %></td>
           <td><%= link_to "Map", feature_fam_to_tam_maps_path(bam_to_fam_feature.feature_id), :class => "button" %></td>
         </tr>
       <% end %>
