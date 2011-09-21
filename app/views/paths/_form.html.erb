@@ -14,6 +14,11 @@
       <%= f.label :priority %><br />
 			<%= f.select :priority, Path::PRIORITY %>
     </p>
+    <p>
+      <%= f.label :tag_names %><br />
+      <%= f.text_field :tag_names %>
+    </p>
+
 
 
     <h3>Steps in Path</h3>
@@ -31,7 +36,7 @@
 				  </li>
         <% else %>
       	  <li>
-      	  	<%= builder.select :business_process_element_id, {builder.object.business_process_element.name + " (" + builder.object.business_process_element.element_type + ")", builder.object.id},{}, {:disabled => true, :style => "width:200px"} %>
+      	  	<%= builder.select :business_process_element_id, [builder.object.business_process_element.name + " (" + builder.object.business_process_element.element_type + ")", builder.object.id],{}, {:disabled => true, :style => "width:200px"} %>
             <%= builder.text_field :comment, :style => "width: 300px" %>
 						<% if builder.object.comment && builder.object.comment.size > 100 then %>
 	            <%= image_tag '/icons/comment.png', :alt=> "more ...", :title=> builder.object.comment %>

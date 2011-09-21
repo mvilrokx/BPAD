@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110613192844) do
+ActiveRecord::Schema.define(:version => 20110920224820) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -104,6 +104,15 @@ ActiveRecord::Schema.define(:version => 20110613192844) do
   end
 
   add_index "business_processes", ["iteration_id"], :name => "iteration_id_ix"
+
+  create_table "data_object_instances", :force => true do |t|
+    t.string   "name"
+    t.integer  "step_id"
+    t.integer  "business_process_element_id"
+    t.integer  "iteration_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "fam_to_tam_maps", :force => true do |t|
     t.integer  "feature_id"
@@ -263,6 +272,19 @@ ActiveRecord::Schema.define(:version => 20110613192844) do
   add_index "steps", ["business_process_element_id"], :name => "business_process_element_id_ix"
   add_index "steps", ["iteration_id"], :name => "iteration_id_ix"
   add_index "steps", ["path_id"], :name => "path_id_ix"
+
+  create_table "taggings", :force => true do |t|
+    t.integer  "path_id"
+    t.integer  "tag_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "username"
