@@ -29,6 +29,7 @@ Rails::Initializer.run do |config|
   config.gem "compass", :version => '>= 0.11.1'
   config.gem "haml"
   config.gem "fastercsv", :version => "~> 1.5.4"
+	config.gem "ruport"
 
 	# Only needed in DEV
 	config.gem 'awesome_print', :as => 'ap'
