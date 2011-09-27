@@ -1,6 +1,10 @@
 class Path < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
+
+  has_many :work_assignments, :dependent => :destroy
+  has_many :users, :through => :work_assignments
+
   # attr_accessible :business_process_id, :name, :description, :steps_attributes
   validates_presence_of :name, :description
   attr_writer :tag_names
@@ -137,8 +141,16 @@ class Path < ActiveRecord::Base
     end
   end
 
+  def developers
+    @dev = []
+    for user in users
+      @dev << user.username
+    end
+    @dev
+  end
+
   private
-  
+
   def assign_tags
     if @tag_names
       self.tags = @tag_names.split(/\s+/).map do |name|

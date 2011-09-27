@@ -1,0 +1,15 @@
+<% title "Work Assignments" %>
+
+<table>
+  <tr>
+    <th>Af User</th>
+    <th>Path</th>
+  </tr>
+  <% for work_assignment in @work_assignments %>
+    <tr>
+      <td><%=h work_assignment.af_user_id %></td>
+      <td><%=h work_assignment.path_id %></td>
+    </tr>
+  <% end %>
+</table>
+

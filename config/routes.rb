@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :work_assignments
+
   map.resources :logical_entity_attributes
 
   map.resources :interfaces

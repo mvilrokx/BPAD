@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110920224820) do
+ActiveRecord::Schema.define(:version => 20110922174927) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -104,15 +104,6 @@ ActiveRecord::Schema.define(:version => 20110920224820) do
   end
 
   add_index "business_processes", ["iteration_id"], :name => "iteration_id_ix"
-
-  create_table "data_object_instances", :force => true do |t|
-    t.string   "name"
-    t.integer  "step_id"
-    t.integer  "business_process_element_id"
-    t.integer  "iteration_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "fam_to_tam_maps", :force => true do |t|
     t.integer  "feature_id"
@@ -248,6 +239,7 @@ ActiveRecord::Schema.define(:version => 20110920224820) do
     t.integer  "iteration_id"
     t.string   "status"
     t.integer  "priority"
+    t.integer  "estimate"
   end
 
   add_index "paths", ["business_process_id"], :name => "business_process_id_ix"
@@ -318,5 +310,12 @@ ActiveRecord::Schema.define(:version => 20110920224820) do
 
   add_index "watchings", ["user_id"], :name => "user_id_ix"
   add_index "watchings", ["watchable_id", "watchable_type"], :name => "watchable_ix"
+
+  create_table "work_assignments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "path_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

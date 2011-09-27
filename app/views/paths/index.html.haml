@@ -14,6 +14,7 @@
 .content
   %table{:class => ["pretty", "striped"]}
     %tr
+      %th= sortable @paths, "id"
       %th= sortable @paths, "name"
       %th= sortable @paths, "priority"
       %th Description
@@ -24,6 +25,7 @@
 
     -for path in @paths
       %tr
+        %td=h path.id
         %td=h path.name
         %td=h path.priority
         %td=h path.description

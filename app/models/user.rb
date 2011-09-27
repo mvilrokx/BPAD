@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   has_many :assignments
   has_many :roles, :through => :assignments
+  has_many :work_assignments
+  has_many :paths, :through => :work_assignments
+
   has_many :watchings
   belongs_to :iteration
 
@@ -41,3 +44,4 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest([pass, password_salt].join)
   end
 end
+

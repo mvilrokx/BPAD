@@ -11,6 +11,11 @@
     </p>
 
     <p>
+      <%= f.label :estimate, 'Estimate (hours)' %><br />
+			<%= f.text_field :estimate %>
+    </p>
+
+    <p>
       <%= f.label :priority %><br />
 			<%= f.select :priority, Path::PRIORITY %>
     </p>
@@ -19,7 +24,13 @@
       <%= f.text_field :tag_names %>
     </p>
 
-
+    <p>
+      <%= f.label :developers %><br />
+      <% for user in User.all %>
+        <%= check_box_tag "path[user_ids][]", user.id, @path.users.include?(user) %>
+        <%=h user.username %><br />
+      <% end %>
+    </p>
 
     <h3>Steps in Path</h3>
     <ol>
@@ -51,3 +62,4 @@
 
   <p><%= f.submit %></p>
 <% end %>
+
