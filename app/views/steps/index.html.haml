@@ -16,6 +16,7 @@
   %table{:class => ["pretty", "striped"]}
     %tr
       %th Steps
+      %th Description
       %th Type
       %th # Features
       %th Map Status
@@ -23,10 +24,8 @@
       %th Actions
     -for step in @steps
       %tr
-        %td
-          = h step.element_name
-          -if !step.comment.blank?
-            = image_tag '/icons/comment.png', :alt=> step.comment, :title=> step.comment
+        %td= h step.element_name
+        %td= simple_format step.comment
         %td=h step.element_type
         %td= link_to step.bam_to_fam_map.bam_to_fam_features.count, step_bam_to_fam_features_path(step), :title=> 'Manage Features' if step.bam_to_fam_map
         %td= step.mapping_required? ? h(status_iconifier(step.status)):"Not Required"
