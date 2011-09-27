@@ -1,0 +1,9 @@
+<select id="usecases", name="usecases[id]">
+	<% for usecase in @usecases -%>
+		<option id="<%= usecase %>" value="<%= usecase%>"><%= usecase %></option>
+	<%end%>
+</select>	
+
+<script type="text/javascript">
+	document.getElementById("<%= @default_usecase%>").selected = true
+</script>

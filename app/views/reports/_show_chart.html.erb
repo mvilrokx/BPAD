@@ -1,0 +1,40 @@
+<script type="text/javascript">
+
+<!-- google.load("visualization", "1", {packages:["corechart"]}); -->
+google.load('visualization', '1', {'packages':['annotatedtimeline']});
+			$(document).ready(function(){
+				 drawChart();
+			});
+      function drawChart() {
+				var dates = <%= @dates.to_json %>
+				var effortleft = <%=@effortleft.to_json%>
+				var originalestimate = <%=@effortestimate.to_json%>
+<!--				alert(dates)  -->
+        var data = new google.visualization.DataTable();
+<!--        data.addColumn('string', 'Dates'); -->
+<!--				data.addColumn('number', 'Days'); -->
+				data.addColumn('date', 'Date');
+        data.addColumn('number', 'Effort Left');
+				data.addColumn('string', 'title1');
+				data.addColumn('string', 'text1');
+        data.addColumn('number', 'Original Estimate');
+				data.addColumn('string', 'title2');
+				data.addColumn('string', 'text2');
+				for(i=0; i< dates.length; i++){
+					data.addRow([new Date(dates[i]), effortleft[i], undefined, undefined, originalestimate[i], undefined, undefined]);
+				}
+
+ 
+
+<!--        var chart = new google.visualization.LineChart(document.getElementById('chart_div')); -->
+<!--				var chart = new google.visualization.ScatterChart(document.getElementById('chart_div')); -->
+				var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('chart_div'));
+<!--        chart.draw(data, {width: 800, height: 400, title: <%= @chartLabel.to_json%>}); -->
+				chart.draw(data, {title: <%= @chartLabel.to_json%>});
+      }
+
+</script>
+
+ 
+<div id="chart_div" style='width: 800px; height: 400px;'></div>
+
