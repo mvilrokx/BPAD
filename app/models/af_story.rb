@@ -3,8 +3,10 @@ class AfStory < ActiveRecord::Base
   set_table_name "stories"
 
 	acts_as_tree
+	acts_as_reportable
 
   belongs_to :backlog, :class_name => "AfBacklog", :foreign_key => "backlog_id"
+	belongs_to :usecase, :class_name => "AfStory", :foreign_key => "parent_id"
   has_many :labels, :class_name => "AfLabel", :foreign_key => "story_id"
   has_many :tasks, :class_name => "AfTask", :foreign_key => "story_id"
 
@@ -71,6 +73,15 @@ class AfStory < ActiveRecord::Base
 #                                  :creator_id => 1,
 #                                  :timestamp => Time.now}]
   end
+
+	def getUsecaseNames
+		data = AfStory.find(:all, :select=>"id, name", :conditions => "parent_id is null")
+		id_name_map = Hash.new
+		data.each do |r|
+			id_name_map[r.id] = r.name
+		end 
+		return id_name_map
+	end
 
   after_create :audit_create, :add_label
 

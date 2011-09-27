@@ -1,0 +1,13 @@
+<select id="projects", name="projects[id]">
+	<% for project in @bpnames -%>
+		<option id="<%= project %>" value="<%= project%>"><%= project %></option>
+	<%end%>
+</select>	
+
+<div id="select_usecase">
+	<%= render :partial => "select_usecase" %>
+</div>
+
+<script type="text/javascript">
+	document.getElementById("<%= @default_bpname%>").selected = true
+</script>

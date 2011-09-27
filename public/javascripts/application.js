@@ -278,3 +278,18 @@ $(document).ready(function() {
 	$( "#sortable" ).disableSelection();
 });
 
+$(function() {
+	$("#iterations").change(function() {
+	var iteration = $('select#iterations :selected').val();
+	$.get('/reports/iteration_change_listener/' + iteration, function(data){
+	$("#select_project").html(data);})
+	return false;}
+	);
+    });
+
+$('#projects').live('change', function() {
+	var project = $('select#projects :selected').val();
+	$.get('/reports/project_change_listener/' + project, function(data){$("#select_usecase").html(data);});
+	return false;
+});
+

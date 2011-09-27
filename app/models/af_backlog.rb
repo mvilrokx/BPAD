@@ -2,7 +2,9 @@ class AfBacklog < ActiveRecord::Base
   establish_connection :agilefant
   set_table_name "backlogs"
 	acts_as_tree
+	acts_as_reportable
 
+	belongs_to :businessProcess, :class_name => "AfBacklog", :foreign_key => "parent_id"
 	has_many :stories, :class_name => "AfStory", :foreign_key => "backlog_id"
 
 	attr_accessor :bpad_business_process_id
