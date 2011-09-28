@@ -25,8 +25,6 @@ class ReportsController < ApplicationController
 	$current_date = Date.today
 	
 	def index
-	puts "in reports controller!!"
-
 	@all_tasks_info = AfTask.report_table(:all, :only=>[:name, :effortleft, :originalestimate], :include =>{:story => {:only => [:name, :parent_id], :include => {:backlog =>{:only => [:name, :startDate, :endDate, :backlogtype], :include =>{:businessProcess => {:only=>[:name]}}}}}})
 
   @all_tasks_info.rename_column("name", "task_name");
@@ -40,37 +38,33 @@ class ReportsController < ApplicationController
 	@all_tasks_info.rename_column(":originalestimate",$ORIGINAL_ESTIMATE_COL)
 
 	$all_task_data = @all_tasks_info
-
+	
 	afStory = AfStory.new
 	$usecase_id_name_map = afStory.getUsecaseNames 
 
-	@groups = Grouping(@all_tasks_info, :by =>["businessProcess","usecase_id","iteration"])
-	@sub = @groups.subgrouping("Manage Time Consumer Sets")
-#.subgrouping("UC1: Create a new time category")
-	
-	@iterations = Array.new
-	groupingByIteration = Grouping(@all_tasks_info, :by =>["iteration"])
-	groupingByIteration.each do |iteration_name, group|
-		if iteration_name != nil
-			@iterations << iteration_name
+	a = $all_task_data
+	a.sort_rows_by!($STARTDATE_COL, :order => :descending)
+	$g_iteration_order = Array.new
+	iteration_col = a.column($ITERATION_COL)
+	iteration_col.each do |iter|
+		if(iter!=nil && !($g_iteration_order.include?(iter)))
+			$g_iteration_order << iter
 		end
-	end
+	end	
 
+	@iterations = $g_iteration_order
 	@iterations << $ALL_ITERATIONS		
-	@default_iteration = "August 2011 Delivery" 
-	data = $all_task_data.sub_table{ |r| (r.iteration).eql?(@default_iteration)}
+	@default_iteration = $ALL_ITERATIONS
+	data = $all_task_data
 	create_bpname_list(data)
 	create_usecase_list(data)
-	cal_chart(data)
+	cal_chart_all_iterations(data)
 	@dates = $g_dates
 	@effortestimate = $g_effortestimate
 	@effortleft = $g_effortleft
 	@chartLabel = @default_iteration + " " + $ALL_PROJECTS + " " + $ALL_USECASES
 	$current_iteration = @default_iteration
 	
-#	$all_task_data.sort_rows_by!($STARTDATE_COL, :order => :descending)
-#	data = Grouping($all_task_data, :by=>$ITERATION_COL)
-#	@test = data
 	end
 
 	def updateChart
@@ -88,7 +82,7 @@ class ReportsController < ApplicationController
 				data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
 			end
 			if(!usecase.eql?($ALL_USECASES))
-				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.key(usecase))}
+				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.index(usecase))}
 			end
 			cal_chart(data)
 		end
@@ -98,21 +92,20 @@ class ReportsController < ApplicationController
 				data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
 			end
 			if(!usecase.eql?($ALL_USECASES))
-				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.key(usecase))}
+				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.index(usecase))}
 			end
+		
 			cal_chart_all_iterations(data)
 		end
 		@dates = $g_dates
 		@effortestimate = $g_effortestimate
 		@effortleft = $g_effortleft
-#		render :nothing => 'true'
 		render :partial => 'show_chart'
 	end
 
 	
 	def iteration_change_listener
 		iteration = params[:id]
-		puts "selected iteration is " + iteration
 		data = $all_task_data
 		if(!iteration.eql?($ALL_ITERATIONS))
 			data = $all_task_data.sub_table{ |r| (r.iteration).eql?(iteration)}
@@ -124,9 +117,7 @@ class ReportsController < ApplicationController
 	end
 
 	def project_change_listener
-		puts "in project change listener ..."
 		project = params[:id]
-		puts "selected project is " + project
 		data = $all_task_data
 		if(!$current_iteration.eql?($ALL_ITERATIONS)) 
 			data = $all_task_data.sub_table{ |r| (r.iteration).eql?($current_iteration)}
@@ -157,17 +148,14 @@ class ReportsController < ApplicationController
 				effort_left_end_date_index = $current_date - start_date		
 			end
 			$g_dates << start_date.to_s
-#			$g_dates << start_date_index
 			$g_effortleft << original_estimate_sum
 			$g_effortestimate << original_estimate_sum
 			if(effort_left_end_date < end_date)
 				$g_dates << effort_left_end_date.to_s
-#				$g_dates << effort_left_end_date_index
 				estimate_at_today = original_estimate_sum/(end_date - start_date - 1.0) * (end_date - effort_left_end_date)				
 				$g_effortestimate << estimate_at_today
 			end
-			$g_dates << end_date.to_s	
-#			$g_dates << end_date_index			
+			$g_dates << end_date.to_s				
 			$g_effortleft << effort_left_sum			
 			$g_effortestimate << estimate_when_done 
 		end
@@ -178,10 +166,18 @@ class ReportsController < ApplicationController
 			$g_effortestimate.clear
 			effort_left_estimate_total = 0
 			start_date = $current_date
-			data.sort_rows_by!($STARTDATE_COL, :order => :descending)
 			data = Grouping(data, :by=>$ITERATION_COL)
+			
+			sort_data = Array.new
 			data.each do |iteration, group|
-				if(iteration != nil && (iteration.include?("2011") || iteration.include?("2012")))
+				i = $g_iteration_order.index(iteration)
+				if(i!= nil)
+					sort_data[i] = group
+				end
+			end
+
+			sort_data.each do |group|
+				if(!group.nil?)				
 					start_date = group.column($STARTDATE_COL)[0].to_date 
 					end_date = group.column($ENDDATE_COL)[0].to_date 
 					effort_left = (group.sigma($EFFORT_LEFT_COL))/60.0 + effort_left_estimate_total
@@ -192,8 +188,6 @@ class ReportsController < ApplicationController
 					if($current_date > start_date)
 						$g_effortleft << effort_left
 						if($current_date < end_date)
-							puts "current_date is "
-							puts $current_date
 							$g_dates << ($current_date + 1).to_s
 							estimate_at_today = original_estimate_this_iteration/(end_date - start_date - 1.0) * (end_date - $current_date) + effort_left_estimate_total
 							$g_effortestimate << estimate_at_today
