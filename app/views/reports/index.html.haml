@@ -1,7 +1,6 @@
 - title "Reports", false
 
 .content
-/=@test.to_html
 
 - form_remote_tag :update => "burn_chart", :url => {:action => "updateChart"} do
 	%select{:id=>"iterations", :name=>"iterations[id]"}
