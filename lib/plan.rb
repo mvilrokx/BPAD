@@ -5,9 +5,9 @@ class Plan
 
     iteration_start_date = start_date
     assignment_happened = true
+    @planned_paths = Hash.new
 
     unplanned_paths = Path.all(:joins => :users, :group => "id", :order => "priority")
-    @planned_paths = Hash.new
     all_users = User.all
     available_users = all_users.dup
 
@@ -27,7 +27,6 @@ class Plan
           path.users.each do |user|
             available_users.delete(user)
           end
-#          already_planned_paths << path
         end
         break if available_users.empty?
       end

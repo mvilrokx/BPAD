@@ -1,0 +1,14 @@
+Web TE Worker TC Detailed process|WTE-UC100 - Timecard With Regional and Contextual panels fully operational - Period Navigation, Help, and Accrual Information|test|SAXIAO#SDEVALLA
+Setup Layout Composer|LC-UC300 - Task List Navigation - Navigating to / from Pages, to Task List, to speicifc pages,   Create Different Timecard Set 'types' and ensure Task list is complete|test|JYOTVENK
+Manage (Setup) HCM Groups|HCM Group create group|test|ASIDGIDD
+Approvals Flow|HR Manager approves corrected timecard|test|MIHIPATE#SOSAGBEM
+Manage (Setup) Public Timecard Templates|UC6: Create Project Fields Timecard Template|test|HVANGIPU
+Manage (Setup) Timekeeper Groups|TKG-UC90 - Navigate to Manage TK Groups form Super Timekeeper Access|test|SANDDE
+Web TimeEntry - Timekeeper|TKE-UC40 - Time entry for group of workers - all workers with different profiles|test|SNANDURI
+Manage (Setup) T&L Rule Sets|RS-UC40 - CRUD TAR Rule Set (x5)|test|DCOHANOF
+Transfer Time|TTP-UC20 - Use case to define Transffer process - Time Moved to payroll on Submit no Approval needed|test|GKRISHNA
+Manage Worker Templates|WPT-UC50 - Worker Define Templates with all fields completed|test|KAREREDD
+Web TimeEntry - Manager|Manager creates a new timecard for a mid-period hire|test|SUBCHATT
+Manage (Setup) - Approval Rules|HR Manager Approval|test|KARUNART
+Manage (Setup) - Rule Balance|RB-UC50 - Create Seeded Balances|test|ASIDGIDD
+Manage (Setup) - Conditional Rules|CR-UC30 - Define Consolidate Rule Set, with Order and Conditions based on Time Entries|test|JASSINGH
