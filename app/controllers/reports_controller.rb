@@ -143,20 +143,22 @@ class ReportsController < ApplicationController
 			start_date_index = 1.0
 			end_date_index = end_date - start_date + 1.0
 			effort_left_end_date_index = end_date_index
-			if($current_date > start_date && $current_date < end_date)
-				effort_left_end_date = $current_date		
-				effort_left_end_date_index = $current_date - start_date		
+			if($current_date >= start_date)
+				if($current_date <= end_date)
+					effort_left_end_date = $current_date		
+					effort_left_end_date_index = $current_date - start_date		
+				end
+				$g_effortleft << original_estimate_sum
+				$g_effortleft << effort_left_sum			
 			end
 			$g_dates << start_date.to_s
-			$g_effortleft << original_estimate_sum
 			$g_effortestimate << original_estimate_sum
 			if(effort_left_end_date < end_date)
 				$g_dates << effort_left_end_date.to_s
 				estimate_at_today = original_estimate_sum/(end_date - start_date - 1.0) * (end_date - effort_left_end_date)				
 				$g_effortestimate << estimate_at_today
 			end
-			$g_dates << end_date.to_s				
-			$g_effortleft << effort_left_sum			
+			$g_dates << end_date.to_s							
 			$g_effortestimate << estimate_when_done 
 		end
 
