@@ -8,6 +8,7 @@ class Path < ActiveRecord::Base
   # attr_accessible :business_process_id, :name, :description, :steps_attributes
   validates_presence_of :name, :description
   attr_writer :tag_names
+  before_save :set_priority
   after_save :assign_tags
 
   def tag_names
@@ -149,6 +150,10 @@ class Path < ActiveRecord::Base
     @dev
   end
 
+  def self.next_available_priority
+    Path.maximum("priority") + 1
+  end
+
   private
 
   def assign_tags
@@ -158,5 +163,10 @@ class Path < ActiveRecord::Base
       end
      end
   end
+
+  def set_priority
+    self.priority = Path.next_available_priority
+  end
+
 end
 
