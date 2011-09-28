@@ -1,6 +1,9 @@
 - content_for :head do
   = javascript_include_tag 'jstree-read-only/jquery.jstree.js'
 
+- content_for :active_menu_item do
+  Business Model
+
 - content_for :content do
   - title = yield(:title), false
 

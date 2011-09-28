@@ -2,45 +2,9 @@ class PlanController < ApplicationController
   def bpad
     @projects = BusinessProcess.all(:include => :paths)
 
-    @paths = Path.all(:joins => :users, :group => "id", :order => "priority")
     available_users = User.all
-    planned_path = Hash.new
-    already_planned_paths = []
+    planned_path = Plan.new.planned_paths
 
-    iteration_start_date = Date.today.months_since(4).beginning_of_month
-    assignment_happened = true
-
-    until @paths.empty? or !assignment_happened
-      assignment_happened = false
-      @paths.each do |path|
-        assign_in_this_iteration = true
-        path.users.each do |user|
-          if !available_users.include?(user)
-            assign_in_this_iteration = false
-          end
-        end
-        if assign_in_this_iteration
-          assignment_happened = true
-          planned_path[path] = [iteration_start_date, path.developers.join(',')]
-          puts "For path #{path.name} ... "
-          path.users.each do |user|
-            #delete developer from list
-            puts "Deleting #{user.username}"
-            available_users.delete(user)
-          end
-          already_planned_paths << path
-        end
-        # exit when developers used
-        puts "No More Developers Available" if available_users.empty?
-        break if available_users.empty?
-
-      end
-      ### reset
-      # remove already planned paths from list
-      @paths.delete_if {|x| already_planned_paths.include?(x)}
-      available_users = User.all
-      iteration_start_date = iteration_start_date.next_month
-    end
     csv_string = FasterCSV.generate do |csv|
 
       cols = %w(Outline_Level WBS Name Scheduled_Work Percent_Complete Start_Date Finish_Date Resource_Names Activity Deliverable_Type Product Hyperlink Notes Release_Version)
