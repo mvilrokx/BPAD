@@ -2,9 +2,7 @@ class PlansController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
   def product_managers_todo_list
-    puts "etner"
     @planned_paths = Plan.new.planned_paths
-    puts "leave"
   end
 
   def bpad
