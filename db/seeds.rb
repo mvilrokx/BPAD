@@ -33,6 +33,7 @@ open(use_cases_file) do |use_cases|
 
       end
     end
+    developers = []
   end
   puts "\nDone!"
 end

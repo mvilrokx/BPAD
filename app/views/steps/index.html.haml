@@ -15,6 +15,7 @@
 .content
   %table{:class => ["pretty", "striped"]}
     %tr
+      %th #
       %th Steps
       %th Description
       %th Type
@@ -22,8 +23,9 @@
       %th Map Status
       %th Signoffs
       %th Actions
-    -for step in @steps
+    -@steps.each_with_index do |step, step_nr|
       %tr
+        %td= h step_nr+1
         %td= h step.element_name
         %td= simple_format step.comment
         %td=h step.element_type
