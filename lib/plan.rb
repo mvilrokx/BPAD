@@ -36,5 +36,31 @@ class Plan
     end
   end
 
+  def by_iteration_by_developer(months_ahead = 15)
+    developer_use_cases = Array.new
+    iteration_use_cases = Array.new # Hash.new
+    all_use_cases = Hash.new
+    User.all.each do |user|
+      puts "Starting with User " + user.username
+      ((Date.today.beginning_of_month..Date.today.months_since(months_ahead)).select {|d| d.day ==1}).each do |iteration_start_date|
+        puts "Starting iteration " + iteration_start_date.to_s
+        @planned_paths.each do |path, path_details|
+          if path_details[1].split(',').include?(user.username) && path_details[0] == iteration_start_date
+            developer_use_cases << path
+          end
+        end
+        if developer_use_cases.count != 0
+          iteration_use_cases << [iteration_start_date, developer_use_cases]
+        else
+          iteration_use_cases << [iteration_start_date, [Path.new(:name => '')]]
+        end
+        developer_use_cases = []
+      end
+      all_use_cases[user] = iteration_use_cases
+      iteration_use_cases = []
+    end
+    all_use_cases
+  end
+
 end
 

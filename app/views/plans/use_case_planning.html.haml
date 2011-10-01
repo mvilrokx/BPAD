@@ -1,0 +1,16 @@
+- title "Fusion Time Use Cases Planning"
+
+.content
+  %table{:class => ["pretty", "striped"]}
+    %tr
+      %th Developers
+      -((Date.today.beginning_of_month..Date.today.months_since(15)).select {|d| d.day ==1}).each do |iteration_start_date|
+        %th= iteration_start_date
+
+    -@use_case_plan.each do |user, iteration_use_cases|
+      %tr
+        %td= user.username
+        -for dev_use_cases in iteration_use_cases
+          -for use_cases in dev_use_cases[1]
+            %td= use_cases.name
+

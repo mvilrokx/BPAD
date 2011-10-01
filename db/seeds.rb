@@ -24,6 +24,7 @@ open(use_cases_file) do |use_cases|
       bp = BusinessProcess.find_by_name(business_process_name)
       if bp
         path = Path.find_or_initialize_by_name(:name => name, :description => description, :business_process => bp)
+        path.users = []
         path.users = developers
         path.do_not_track = true
         path.save!
