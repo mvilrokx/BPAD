@@ -16,9 +16,13 @@
     </p>
 
     <p>
-      <%= f.label :tag_names %><br />
-      <%= f.text_field :tag_names %>
+      <!--  f.label :tag_names   f.text_field :tag_names   --> 
+       <%= h f.label :fbstyle_tag_tokens, "Tag Names" %><br />
+       <%= h f.text_field :fbstyle_tag_tokens , "data-pre" => @path.tags.map(&:attributes).to_json %> 
     </p>
+
+
+ 
 
     <p>
       <%= f.label :developers %><br />
