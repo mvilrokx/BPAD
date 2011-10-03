@@ -1,0 +1,46 @@
+Web TE Worker TC Detailed process|WTE-UC100 - Timecard With Regional and Contextual panels fully operational - Period Navigation, Help, and Accrual Information|LONG TERM PLANNING|SAXIAO#SDEVALLA
+Setup Layout Composer|LC-UC100 - Search / Edit existing Timecards - Basic and Advanced Search , enable Saved Search |LONG TERM PLANNING|JYOTVENK
+Manage (Setup) HCM Groups|HCM-Group UC1|LONG TERM PLANNING|ASIDGIDD
+Approvals Flow|HR Manager rejects timecard|LONG TERM PLANNING|MIHIPATE#SOSAGBEM
+Manage (Setup) Public Timecard Templates|UC1 : Create Projects Public Timecard Template|LONG TERM PLANNING|HVANGIPU
+Manage (Setup) Timekeeper Groups|TKG-UC10 - Create New group for Self|LONG TERM PLANNING|SANDDE
+Web TimeEntry - Timekeeper|TKE-UC10 - Enable TK Group entry from Table of Worker|LONG TERM PLANNING|SNANDURI
+Manage (Setup) T&L Rule Sets|RS-UC10 - CRUD TER Rule Set (x5)|LONG TERM PLANNING|DCOHANOF
+Transfer Time|TTP-UC10 - Use case to define Transffer process - Time Moved to payroll on Submit / Approval|LONG TERM PLANNING|GKRISHNA
+Manage Worker Templates|WPT-UC10 - Worker Create Template from Template Page|LONG TERM PLANNING|KAREREDD
+Web TimeEntry - Manager|Manager creates own timecard from Portrait |LONG TERM PLANNING|SUBCHATT
+Manage (Setup) - Approval Rules|HR Manager Approval|LONG TERM PLANNING|KARUNART
+Manage (Setup) - Conditional Rules|CR-UC10 - Define Individual Rules for Consolidate Rule|LONG TERM PLANNING|JASSINGH
+Web TE Worker TC Detailed process|WTE-UC110 - Time Summary - On timecard, along with Analytics.  Changes to Analytics For worker|LONG TERM PLANNING|SAXIAO#SDEVALLA
+Setup Layout Composer|LC-UC200 - All Crud Functions From Search / Results  (Create, Duplicate, Edit and Delete a Timecard Set (never used)) on timecards from the Results table, along with changes from the task page that reflects back to questionaire|LONG TERM PLANNING|JYOTVENK
+Manage (Setup) HCM Groups|HCM-Group UC2|LONG TERM PLANNING|ASIDGIDD
+Approvals Flow|HR Manager approves corrected timecard|LONG TERM PLANNING|MIHIPATE#SOSAGBEM
+Manage (Setup) Timekeeper Groups|TKG-UC20 - Create New Group for Other Timekeeper|LONG TERM PLANNING|SANDDE
+Web TimeEntry - Timekeeper|TKE-UC20 - Enable TK Group Entry from Gantt list of Workers|LONG TERM PLANNING|SNANDURI#HVANGIPU
+Manage (Setup) T&L Rule Sets|RS-UC20 - CRUD TCR Rule Set (x5)|LONG TERM PLANNING|DCOHANOF
+Transfer Time|TTP-UC20 - Use case to define Transffer process - Time Moved to payroll on Submit no Approval needed|LONG TERM PLANNING|GKRISHNA
+Manage Worker Templates|WPT-UC20 - Worker edit Template from Template Page|LONG TERM PLANNING|KAREREDD
+Web TimeEntry - Manager|Manager edits own timecard|LONG TERM PLANNING|SUBCHATT
+Manage (Setup) - Approval Rules|Project Data Approval Rule|LONG TERM PLANNING|KARUNART
+Manage (Setup) - Conditional Rules|CR-UC20 - Define Rule Conditions and Conditional Rule, defineing default rule|LONG TERM PLANNING|JASSINGH
+Web TE Worker TC Detailed process|WTE-UC120 - Remaining Functionality - Possible Intr-Period Navigation, 'Apply to all' - daily detail (if possible)|LONG TERM PLANNING|SAXIAO#SDEVALLA
+Setup Layout Composer|LC-UC300 - Task List Navigation - Navigating to / from Pages, to Task List, to speicifc pages,   Create Different Timecard Set 'types' and ensure Task list is complete|LONG TERM PLANNING|JYOTVENK
+Manage (Setup) HCM Groups|HCM-Group UC3|LONG TERM PLANNING|ASIDGIDD
+Manage (Setup) Timekeeper Groups|TKG-UC30 - Edit Group Criteria|LONG TERM PLANNING|SANDDE
+Web TimeEntry - Timekeeper|TKE-UC30 - Enable TK Group entry for a group of workers - all with the same time consumer set (all with same setup Profile)|LONG TERM PLANNING|SNANDURI#HVANGIPU
+Transfer Time|TTP-UC30 - Use case to define Transffer process - Time Moved to payroll on Save|LONG TERM PLANNING|GKRISHNA
+Manage Worker Templates|WPT-UC30 - Worker Delete Template from Template Page|LONG TERM PLANNING|KAREREDD#MIHIPATE
+Web TimeEntry - Manager|Manager creates a new timecard for a mid-period hire|LONG TERM PLANNING|SUBCHATT
+Manage (Setup) - Approval Rules|Approval Maximum|LONG TERM PLANNING|KARUNART#SOSAGBEM
+Manage (Setup) - Conditional Rules|CR-UC30 - Define Consolidate Rule Set, with Order and Conditions based on Time Entries|LONG TERM PLANNING|JASSINGH
+Manage (Setup) - Rule Balance|RB-UC10 - Create Balance|LONG TERM PLANNING|DCOHANOF
+Web TE Worker TC Detailed process|WTE-UC130 - Enable all TCR Error Statuses and save with Expedited Status|LONG TERM PLANNING|SAXIAO#SDEVALLA
+Setup Layout Composer|LC-UC400 - Enable TCR Results Matrix on Review Page|LONG TERM PLANNING|JYOTVENK#SOSAGBEM
+Manage (Setup) HCM Groups|HCM-Group UC4|LONG TERM PLANNING|ASIDGIDD
+Manage (Setup) Timekeeper Groups|TKG-UC40 - Edit Static Group|LONG TERM PLANNING|SANDDE
+Web TimeEntry - Timekeeper|TKE-UC40 - Time entry for group of workers - all workers with different profiles|LONG TERM PLANNING|SNANDURI#HVANGIPU
+Transfer Time|TTP-UC40 - Use case to define Transffer process - Time Moved to payroll all other statuses (expedited, with errors)|LONG TERM PLANNING|GKRISHNA#KARUNART
+Manage Worker Templates|WPT-UC40 - Worker search for Templates from Template Page|LONG TERM PLANNING|KAREREDD#MIHIPATE
+Web TimeEntry - Manager|Manager deletes timecard|LONG TERM PLANNING|SUBCHATT
+Manage (Setup) - Conditional Rules|CR-UC40 - Define Consolidate Rule Set with Rules anfd Conditions assigned to a person without Condition values on TC|LONG TERM PLANNING|JASSINGH
+Manage (Setup) - Rule Balance|RB-UC20 - Edit Balance|LONG TERM PLANNING|DCOHANOF

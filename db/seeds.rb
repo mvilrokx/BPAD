@@ -6,7 +6,7 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
 
-use_cases_file = "db/useCasesFile2.csv"
+use_cases_file = "db/useCasesFile4.csv"
 developers = []
 open(use_cases_file) do |use_cases|
   puts "\nLoading Use Cases from file " + use_cases_file
