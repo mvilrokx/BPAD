@@ -293,3 +293,13 @@ $('#projects').live('change', function() {
 	return false;
 });
 
+//  Path tags facebook style
+ $(document).ready(function() { 
+  $("#path_fbstyle_tag_tokens").tokenInput("/tags.json", {
+    crossDomain: false,
+    prePopulate: $(this).data("pre"),
+    preventDuplicates: true,
+    theme: "facebook"
+  }); 
+});
+  

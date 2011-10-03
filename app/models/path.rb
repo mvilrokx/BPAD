@@ -7,13 +7,26 @@ class Path < ActiveRecord::Base
 
   # attr_accessible :business_process_id, :name, :description, :steps_attributes
   validates_presence_of :name, :description
-  attr_writer :tag_names
   before_save :set_priority
-  after_save :assign_tags
 
-  def tag_names
-    @tag_names || tags.map(&:name).join(' ')
-  end
+  #attr_writer :tag_names 
+  #after_save :assign_tags
+ 
+  attr_reader :fbstyle_tag_tokens
+  after_save :assign_fbstyle_tags
+
+  #def tag_names
+  #  @tag_names || tags.map(&:name).join(' ')
+  #end
+
+  def fbstyle_tag_tokens=(ids)   
+    # ids.gsub!(/CREATE_(.+?)_END/) do 
+    #   Tag.create!(:name => $1).id 
+    # end
+    #self.tag_ids = ids.split(",")
+    @all_defined_tags =  tags.find_by_sql("select id , name from tags")   
+    @all_fbstyle_tag_tokens = ids 
+  end 
 
   belongs_to :business_process
   belongs_to :iteration
@@ -153,16 +166,51 @@ class Path < ActiveRecord::Base
   def self.next_available_priority
     Path.maximum("priority") + 1
   end
+ 
 
   private
 
-  def assign_tags
-    if @tag_names
-      self.tags = @tag_names.split(/\s+/).map do |name|
+  #def assign_tags
+   # if @tag_names
+      #self.tags = @tag_names.split(/\s+/).map do |name|
+       # Tag.find_or_create_by_name(name)
+      #end
+     #end
+  #end
+ 
+  def assign_fbstyle_tags
+
+    adt = {}    #hash all defined tags
+    @all_defined_tags.each do |r |
+         adt[r.id] = r.name
+    end   
+
+    if @all_fbstyle_tag_tokens
+      ta = @all_fbstyle_tag_tokens.split(",").each{|t|t.strip!} 
+    end 
+
+    a_names = []
+    if ta
+      ta.each do |t |
+        if t =~ (/CREATE_(.+?)_END/) 
+          t.gsub!(/CREATE_(.+?)_END/) do 
+            a_names << $1  
+          end
+        else
+           ti = t.to_i
+           nm = adt[ti] 
+           a_names << nm 
+        end
+      end
+      
+      self.tags = a_names.map do |name|
         Tag.find_or_create_by_name(name)
       end
-     end
+ 
+    end
+
   end
+
 
   def set_priority
     self.priority = Path.next_available_priority

@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :tags
+
+
   map.resources :work_assignments
 
   map.resources :logical_entity_attributes
