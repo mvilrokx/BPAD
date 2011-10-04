@@ -3,6 +3,7 @@ class PathsController < ApplicationController
 	before_filter :login_required
 	helper_method :sort_column, :sort_direction
 
+
   def index
     @paths = @business_process.paths.paginate(:page => params[:page], :order => sort_column(Path) + " " + sort_direction)
   end
@@ -33,6 +34,7 @@ class PathsController < ApplicationController
 
   def edit
     @path = @business_process.paths.find(params[:id])
+    find_cur_path_dev_assgn
     last_existing_step = Step.find_by_id(@path.steps.maximum("id"))
     if last_existing_step.nil?
       @available_steps = @business_process.business_process_elements.all(:conditions => "element_type = 'startEvent'")
@@ -99,10 +101,19 @@ class PathsController < ApplicationController
     redirect_to path_steps_path(@business_process.paths.find(params[:id]))
   end
 
+
+  def find_cur_path_dev_assgn
+    var = params[:id]
+    sql = "select u.id, IFNULL ( CONCAT (u.name,  ' ', u.last_Name   ) , CONCAT ('Usre Name: ' , u.username   )) name from users u,  work_assignments w where w.path_id = " + var + " and w.user_id  = u.id "
+    @cur_path_dev_assgn =  @business_process.paths.find_by_sql(sql)
+  end
+
   private
     def find_business_process
         @business_process = BusinessProcess.find(params[:business_process_id])
     end
+
+
 
 end
 

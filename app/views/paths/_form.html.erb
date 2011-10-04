@@ -22,27 +22,16 @@
     </p>
 
 
-
-<!--   zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-, "data-pre" => @path.workAssignments.map(&:attributes).to_json
-
+ <!--  delvelopers  -->
     <p>
-       <zz= h f.label :fbstyle_devloper_tokens, "developers" zz><br />
-       <zz= h f.text_field :fbstyle_devloper_tokens , "data-pre" => "".to_json zz>
+       <%= h f.label :fbstyle_devloper_tokens, "developers" %><br />
+       <%= h f.text_field :fbstyle_devloper_tokens , "data-pre" => @cur_path_dev_assgn.map(&:attributes).to_json %>
     </p>
 
-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz   -->
 
 
 
 
-    <p>
-      <%= f.label :developers %><br />
-      <% for user in User.all(:order => "username") %>
-        <%= check_box_tag "path[user_ids][]", user.id, @path.users.include?(user) %>
-        <%=h user.username %><br />
-      <% end %>
-    </p>
 
     <h3>Steps in Path</h3>
     <ol>

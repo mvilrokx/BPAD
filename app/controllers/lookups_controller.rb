@@ -43,22 +43,6 @@ class LookupsController < ApplicationController
     var=  "'%#{params[:q]}%'"
     sql = "select id, IFNULL ( CONCAT (name,  ' ', last_Name   )  , CONCAT ('Usre Name: ' , username   )) name from users where name like " + var + " or last_name like " + var + " or username like " + var
     @alldevs = User.find_by_sql(sql  )
-#     var=  "%#{params[:q]}%"
-#    xdevs = User.find(:all, :conditions => ["name like ? or last_name like ? or username like ?"  ,var,var,var])
-
-#    @alldevs = User.find(:all, :conditions => ["1 = 2"])
-#    xdevs.map do |u|
-#      @alldevs << {:name =>  u.name , :id => u.id}
-#    end
-
-
-#    @alldevs.each do |r |
-#       puts  " zzzzzzzzzzzzzxdevsz alldevs nnnnnname: " +  @alldevs.to_s
-#    end
-
-
-
-
     respond_to do |format|
       format.html
       format.json { render :json => @alldevs.map(&:attributes) }
