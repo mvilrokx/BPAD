@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   # new columns need to be added here to be writable through mass assignment
 #  attr_accessible :username, :email, :password, :password_confirmation
 
-  attr_accessor :password
+  attr_accessor :password, :full_name
   before_save :prepare_password
 
   validates_presence_of :username
@@ -20,6 +20,16 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates_confirmation_of :password
   validates_length_of :password, :minimum => 4, :allow_blank => true
+  attr_writer :full_name
+
+  def full_name
+    if  name
+       @full_name =  "'" + name + " " + last_name + "'"
+    else
+       @full_name =   username + "(Empty name)"
+    end
+
+  end
 
   # login can be either username or email address
   def self.authenticate(login, pass)

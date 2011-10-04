@@ -15,9 +15,7 @@ class Path < ActiveRecord::Base
   attr_reader :fbstyle_tag_tokens
   after_save :assign_fbstyle_tags
 
-  #def tag_names
-  #  @tag_names || tags.map(&:name).join(' ')
-  #end
+  attr_reader :fbstyle_devloper_tokens
 
   def fbstyle_tag_tokens=(ids)
     # ids.gsub!(/CREATE_(.+?)_END/) do
@@ -27,6 +25,14 @@ class Path < ActiveRecord::Base
     @all_defined_tags =  tags.find_by_sql("select id , name from tags")
     @all_fbstyle_tag_tokens = ids
   end
+
+  def fbstyle_devloper_tokens=(ids)
+    puts "aa111 --- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+    puts "aa111 .111--- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz  ids  zz"   + ids.to_s
+    @all_defined_devloper =  WorkAssignment.find(all)
+    @all_fbstyle_devloper_tokens = ids
+  end
+
 
   belongs_to :business_process
   belongs_to :iteration
