@@ -1,7 +1,9 @@
 class AgilefantController < ApplicationController
+
+  PRODUCT = "HWM"
+  RELEASE = "V2.0"
+
   def plan
-    PRODUCT = "HWM"
-    RELEASE = "V2.0"
 
     @projects = AfBacklog.all(:include => {:stories => {:children => :tasks}},
                               :conditions => ['backlogs.backlogtype = "Project" and stories.parent_id is null'])
