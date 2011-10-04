@@ -294,12 +294,22 @@ $('#projects').live('change', function() {
 });
 
 //  Path tags facebook style
- $(document).ready(function() { 
-  $("#path_fbstyle_tag_tokens").tokenInput("/tags.json", {
+ $(document).ready(function() {
+  $("#path_fbstyle_tag_tokens").tokenInput("/lookups/tagsvvo.json", {
     crossDomain: false,
     prePopulate: $(this).data("pre"),
     preventDuplicates: true,
     theme: "facebook"
-  }); 
+  });
 });
-  
+
+
+//  Path developers facebook style
+ $(document).ready(function() {
+  $("#path_fbstyle_devloper_tokens").tokenInput("/lookups/developersVVo.json", {
+    crossDomain: false,
+    preventDuplicates: true,
+    theme: "facebook"
+  });
+});
+

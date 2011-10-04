@@ -15,14 +15,26 @@
 			<%= f.text_field :estimate %>
     </p>
 
-    <p>
-      <!--  f.label :tag_names   f.text_field :tag_names   --> 
+     <p>
+      <!--  f.label :tag_names   f.text_field :tag_names   -->
        <%= h f.label :fbstyle_tag_tokens, "Tag Names" %><br />
-       <%= h f.text_field :fbstyle_tag_tokens , "data-pre" => @path.tags.map(&:attributes).to_json %> 
+       <%= h f.text_field :fbstyle_tag_tokens , "data-pre" => @path.tags.map(&:attributes).to_json %>
     </p>
 
 
- 
+
+<!--   zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+, "data-pre" => @path.workAssignments.map(&:attributes).to_json
+
+    <p>
+       <zz= h f.label :fbstyle_devloper_tokens, "developers" zz><br />
+       <zz= h f.text_field :fbstyle_devloper_tokens , "data-pre" => "".to_json zz>
+    </p>
+
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz   -->
+
+
+
 
     <p>
       <%= f.label :developers %><br />
