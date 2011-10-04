@@ -15,9 +15,7 @@ class Path < ActiveRecord::Base
   attr_reader :fbstyle_tag_tokens
   after_save :assign_fbstyle_tags
 
-  #def tag_names
-  #  @tag_names || tags.map(&:name).join(' ')
-  #end
+  attr_reader :fbstyle_devloper_tokens
 
   def fbstyle_tag_tokens=(ids)
     # ids.gsub!(/CREATE_(.+?)_END/) do
@@ -27,6 +25,14 @@ class Path < ActiveRecord::Base
     @all_defined_tags =  tags.find_by_sql("select id , name from tags")
     @all_fbstyle_tag_tokens = ids
   end
+
+  def fbstyle_devloper_tokens=(ids)
+    puts "aa111 --- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
+    puts "aa111 .111--- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz  ids  zz"   + ids.to_s
+    @all_defined_devloper =  WorkAssignment.find(all)
+    @all_fbstyle_devloper_tokens = ids
+  end
+
 
   belongs_to :business_process
   belongs_to :iteration
@@ -179,45 +185,40 @@ class Path < ActiveRecord::Base
   #end
 
   def assign_fbstyle_tags
-    puts "entering assign_fbstyle_tags"
-
-    adt = {}    #hash all defined tags
-    tags.find_by_sql("select id , name from tags").each do |r |
-         adt[r.id] = r.name
-    end
 
     if @all_fbstyle_tag_tokens
       ta = @all_fbstyle_tag_tokens.split(",").each{|t|t.strip!}
-    end
+      adt = {}    #hash all defined tags
+      @all_defined_tags.each do |r |
+           adt[r.id] = r.name
+      end
 
-    a_names = []
-    if ta
-      ta.each do |t |
-        if t =~ (/CREATE_(.+?)_END/)
-          t.gsub!(/CREATE_(.+?)_END/) do
-            a_names << $1
+      a_names = []
+      if ta
+        ta.each do |t |
+          if t =~ (/CREATE_(.+?)_END/)
+            t.gsub!(/CREATE_(.+?)_END/) do
+              a_names << $1
+            end
+          else
+             ti = t.to_i
+             nm = adt[ti]
+             a_names << nm
           end
-        else
-           ti = t.to_i
-           nm = adt[ti]
-           a_names << nm
         end
-      end
 
-      self.tags = a_names.map do |name|
-        Tag.find_or_create_by_name(name)
+        self.tags = a_names.map do |name|
+          Tag.find_or_create_by_name(name)
+        end
+
       end
 
     end
-
-    puts "Leaving assign_fbstyle_tags"
   end
 
 
   def set_priority
-    puts "entering set_priority"
     self.priority = Path.next_available_priority
-    puts "Leaving set_priority"
   end
 
 end
