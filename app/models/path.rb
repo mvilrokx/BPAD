@@ -9,9 +9,9 @@ class Path < ActiveRecord::Base
   validates_presence_of :name, :description
   before_save :set_priority
 
-  #attr_writer :tag_names 
+  #attr_writer :tag_names
   #after_save :assign_tags
- 
+
   attr_reader :fbstyle_tag_tokens
   after_save :assign_fbstyle_tags
 
@@ -19,14 +19,14 @@ class Path < ActiveRecord::Base
   #  @tag_names || tags.map(&:name).join(' ')
   #end
 
-  def fbstyle_tag_tokens=(ids)   
-    # ids.gsub!(/CREATE_(.+?)_END/) do 
-    #   Tag.create!(:name => $1).id 
+  def fbstyle_tag_tokens=(ids)
+    # ids.gsub!(/CREATE_(.+?)_END/) do
+    #   Tag.create!(:name => $1).id
     # end
     #self.tag_ids = ids.split(",")
-    @all_defined_tags =  tags.find_by_sql("select id , name from tags")   
-    @all_fbstyle_tag_tokens = ids 
-  end 
+    @all_defined_tags =  tags.find_by_sql("select id , name from tags")
+    @all_fbstyle_tag_tokens = ids
+  end
 
   belongs_to :business_process
   belongs_to :iteration
@@ -166,7 +166,7 @@ class Path < ActiveRecord::Base
   def self.next_available_priority
     Path.maximum("priority") + 1
   end
- 
+
 
   private
 
@@ -177,43 +177,47 @@ class Path < ActiveRecord::Base
       #end
      #end
   #end
- 
+
   def assign_fbstyle_tags
+    puts "entering assign_fbstyle_tags"
 
     adt = {}    #hash all defined tags
-    @all_defined_tags.each do |r |
+    tags.find_by_sql("select id , name from tags").each do |r |
          adt[r.id] = r.name
-    end   
+    end
 
     if @all_fbstyle_tag_tokens
-      ta = @all_fbstyle_tag_tokens.split(",").each{|t|t.strip!} 
-    end 
+      ta = @all_fbstyle_tag_tokens.split(",").each{|t|t.strip!}
+    end
 
     a_names = []
     if ta
       ta.each do |t |
-        if t =~ (/CREATE_(.+?)_END/) 
-          t.gsub!(/CREATE_(.+?)_END/) do 
-            a_names << $1  
+        if t =~ (/CREATE_(.+?)_END/)
+          t.gsub!(/CREATE_(.+?)_END/) do
+            a_names << $1
           end
         else
            ti = t.to_i
-           nm = adt[ti] 
-           a_names << nm 
+           nm = adt[ti]
+           a_names << nm
         end
       end
-      
+
       self.tags = a_names.map do |name|
         Tag.find_or_create_by_name(name)
       end
- 
+
     end
 
+    puts "Leaving assign_fbstyle_tags"
   end
 
 
   def set_priority
+    puts "entering set_priority"
     self.priority = Path.next_available_priority
+    puts "Leaving set_priority"
   end
 
 end

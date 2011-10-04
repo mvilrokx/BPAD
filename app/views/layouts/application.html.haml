@@ -2,15 +2,12 @@
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
     = render :partial => "layouts/head"
-    = stylesheet_link_tag "application", "token-input-facebook.css"
-    = stylesheet_link_tag "application", "token-input.css"
-    = stylesheet_link_tag "application", "token-input-mac.css"
-    = javascript_include_tag :defaults, "jquery.tokeninput.js" 
 
   %body
     = render :partial => "layouts/header"
     = render :partial => "layouts/body"
     = render :partial => "layouts/footer"
-    
+
     #env
       %span= RAILS_ENV
+
