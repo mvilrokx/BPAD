@@ -2,30 +2,6 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.xml
 
-
-
-  def index
-
-### moved all lookup to LookupsController
-
-#    #@tags = Tag.all
-#    #sql = "select id , name from tags  where name like " +  "'%#{params[:q]}%'" + " union select -1, " + "'#{params[:q]}'" + " from dual "
-#    #@tags = Tag.find_by_sql( sql)
-#    #@tags =        Tag.where("name like ?","%#{params[:q]}%").select(['name', 'id'])
-#    @tags = Tag.find(:all, :conditions => ["name like ?"  ,"%#{params[:q]}%"])
-#    results = @tags.map(&:attributes)
-#    results << {:name => "Add: #{params[:q]}", :id => "CREATE_#{params[:q]}_END"}
-
-#    respond_to do |format|
-#      format.html
-#      format.json { render :json => results }
-#      #format.json { render :json => @tags.map(&:attributes) }
-
-    end
-
-
-  end
-
   # GET /tags/1
   # GET /tags/1.xml
   def show
