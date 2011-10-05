@@ -293,6 +293,12 @@ $('#projects').live('change', function() {
 	return false;
 });
 
+$('#projects').live('change', function() {
+	var project = $('select#projects :selected').val();
+	$.get('/reports/project_change_listener/' + project, function(data){$("#select_usecase").html(data);});
+	return false;
+});
+
 //  Path tags facebook style
  $(document).ready(function() {
   $("#path_fbstyle_tag_tokens").tokenInput("/lookups/tagsvvo.json", {

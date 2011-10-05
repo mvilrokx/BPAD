@@ -105,15 +105,6 @@ ActiveRecord::Schema.define(:version => 20111003174522) do
 
   add_index "business_processes", ["iteration_id"], :name => "iteration_id_ix"
 
-  create_table "data_object_instances", :force => true do |t|
-    t.string   "name"
-    t.integer  "step_id"
-    t.integer  "business_process_element_id"
-    t.integer  "iteration_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "fam_to_tam_maps", :force => true do |t|
     t.integer  "feature_id"
     t.integer  "build_feature_id"

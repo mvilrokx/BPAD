@@ -5,8 +5,11 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
+["Business Process Modeler", "Functional Modeler", "Technical Modeler", "Developer", "Administrator"].each do |role|
+  Role.find_or_create_by_name role
+end
 
-use_cases_file = "db/useCasesFile4.csv"
+use_cases_file = "db/useCasesFile.csv"
 developers = []
 open(use_cases_file) do |use_cases|
   puts "\nLoading Use Cases from file " + use_cases_file
