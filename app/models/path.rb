@@ -16,20 +16,16 @@ class Path < ActiveRecord::Base
   after_save :assign_fbstyle_tags
 
   attr_reader :fbstyle_devloper_tokens
+  after_save :assign_work_assginments
 
   def fbstyle_tag_tokens=(ids)
-    # ids.gsub!(/CREATE_(.+?)_END/) do
-    #   Tag.create!(:name => $1).id
-    # end
-    #self.tag_ids = ids.split(",")
     @all_defined_tags =  tags.find_by_sql("select id , name from tags")
     @all_fbstyle_tag_tokens = ids
   end
 
+
   def fbstyle_devloper_tokens=(ids)
-    puts "aa111 --- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-    puts "aa111 .111--- zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz  ids  zz"   + ids.to_s
-    @all_defined_devloper =  WorkAssignment.find(all)
+#    @all_defined_devloper =  WorkAssignment.find(:all)
     @all_fbstyle_devloper_tokens = ids
   end
 
@@ -216,10 +212,18 @@ class Path < ActiveRecord::Base
     end
   end
 
-
   def set_priority
     self.priority = Path.next_available_priority
   end
+
+  def assign_work_assginments
+    if @all_fbstyle_devloper_tokens
+       self.work_assignments = @all_fbstyle_devloper_tokens.split(",").map do |id|
+        WorkAssignment.find_or_create_by_user_id(id)
+      end
+    end
+  end
+
 
 end
 

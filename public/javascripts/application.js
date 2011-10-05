@@ -314,6 +314,7 @@ $('#projects').live('change', function() {
  $(document).ready(function() {
   $("#path_fbstyle_devloper_tokens").tokenInput("/lookups/developersVVo.json", {
     crossDomain: false,
+    prePopulate: $(this).data("pre"),
     preventDuplicates: true,
     theme: "facebook"
   });
