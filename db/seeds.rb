@@ -15,8 +15,9 @@ open(use_cases_file) do |use_cases|
   puts "\nLoading Use Cases from file " + use_cases_file
   use_cases.read.each_line do |use_case|
     if !use_case.blank?
-      business_process_name, name, description, developer_names = use_case.chomp.strip.split("|")
-      assigned_developers = developer_names.chomp.strip.split("#")
+      business_process_name, name, description, tags = use_case.chomp.strip.split("|")
+#      business_process_name, name, description, developer_names, tags = use_case.chomp.strip.split("|")
+#      assigned_developers = developer_names.chomp.strip.split("#")
       assigned_developers.each do |username|
         if user = User.first(:conditions => ["username = (?)", username])
           developers << user
@@ -29,6 +30,8 @@ open(use_cases_file) do |use_cases|
         path = Path.find_or_initialize_by_name(:name => name, :description => description, :business_process => bp)
         path.users = []
         path.users = developers
+        path.tags = []
+        path.tags = developers
         path.do_not_track = true
         path.save!
         print "."
