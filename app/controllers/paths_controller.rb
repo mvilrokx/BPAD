@@ -103,9 +103,22 @@ class PathsController < ApplicationController
 
 
   def find_cur_path_dev_assgn
+
     var = params[:id]
-    sql = "select u.id, IFNULL ( CONCAT (u.name,  ' ', u.last_Name   ) , CONCAT ('Usre Name: ' , u.username   )) name from users u,  work_assignments w where w.path_id = " + var + " and w.user_id  = u.id "
-    @cur_path_dev_assgn =  @business_process.paths.find_by_sql(sql)
+#   sql = "select u.id, IFNULL ( CONCAT (u.name,  ' ', u.last_Name   ) , CONCAT ('Usre Name: ' , u.username   )) name from users u,  work_assignments w where w.path_id = " + var + " and w.user_id  = u.id "
+#   @cur_path_dev_assgn =  @business_process.paths.find_by_sql(sql)
+
+   @cur_path_dev_assgn  = User.find(:all,
+                             :select => "u.id, u.username, u.name, u.last_name, w.path_id",
+                             :joins => "as u inner join work_assignments as w on w.user_id  = u.id ",
+                             :conditions => [" w.path_id = ?"  ,var ])
+    if @cur_path_dev_assgn
+      @cur_path_dev_assgn.each do | r|
+        r.name = r.username + "(" +  (r.name || " .. ") + ")"
+      end
+    end
+
+
   end
 
   private
