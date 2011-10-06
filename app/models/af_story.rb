@@ -79,13 +79,22 @@ class AfStory < ActiveRecord::Base
 		id_name_map = Hash.new
 		data.each do |r|
 			id_name_map[r.id] = r.name
-		end 
+		end
 		return id_name_map
 	end
 
   after_create :audit_create, :add_label
 
+  def original_estimate
+    estimate = 0
+    self.children.each do |sub_story|
+      estimate = estimate + sub_story.tasks.sum("originalestimate")
+    end
+    estimate
+  end
+
 protected
+
   def audit_create
     audit(AfAgilefantRevision::REVISION_TYPES[:create])
   end

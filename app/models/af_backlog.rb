@@ -61,6 +61,14 @@ class AfBacklog < ActiveRecord::Base
 #    self.af_stories_attributes = stories
   end
 
+  def original_estimate
+    estimate = 0
+    stories.each do |story|
+      estimate = estimate + story.original_estimate
+    end
+    estimate
+  end
+
 protected
 
   def audit_create
