@@ -293,11 +293,13 @@ $('#projects').live('change', function() {
 	return false;
 });
 
-$('#projects').live('change', function() {
-	var project = $('select#projects :selected').val();
-	$.get('/reports/project_change_listener/' + project, function(data){$("#select_usecase").html(data);});
+
+$(function() {
+	$('#selectForm').submit(function(){
+	var param = $(this).serialize();
+	$.get('/reports/updateChart/' + param, function(data){$("#burn_chart").html(data);});
 	return false;
-});
+	});});
 
 //  Path tags facebook style
  $(document).ready(function() {
@@ -319,4 +321,5 @@ $('#projects').live('change', function() {
     theme: "facebook"
   });
 });
+
 

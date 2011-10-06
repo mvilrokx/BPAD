@@ -37,13 +37,13 @@ class LookupsController < ApplicationController
   end
 
 
-
   ## Developers/users Dynamic lookup search
   def developersVVo
     var=  "%#{params[:q]}%"
 #    sql = "select id, IFNULL ( CONCAT (name,  ' ', last_Name   )  , CONCAT ('Usre Name: ' , username   )) name from users where name like " + var + " or last_name like " + var + " or username like " + var
-#    @alldevs = User.find_by_sql(sql  )
-    @alldevs = User.find(:all, :select => "id, username, name, last_name",  :conditions => ["name like ? or last_name like ? or username like ?"  ,var,var,var])
+    @alldevs = User.find(:all, :select => "u.id, u.username, u.name, u.last_name " ,
+                               :joins => "as u inner join assignments as a on u.id = a.user_id and role_id = 4 ",
+                               :conditions => ["u.name like ? or u.last_name like ? or u.username like ?"  ,var,var,var])
 
     if @alldevs
       @alldevs.each do | r|

@@ -2,12 +2,12 @@
 
 .content
 
-- form_remote_tag :update => "burn_chart", :url => {:action => "updateChart"} do
-	%select{:id=>"iterations", :name=>"iterations[id]"}
+%form{:id => "selectForm"}
+	%select{:id=>"iterations", :name=>"iterations"}
 		- for iteration in @iterations
 			%option{:id => iteration, :value => iteration}=iteration
 	%div#select_project= render :partial => "select_project"
-	= submit_tag 'Select'
+	%input{:id=>"selectButton", :type => "submit", :value => "select"}
 
 
 :javascript

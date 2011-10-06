@@ -61,6 +61,24 @@ class AfBacklog < ActiveRecord::Base
 #    self.af_stories_attributes = stories
   end
 
+	def getIterationStartdateMap
+		data = AfBacklog.find(:all, :select=>"name, startDate, backlogtype", :conditions => "backlogtype like 'Iteration'")
+		iteration_startdate_map = Hash.new
+		data.each do |r|
+			iteration_startdate_map[r.name] = r.startDate
+		end 
+		return iteration_startdate_map
+	end
+
+	def getProjectIdMap
+		data = AfBacklog.find(:all, :select=>"id, name, backlogtype", :conditions => "backlogtype like 'Project'")
+		project_id_map = Hash.new
+		data.each do |r|
+			project_id_map[r.id] = r.name
+		end
+		return project_id_map
+	end
+
   def original_estimate
     estimate = 0
     stories.each do |story|

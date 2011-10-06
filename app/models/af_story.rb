@@ -75,11 +75,11 @@ class AfStory < ActiveRecord::Base
   end
 
 	def getUsecaseNames
-		data = AfStory.find(:all, :select=>"id, name", :conditions => "parent_id is null")
+		data = AfStory.find(:all, :select=>"id, name, backlog_id", :conditions => "parent_id is null")
 		id_name_map = Hash.new
 		data.each do |r|
-			id_name_map[r.id] = r.name
-		end
+			id_name_map[r.id] = r.name.to_s+"@"+r.backlog_id.to_s
+		end 
 		return id_name_map
 	end
 

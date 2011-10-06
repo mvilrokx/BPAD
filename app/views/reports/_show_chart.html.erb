@@ -7,6 +7,8 @@ google.load('visualization', '1', {'packages':['annotatedtimeline']});
 				var dates = <%= @dates.to_json %>
 				var effortleft = <%=@effortleft.to_json%>
 				var originalestimate = <%=@effortestimate.to_json%>
+				var test = <%=@test.to_json%>
+<!--				alert(dates) -->
         var data = new google.visualization.DataTable();
 				data.addColumn('date', 'Date');
         data.addColumn('number', 'Effort Left (Hours)');

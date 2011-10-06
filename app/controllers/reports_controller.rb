@@ -4,7 +4,9 @@ class ReportsController < ApplicationController
 	$ALL_ITERATIONS = "All Iterations"
 	$ALL_PROJECTS = "All Projects"
 	$ALL_USECASES = "All Use Cases"
+	$TASK_ID_COL = "task_id"
 	$TASK_NAME_COL = "task_name"
+	$STORY_ID_COL = "story_id"
 	$STORY_NAME_COL = "story_name"
 	$USECASE_ID_COL = "usecase_id"
 	$ITERATION_COL = "iteration"
@@ -13,11 +15,8 @@ class ReportsController < ApplicationController
 	$BUSINESS_PROCESS_COL = "businessProcess"
 	$EFFORT_LEFT_COL = "effortleft"
 	$ORIGINAL_ESTIMATE_COL = "originalestimate"
+	$TIME_STAMP_COL = "timestamp"
 
-  $bpeffortLeftName = 0
-  $bpeffortEstimateName = 1
-	$effortLeftSum = 2
-	
 	$g_dates = Array.new
 	$g_effortleft = Array.new
 	$g_effortestimate = Array.new
@@ -25,24 +24,29 @@ class ReportsController < ApplicationController
 	$current_date = Date.today
 	
 	def index
-	@all_tasks_info = AfTask.report_table(:all, :only=>[:name, :effortleft, :originalestimate], :include =>{:story => {:only => [:name, :parent_id], :include => {:backlog =>{:only => [:name, :startDate, :endDate, :backlogtype], :include =>{:businessProcess => {:only=>[:name]}}}}}})
 
-  @all_tasks_info.rename_column("name", "task_name");
-	@all_tasks_info.rename_column("story.name", "story_name")
-	@all_tasks_info.rename_column("story.parent_id", "usecase_id")
-	@all_tasks_info.rename_column("backlog.name","iteration")
-	@all_tasks_info.rename_column("backlog.startDate","startDate")
-	@all_tasks_info.rename_column("backlog.endDate","endDate")
-	@all_tasks_info.rename_column("businessProcess.name","businessProcess")
-	@all_tasks_info.rename_column(":effortleft",$EFFORT_LEFT_COL)
-	@all_tasks_info.rename_column(":originalestimate",$ORIGINAL_ESTIMATE_COL)
+	story_data = AfStory.report_table(:all, :only=>[:id, :name, :parent_id], :include => {:backlog =>{:only=>[:name, :startDate, :endDate, :backlogtype], :include =>{:businessProcess => {:only=>[:name]}}}})
+	story_data.rename_column("id", "story_id")
+	story_data.rename_column("name", "story_name")
+	story_data.rename_column("parent_id", "usecase_id")
+	story_data.rename_column("backlog.name","iteration")
+	story_data.rename_column("backlog.startDate","startDate")
+	story_data.rename_column("backlog.endDate","endDate")
+	story_data.rename_column("backlog.backlogtype","backlogtype")
+	story_data.rename_column("businessProcess.name","businessProcess")
+	story_data.sub_table!{ |r| (r.backlogtype).eql?("Iteration")}
+	$all_story_data = story_data	
 
-	$all_task_data = @all_tasks_info
-	
+	$end_date_all_iterations = Date.new((Date.today>>3).year,(Date.today>>3).month,1)-1
+
 	afStory = AfStory.new
 	$usecase_id_name_map = afStory.getUsecaseNames 
 
-	a = $all_task_data
+	afBacklog = AfBacklog.new
+	$iteration_startdate_map = afBacklog.getIterationStartdateMap
+	$project_id_map = afBacklog.getProjectIdMap
+
+	a = $all_story_data
 	a.sort_rows_by!($STARTDATE_COL, :order => :descending)
 	$g_iteration_order = Array.new
 	iteration_col = a.column($ITERATION_COL)
@@ -54,61 +58,80 @@ class ReportsController < ApplicationController
 
 	@iterations = $g_iteration_order
 	@iterations << $ALL_ITERATIONS		
+
 	@default_iteration = $ALL_ITERATIONS
-	data = $all_task_data
+	data = $all_story_data
 	create_bpname_list(data)
 	create_usecase_list(data)
-	cal_chart_all_iterations(data)
+	get_start_end_date_for_all_iterations
+	cal_story_iteration_startDate_mapping(data)
+	cal_burn_down_all_iterations
 	@dates = $g_dates
 	@effortestimate = $g_effortestimate
 	@effortleft = $g_effortleft
-	@chartLabel = @default_iteration + " " + $ALL_PROJECTS + " " + $ALL_USECASES
 	$current_iteration = @default_iteration
 	
 	end
 
 	def updateChart
-		iteration = params[:iterations][:id]
-		project = params[:projects][:id]
-		usecase = params[:usecases][:id]
-		@chartLabel = iteration + " " + project+ " " + usecase
-		@dates_effort_left = Array.new
-		@dates_original_estimate = Array.new
-		@effortestimate = Array.new
-		@effortleft = Array.new
-		if(!iteration.eql?($ALL_ITERATIONS))
-			data = $all_task_data.sub_table{ |r| (r.iteration).eql?(iteration)}
-			if(!project.eql?($ALL_PROJECTS))
-				data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
-			end
-			if(!usecase.eql?($ALL_USECASES))
-				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.index(usecase))}
-			end
-			cal_chart(data)
-		end
-		if(iteration.eql?($ALL_ITERATIONS))
-			data = $all_task_data
-			if(!project.eql?($ALL_PROJECTS))
-				data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
-			end
-			if(!usecase.eql?($ALL_USECASES))
-				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.index(usecase))}
-			end
+		 
+		selects = params[:id].split('&')
+		iteration = selects[0].split('=')[1].gsub('+', ' ')
+		project = selects[1].split('=')[1].gsub('+', ' ')
+		usecase = selects[2].split('=')[1].gsub('+', ' ')
+
+		@dates = nil
+		@effortestimate = nil
+		@effortleft = nil	
 		
-			cal_chart_all_iterations(data)
+		data = $all_story_data
+			
+		if(!project.eql?($ALL_PROJECTS))
+			data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
 		end
-		@dates = $g_dates
-		@effortestimate = $g_effortestimate
-		@effortleft = $g_effortleft
+		if(!usecase.eql?($ALL_USECASES))
+			if(usecase.eql?("Code Fixes") && project.eql?($ALL_PROJECTS))
+				new_data = nil
+				$usecase_id_name_map.each do |id, name|
+					if(name.start_with?("Code Fixes"))
+						sub_data = data.sub_table{ |r| (r.usecase_id).eql?(id)}
+						if(!new_data.nil?)
+							new_data = new_data + sub_data
+						else
+							new_data = sub_data
+						end
+						end
+					end
+					data = new_data
+				else
+				lookup_usecase = usecase.to_s + "@"+($project_id_map.index(project)).to_s 
+				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.index(lookup_usecase))}
+			end
+		end
+		get_start_end_date_for_all_iterations
+		cal_story_iteration_startDate_mapping(data)
+		cal_burn_down_all_iterations
+		if(iteration.eql?($ALL_ITERATIONS))
+			@dates = $g_dates
+			@effortestimate = $g_effortestimate
+			@effortleft = $g_effortleft
+		end
+		if(!iteration.eql?($ALL_ITERATIONS))			
+			iter_start_date = $iteration_startdate_map[iteration].to_date	
+			cal_one_iteration_chart(iter_start_date)
+			@dates = $g_one_iter_dates
+			@effortestimate = $g_one_iter_effortestimate
+			@effortleft = $g_one_iter_effortleft
+		end
 		render :partial => 'show_chart'
 	end
 
-	
+
 	def iteration_change_listener
 		iteration = params[:id]
-		data = $all_task_data
+		data = $all_story_data
 		if(!iteration.eql?($ALL_ITERATIONS))
-			data = $all_task_data.sub_table{ |r| (r.iteration).eql?(iteration)}
+			data = $all_story_data.sub_table{ |r| (r.iteration).eql?(iteration)}
 		end
 		$current_iteration = iteration
 		create_bpname_list(data)
@@ -118,9 +141,9 @@ class ReportsController < ApplicationController
 
 	def project_change_listener
 		project = params[:id]
-		data = $all_task_data
+		data = $all_story_data
 		if(!$current_iteration.eql?($ALL_ITERATIONS)) 
-			data = $all_task_data.sub_table{ |r| (r.iteration).eql?($current_iteration)}
+			data = $all_story_data.sub_table{ |r| (r.iteration).eql?($current_iteration)}
 		end
 		if(!project.eql?($ALL_PROJECTS))
 			data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
@@ -130,80 +153,232 @@ class ReportsController < ApplicationController
 	end
 
 	private 
-		def cal_chart(data)
-			$g_dates.clear
-			$g_effortleft.clear
-			$g_effortestimate.clear
-			effort_left_sum = (data.sigma($EFFORT_LEFT_COL))/60.0
-			original_estimate_sum = (data.sigma($ORIGINAL_ESTIMATE_COL))/60.0
-			estimate_when_done = 0.0
-			start_date = data.column($STARTDATE_COL)[0].to_date
-			end_date = data.column($ENDDATE_COL)[0].to_date
-			effort_left_end_date = end_date
-			start_date_index = 1.0
-			end_date_index = end_date - start_date + 1.0
-			effort_left_end_date_index = end_date_index
-			if($current_date >= start_date)
-				if($current_date <= end_date)
-					effort_left_end_date = $current_date		
-					effort_left_end_date_index = $current_date - start_date		
-				end
-				$g_effortleft << original_estimate_sum
-				$g_effortleft << effort_left_sum			
-			end
-			$g_dates << start_date.to_s
-			$g_effortestimate << original_estimate_sum
-			if(effort_left_end_date < end_date)
-				$g_dates << effort_left_end_date.to_s
-				estimate_at_today = original_estimate_sum/(end_date - start_date - 1.0) * (end_date - effort_left_end_date)				
-				$g_effortestimate << estimate_at_today
-			end
-			$g_dates << end_date.to_s							
-			$g_effortestimate << estimate_when_done 
+
+		def get_start_end_date_for_all_iterations
+			project_data = AfBacklog.report_table(:all, :only => [:name, :startDate, :endDate], :conditions => "backlogtype like 'Project'")
+			startdate = nil
+			enddate = nil
+			project_data.sort_rows_by!($STARTDATE_COL)
+			startdate_col = project_data.column($STARTDATE_COL)
+			startdate = startdate_col[0].to_date
+			project_data.sort_rows_by!($ENDDATE_COL)
+			enddate_col = project_data.column($ENDDATE_COL)
+			enddate = enddate_col[-1].to_date
+			if(enddate > $end_date_all_iterations)
+				enddate = $end_date_all_iterations
+			end	
+			$g_startdate = startdate
+			$g_enddate = enddate
 		end
 
-		def cal_chart_all_iterations(data)
-			$g_dates.clear
-			$g_effortleft.clear
-			$g_effortestimate.clear
-			effort_left_estimate_total = 0
-			start_date = $current_date
-			data = Grouping(data, :by=>$ITERATION_COL)
-			
-			sort_data = Array.new
-			data.each do |iteration, group|
-				i = $g_iteration_order.index(iteration)
-				if(i!= nil)
-					sort_data[i] = group
-				end
-			end
+		def cal_story_iteration_startDate_mapping(data)
+			$story_iteration_map = Hash.new
+			story_id_col = data.column($STORY_ID_COL)
+			story_id_col.each do |story_id|
+			story_aud_data = AfStoryAud.report_table(:all, :only=>[:id], :include =>{:backlog =>{:only=>		[:name, :startDate, :endDate, :backlogtype]}}, :conditions => ["stories_AUD.id= ?", story_id])
+			story_aud_data.rename_column("backlog.name",$ITERATION_COL)
+			story_aud_data.rename_column("backlog.startDate",$STARTDATE_COL)	
+			story_aud_data.rename_column("backlog.endDate",$ENDDATE_COL)
+			story_aud_data.rename_column("backlog.backlogtype","backlogtype")
+			story_aud_data = story_aud_data.sub_table{ |r| (r.backlogtype).eql?("Iteration")}
 
-			sort_data.each do |group|
-				if(!group.nil?)				
-					start_date = group.column($STARTDATE_COL)[0].to_date 
-					end_date = group.column($ENDDATE_COL)[0].to_date 
-					effort_left = (group.sigma($EFFORT_LEFT_COL))/60.0 + effort_left_estimate_total
-					original_estimate_this_iteration = (group.sigma($ORIGINAL_ESTIMATE_COL))/60.0
-					original_estimate = original_estimate_this_iteration + effort_left_estimate_total					
-					$g_dates << (end_date + 1).to_s
-					$g_effortestimate << effort_left_estimate_total 
-					if($current_date > start_date)
-						$g_effortleft << effort_left
-						if($current_date < end_date)
-							$g_dates << ($current_date + 1).to_s
-							estimate_at_today = original_estimate_this_iteration/(end_date - start_date - 1.0) * (end_date - $current_date) + effort_left_estimate_total
-							$g_effortestimate << estimate_at_today
-						end
-					end 
-					effort_left_estimate_total = original_estimate
+			iteration_start_date_array = Array.new			
+			
+			start_date_col = story_aud_data.column($STARTDATE_COL)
+			start_date_col.each do |start_date|
+				startdate = start_date.to_date
+				enddate = (startdate >> 1) -1
+				if((!iteration_start_date_array.include?(startdate)) && (enddate <= $end_date_all_iterations))
+					iteration_start_date_array << startdate
 				end
 			end
-			$g_dates << (start_date + 1).to_s
-			$g_effortleft << effort_left_estimate_total 
-			$g_effortestimate << effort_left_estimate_total
-			$g_dates.reverse!
-			$g_effortleft.reverse!
-			$g_effortestimate.reverse!
+			iteration_start_date_array.sort!
+			iteration_start_date_array.reverse!		
+			$story_iteration_map[story_id] = iteration_start_date_array
+			end
+		end
+
+		def cal_one_iteration_chart(start_date)
+			$g_one_iter_dates = Array.new
+			$g_one_iter_effortleft = Array.new
+			$g_one_iter_effortestimate = Array.new
+			end_date = (start_date >> 1) -1
+			count = end_date + 1 - start_date
+			effortleft_count = count 
+			if($current_date >= start_date  && $current_date <= end_date)
+				effortleft_count = $current_date + 1 - start_date
+			end
+			if($current_date < start_date)
+				effortleft_count = 0
+			end
+			date = start_date + 1
+			baseline = $g_effortestimate[end_date - $g_startdate]
+			startindex = start_date - $g_startdate - 1
+			for i in (1..count)
+				$g_one_iter_dates << date.to_s
+				$g_one_iter_effortestimate << $g_effortestimate[startindex+i]-baseline 
+				date += 1
+			end
+			for i in (1..effortleft_count)
+				$g_one_iter_effortleft << $g_effortleft[startindex+i] - baseline
+			end			
+		end
+
+		def cal_burn_down_all_iterations
+			$g_dates = Array.new
+			$g_effortleft = Array.new
+			$g_effortestimate = Array.new
+			start_date = $g_startdate.to_date
+			end_date = $g_enddate.to_date
+			count = end_date + 1 - start_date
+			effortleft_count = count 
+			if($current_date >= start_date  && $current_date <= end_date)
+				effortleft_count = $current_date + 1 - start_date
+			end
+			if($current_date < start_date)
+				effortleft_count = 0
+			end
+			date = start_date + 1
+			for i in (1..count)
+				$g_dates << date.to_s
+				$g_effortestimate << 0 
+				date += 1
+			end
+			for i in (1..effortleft_count)
+				$g_effortleft << 0
+			end
+			$story_iteration_map.each do |story_id, iteration_array|
+				task_data = AfTask.report_table(:all, :only => [:id, :story_id], :conditions => ["story_id= ? ", story_id])
+				if(!(task_data.empty?))
+					task_id_col = task_data.column("id")
+					task_id_col.each do |task_id|
+						task_aud_data = AfTaskAud.report_table(:all, :only => [:id, :effortleft, :originalestimate], :include => {:agilefant_revision => {:only => [:timestamp]}}, :conditions => ["tasks_AUD.id= ? ", task_id])
+						task_aud_data = task_aud_data.sub_table{ |r| !((r.effortleft).nil?)}
+						task_aud_data = task_aud_data.sub_table{ |r| !((r.originalestimate).nil?)}
+						if(!(task_aud_data.empty?))
+							task_aud_data.rename_column("agilefant_revision.timestamp", $TIME_STAMP_COL)
+							task_aud_data.sort_rows_by!($TIME_STAMP_COL, :order => :descending)
+							timestamp_col = task_aud_data.column($TIME_STAMP_COL)
+							effortleft_col = task_aud_data.column($EFFORT_LEFT_COL)
+							originalestimate_col = task_aud_data.column($ORIGINAL_ESTIMATE_COL)
+
+							this_task_effort_left = Hash.new
+							this_task_effort_estimate = Hash.new
+							
+							task_skip_iteration_array = Array.new
+							task_iteration_array = iteration_array
+							iter_cnt = 0
+							iteration_array.each do |iter_start_date|
+								iter_cnt += 1
+								skip_this_iteration = 0
+								iter_end_date = (iter_start_date >> 1) -1
+								iter_end_date_index = iter_end_date - $g_startdate
+								this_iter_days = iter_end_date - iter_start_date + 1
+								flagdate = iter_end_date
+								dayindex = iter_end_date_index
+							
+								break_iteration_loop_flag = 0
+								last_estimate = 0
+								last_estimate_data_point = 0
+								last_effort_left = 0
+							
+									timestamp = timestamp_col[0]
+									timepoint = Time.at(timestamp/1000).to_date
+									col_index = 0
+									timepoint_smaller_than_end_date_cnt = 0
+									while(break_iteration_loop_flag<1)
+										if(timepoint <= iter_end_date)
+											timepoint_smaller_than_end_date_cnt += 1
+										end
+										if(timepoint < iter_start_date)
+											break_iteration_loop_flag = 1
+											timepoint = iter_start_date
+											if((timepoint_smaller_than_end_date_cnt < 2 && iter_cnt > 1) || (effortleft_col[col_index]==0))
+												flagdate = start_date - 1;
+												task_skip_iteration_array << iter_start_date
+												skip_this_iteration = 1
+											end	
+										end
+										while ((flagdate + 1 - timepoint) > 0)
+											if(flagdate <= $current_date)
+												effortleft = effortleft_col[col_index]/60
+												last_effort_left = effortleft
+												$g_effortleft[dayindex] += effortleft												
+												this_task_effort_left[iter_start_date.to_date] = effortleft				
+											end
+											estimate = originalestimate_col[col_index]
+											last_estimate_data_point = estimate/60
+											estimate = (estimate/60)/(this_iter_days-1.0)*(iter_end_date - flagdate)
+											last_estimate = estimate
+											$g_effortestimate[dayindex] += estimate								
+											this_task_effort_estimate[iter_start_date.to_date] = estimate
+											dayindex -= 1
+											flagdate -= 1
+										end # while ((flagdate + 1 - timepoint) > 0)
+										col_index += 1
+										if(col_index >= timestamp_col.length)
+											break_iteration_loop_flag = 1
+										else
+											timestamp = timestamp_col[col_index]
+											timepoint = Time.at(timestamp/1000).to_date
+										end																									
+									end # while(break_iteration_loop_flag<1)
+								
+								if(skip_this_iteration < 1)
+									lastrowindex = dayindex + 1
+									estimate_step = 0
+									if(iter_end_date_index - lastrowindex > 0)
+										estimate_step = last_estimate/(iter_end_date_index - lastrowindex)
+									else
+										estimate_step = last_estimate_data_point/(this_iter_days-1.0)
+									end
+									while(dayindex +1 > (iter_start_date - $g_startdate))
+										if(flagdate <= $current_date)
+											if(dayindex < effortleft_count)
+												effortleft = estimate_step*(this_iter_days-1.0)
+												$g_effortleft[dayindex] += effortleft
+												this_task_effort_left[iter_start_date.to_date] = effortleft
+											end
+										end					
+										estimate = estimate_step * (iter_end_date_index - dayindex)						
+										$g_effortestimate[dayindex] += estimate
+										this_task_effort_estimate[iter_start_date.to_date] = estimate
+										dayindex -= 1
+									end	
+									
+								end #if(skip_this_iteration < 1) 
+							end # iteration_array.each do |iter_start_date|
+							##fill missing iterations
+							empty_iter_start = $g_startdate							
+							task_iteration_array.delete_if {|x| task_skip_iteration_array.include?(x) }
+							increase_order_iteration_array = task_iteration_array.sort
+							increase_order_iteration_array.each do |iter_start_date|
+								iter_start_date_index = iter_start_date - $g_startdate
+								if ((empty_iter_start >> 1 - 1) < iter_start_date)
+									dayindex = empty_iter_start - $g_startdate
+									starting_dayindex = dayindex
+									while (dayindex < iter_start_date_index)
+										if(dayindex <= ($current_date - $g_startdate)) 
+											if(starting_dayindex < 1)
+												 
+												$g_effortleft[dayindex] += this_task_effort_estimate[iter_start_date.to_date]
+											else
+												if(this_task_effort_left[iter_start_date.to_date].nil?)
+													this_task_effort_left[iter_start_date.to_date] = 0
+												end
+												$g_effortleft[dayindex] += this_task_effort_left[iter_start_date.to_date]
+											end
+										end
+										$g_effortestimate[dayindex] += this_task_effort_estimate[iter_start_date.to_date]
+										dayindex += 1
+									end	 
+								end							
+								empty_iter_start = iter_start_date >> 1 
+							end
+						end if(!(task_aud_data.empty?))
+					end # task_id_col.each do |task_id|
+				end # if(!(task_data.empty?))
+			end # $story_iteration_map.each do |story_id, iteration_array|
 		end
 
 		def create_bpname_list(data)
@@ -224,7 +399,7 @@ class ReportsController < ApplicationController
 			@usecases = Array.new
 			usecase_list = data.column("usecase_id")
 			usecase_list.each do |usecase_id|
-				usecase = $usecase_id_name_map[usecase_id]
+				usecase = $usecase_id_name_map[usecase_id].split('@')[0]
 				if (usecase != nil)
 					if(!(@usecases.include?(usecase)))
 					@usecases << usecase
