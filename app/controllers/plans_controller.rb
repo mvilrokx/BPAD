@@ -1,6 +1,11 @@
 class PlansController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
+  def use_case_planning
+    plan = Plan.new
+    @use_case_plan = plan.by_iteration_by_developer
+  end
+
   def product_managers_todo_list
     @planned_paths = Plan.new.planned_paths
   end

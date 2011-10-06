@@ -293,10 +293,33 @@ $('#projects').live('change', function() {
 	return false;
 });
 
+
 $(function() {
 	$('#selectForm').submit(function(){
 	var param = $(this).serialize();
 	$.get('/reports/updateChart/' + param, function(data){$("#burn_chart").html(data);});
 	return false;
 	});});
+
+//  Path tags facebook style
+ $(document).ready(function() {
+  $("#path_fbstyle_tag_tokens").tokenInput("/lookups/tagsvvo.json", {
+    crossDomain: false,
+    prePopulate: $(this).data("pre"),
+    preventDuplicates: true,
+    theme: "facebook"
+  });
+});
+
+
+//  Path developers facebook style
+ $(document).ready(function() {
+  $("#path_fbstyle_devloper_tokens").tokenInput("/lookups/developersVVo.json", {
+    crossDomain: false,
+    prePopulate: $(this).data("pre"),
+    preventDuplicates: true,
+    theme: "facebook"
+  });
+});
+
 

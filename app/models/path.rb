@@ -7,13 +7,28 @@ class Path < ActiveRecord::Base
 
   # attr_accessible :business_process_id, :name, :description, :steps_attributes
   validates_presence_of :name, :description
-  attr_writer :tag_names
   before_save :set_priority
-  after_save :assign_tags
 
-  def tag_names
-    @tag_names || tags.map(&:name).join(' ')
+  #attr_writer :tag_names
+  #after_save :assign_tags
+
+  attr_reader :fbstyle_tag_tokens
+  after_save :assign_fbstyle_tags
+
+  attr_reader :fbstyle_devloper_tokens
+  after_save :assign_work_assginments
+
+  def fbstyle_tag_tokens=(ids)
+    @all_defined_tags =  tags.find_by_sql("select id , name from tags")
+    @all_fbstyle_tag_tokens = ids
   end
+
+
+  def fbstyle_devloper_tokens=(ids)
+#    @all_defined_devloper =  WorkAssignment.find(:all)
+    @all_fbstyle_devloper_tokens = ids
+  end
+
 
   belongs_to :business_process
   belongs_to :iteration
@@ -154,19 +169,61 @@ class Path < ActiveRecord::Base
     Path.maximum("priority") + 1
   end
 
+
   private
 
-  def assign_tags
-    if @tag_names
-      self.tags = @tag_names.split(/\s+/).map do |name|
-        Tag.find_or_create_by_name(name)
+  #def assign_tags
+   # if @tag_names
+      #self.tags = @tag_names.split(/\s+/).map do |name|
+       # Tag.find_or_create_by_name(name)
+      #end
+     #end
+  #end
+
+  def assign_fbstyle_tags
+
+    if @all_fbstyle_tag_tokens
+      ta = @all_fbstyle_tag_tokens.split(",").each{|t|t.strip!}
+      adt = {}    #hash all defined tags
+      @all_defined_tags.each do |r |
+           adt[r.id] = r.name
       end
-     end
+
+      a_names = []
+      if ta
+        ta.each do |t |
+          if t =~ (/CREATE_(.+?)_END/)
+            t.gsub!(/CREATE_(.+?)_END/) do
+              a_names << $1
+            end
+          else
+             ti = t.to_i
+             nm = adt[ti]
+             a_names << nm
+          end
+        end
+
+        self.tags = a_names.map do |name|
+          Tag.find_or_create_by_name(name)
+        end
+
+      end
+
+    end
   end
 
   def set_priority
     self.priority = Path.next_available_priority
   end
+
+  def assign_work_assginments
+    if @all_fbstyle_devloper_tokens
+       self.work_assignments = @all_fbstyle_devloper_tokens.split(",").map do |id|
+        WorkAssignment.find_or_create_by_user_id(id)
+      end
+    end
+  end
+
 
 end
 

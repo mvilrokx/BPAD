@@ -15,18 +15,23 @@
 			<%= f.text_field :estimate %>
     </p>
 
-    <p>
-      <%= f.label :tag_names %><br />
-      <%= f.text_field :tag_names %>
+     <p>
+      <!--  f.label :tag_names   f.text_field :tag_names   -->
+       <%= h f.label :fbstyle_tag_tokens, "Tag Names" %><br />
+       <%= h f.text_field :fbstyle_tag_tokens , "data-pre" => @path.tags.map(&:attributes).to_json %>
     </p>
 
+
+ <!--  delvelopers  -->
     <p>
-      <%= f.label :developers %><br />
-      <% for user in User.all(:order => "username") %>
-        <%= check_box_tag "path[user_ids][]", user.id, @path.users.include?(user) %>
-        <%=h user.username %><br />
-      <% end %>
+       <%= h f.label :fbstyle_devloper_tokens, "developers" %><br />
+       <%= h f.text_field :fbstyle_devloper_tokens , "data-pre" => @cur_path_dev_assgn.map(&:attributes).to_json %>
     </p>
+
+
+
+
+
 
     <h3>Steps in Path</h3>
     <ol>

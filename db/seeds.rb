@@ -5,29 +5,13 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Major.create(:name => 'Daley', :city => cities.first)
+["Business Process Modeler", "Functional Modeler", "Technical Modeler", "Developer", "Administrator"].each do |role|
+  Role.find_or_create_by_name role
+end
 
-use_cases_file = "db/useCasesFile.csv"
-developers = []
-open(use_cases_file) do |use_cases|
-  puts "\nLoading Use Cases from file " + use_cases_file
-  use_cases.read.each_line do |use_case|
-    if !use_case.blank?
-      business_process_name, name, description, developer_names = use_case.chomp.strip.split("|")
-      developers = developer_names.chomp.strip.split("#")
-      developers = User.all(:conditions => ["username IN (?)", developers])
-      bp = BusinessProcess.find_by_name(business_process_name)
-      if bp
-        path = Path.find_or_initialize_by_name(:name => name, :description => description, :business_process => bp)
-        path.users = developers
-        path.do_not_track = true
-        path.save!
-        print "."
-      else
-        puts "Skipped loading of " + use_case + " because the Business Process it is attached to ('" + business_process_name + "') does not exist."
-
-      end
-    end
-  end
-  puts "\nDone!"
+["SAXIAO", "SDEVALLA", "JYOTVENK", "ASIDGIDD", "MIHIPATE", "SOSAGBEM", "HVANGIPU", "SANDDE", "SNANDURI", "DCOHANOF", "GKRISHNA", "KAREREDD", "SUBCHATT", "KARUNART", "JASSINGH"].each do |username|
+  developer = User.find_by_username(username)
+  developer.roles << Role.find_by_name("Developer")
+  developer.save!
 end
 

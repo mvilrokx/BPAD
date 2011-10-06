@@ -85,7 +85,16 @@ class AfStory < ActiveRecord::Base
 
   after_create :audit_create, :add_label
 
+  def original_estimate
+    estimate = 0
+    self.children.each do |sub_story|
+      estimate = estimate + sub_story.tasks.sum("originalestimate")
+    end
+    estimate
+  end
+
 protected
+
   def audit_create
     audit(AfAgilefantRevision::REVISION_TYPES[:create])
   end

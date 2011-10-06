@@ -79,6 +79,14 @@ class AfBacklog < ActiveRecord::Base
 		return project_id_map
 	end
 
+  def original_estimate
+    estimate = 0
+    stories.each do |story|
+      estimate = estimate + story.original_estimate
+    end
+    estimate
+  end
+
 protected
 
   def audit_create

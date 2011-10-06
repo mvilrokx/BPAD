@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110922174927) do
+ActiveRecord::Schema.define(:version => 20111003174522) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -286,6 +286,8 @@ ActiveRecord::Schema.define(:version => 20110922174927) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "iteration_id"
+    t.string   "name"
+    t.string   "last_name"
   end
 
   create_table "versions", :force => true do |t|

@@ -3,3 +3,4 @@ class WorkAssignmentsController < ApplicationController
     @work_assignments = WorkAssignment.all
   end
 end
+

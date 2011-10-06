@@ -1,5 +1,10 @@
 class AgilefantController < ApplicationController
+
+  PRODUCT = "HWM"
+  RELEASE = "V2.0"
+
   def plan
+
     @projects = AfBacklog.all(:include => {:stories => {:children => :tasks}},
                               :conditions => ['backlogs.backlogtype = "Project" and stories.parent_id is null'])
 
@@ -9,11 +14,11 @@ class AgilefantController < ApplicationController
       csv << cols
 
       @projects.each do |project|
-        csv << [1, "P-#{project.id}", project.name, nil, nil, nil, nil, nil, nil, nil, "HXT", nil, nil, "V1.3"]
+        csv << [1, "P-#{project.id}", "Project: #{project.name}", nil, nil, nil, nil, nil, nil, nil, PRODUCT, nil, nil, RELEASE]
         project.stories.each do |story|
-          csv << [2, "T-#{story.id}", story.name, nil, nil, nil, nil, nil, nil, nil, "HXT", nil, nil, "V1.3"]
+          csv << [2, "T-#{story.id}", story.name, nil, nil, nil, nil, nil, nil, nil, PRODUCT, nil, nil, RELEASE]
           story.children.each do |sub_story|
-            csv << ["3", "T-#{sub_story.id}", sub_story.name, nil, nil, nil, nil, nil, nil, nil, "HXT", nil, nil, "V1.3"]
+            csv << ["3", "T-#{sub_story.id}", sub_story.name, nil, nil, nil, nil, nil, nil, nil, PRODUCT, nil, nil, RELEASE]
             sub_story.tasks.each do |task|
               csv << ["4",
                       "T-#{task.id}",
@@ -23,7 +28,7 @@ class AgilefantController < ApplicationController
                       task.story.backlog.startDate.strftime("%m/%d/%Y"),
                       task.story.backlog.endDate.strftime("%m/%d/%Y"),
                       task.developers.join(','),
-                      nil,nil,"HXT",nil,nil,"V1.3"]
+                      nil,nil,PRODUCT,nil,nil,RELEASE]
             end
           end
         end
