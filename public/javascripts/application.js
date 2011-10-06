@@ -293,3 +293,10 @@ $('#projects').live('change', function() {
 	return false;
 });
 
+$(function() {
+	$('#selectForm').submit(function(){
+	var param = $(this).serialize();
+	$.get('/reports/updateChart/' + param, function(data){$("#burn_chart").html(data);});
+	return false;
+	});});
+
