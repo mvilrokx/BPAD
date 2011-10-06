@@ -6,6 +6,7 @@ class PathsController < ApplicationController
 
   def index
     @paths = @business_process.paths.paginate(:page => params[:page], :order => sort_column(Path) + " " + sort_direction)
+    find_cur_path_dev_assgn
   end
 
   def show
@@ -16,12 +17,14 @@ class PathsController < ApplicationController
     @path = @business_process.paths.new
 #    Show list of value that is either startEvent OR based on previous step
     @available_steps = @business_process.business_process_elements.all(:conditions => "element_type = 'startEvent'")
+    find_cur_path_dev_assgn
 
     @path.steps.build
   end
 
   def create
     @path = @business_process.paths.new(params[:path])
+    find_cur_path_dev_assgn
     if @path.save
       flash[:notice] = "Successfully created path."
 #      redirect_to [@business_process, @path]
@@ -49,6 +52,7 @@ class PathsController < ApplicationController
 
   def duplicate
     @path = @business_process.paths.find(params[:id]).deep_clone
+    find_cur_path_dev_assgn
     @path.priority ||= 5.to_s
     if @path.save
       flash[:notice] = "Successfully duplicated path."
@@ -61,6 +65,7 @@ class PathsController < ApplicationController
 
   def update
     @path = @business_process.paths.find(params[:id])
+    find_cur_path_dev_assgn
     if @path.update_attributes(params[:path])
       flash[:notice] = "Successfully updated path."
 #      redirect_to [@business_process, @path]
@@ -91,6 +96,7 @@ class PathsController < ApplicationController
     @path = @business_process.paths.find(params[:id])
     @bp_backlog = AfBacklog.find_from_or_create_in_agilefant(@business_process)
     @path_story = AfStory.find_from_or_create_in_agilefant(@path)
+    find_cur_path_dev_assgn
     if @path_story.backlog_id != @bp_backlog.id
       @path_story.update_attribute(:backlog_id, @bp_backlog.id)
     end
