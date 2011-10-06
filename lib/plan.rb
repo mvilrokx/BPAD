@@ -19,22 +19,18 @@ class Plan
       end
     end
 
-    ap business_processes
-
     developers = User.all(:joins => :roles, :conditions => 'roles.name = "Developer"', :order =>:username)
 
     available_developers = developers.dup
 
     paths.each do |path|
       if path.business_process.exists_in_agilefant?
-        if AfStory.find_from_bpad_object(path) || business_processes[path.business_process] < 0
+        if AfStory.find_from_bpad_object(path) || business_processes[path.business_process] <= 0
           @planned_paths[path] = [nil, nil]
         else
           timespent = 0
-puts business_processes[path.business_process]
           if business_processes[path.business_process]  < 130
             timespent = business_processes[path.business_process]
-puts timespent
           else
             timespent = 130
           end
@@ -50,6 +46,8 @@ puts timespent
       end
     end
   end
+
+
 #
 
 #    until paths.empty? or !assignment_happened
