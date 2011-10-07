@@ -399,8 +399,9 @@ class ReportsController < ApplicationController
 			@usecases = Array.new
 			usecase_list = data.column("usecase_id")
 			usecase_list.each do |usecase_id|
-				usecase = $usecase_id_name_map[usecase_id].split('@')[0]
-				if (usecase != nil)
+				usecase_lookup = $usecase_id_name_map[usecase_id]
+				if (usecase_lookup != nil)
+					usecase = usecase_lookup.split('@')[0]
 					if(!(@usecases.include?(usecase)))
 					@usecases << usecase
 				end
