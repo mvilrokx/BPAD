@@ -11,6 +11,10 @@ class PlansController < ApplicationController
   end
 
   def bpad
+    application = "HXT"
+    release = "V1.3"
+    max_project_length = 200
+
     @projects = BusinessProcess.all(:include => :paths)
 
     available_users = User.all
@@ -20,36 +24,60 @@ class PlansController < ApplicationController
 
       cols = %w(Outline_Level WBS Name Scheduled_Work Percent_Complete Start_Date Finish_Date Resource_Names Activity Deliverable_Type Product Hyperlink Notes Release_Version)
       csv << cols
-
+      csv << [1, "P-1", "WFM Development Plan", nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
       @projects.each do |project|
-        csv << [1, "P-#{project.id}", project.name, nil, nil, nil, nil, nil, nil, nil, "HXT", nil, nil, "V1.3"]
-        project.paths.each do |path|
-          story = AfStory.find_from_bpad_object(path)
-          if story
-            csv << [2, "T-#{story.id}", story.name, nil, nil, nil, nil, nil, nil, nil, "HXT", nil, nil, "V1.3"]
-            story.children.each do |sub_story|
-              csv << ["3", "T-#{sub_story.id}", sub_story.name, nil, nil, nil, nil, nil, nil, nil, "HXT", nil, nil, "V1.3"]
-              sub_story.tasks.each do |task|
-                csv << ["4",
-                        "T-#{task.id}",
-                        task.name,
-                        (task.originalestimate||0)/60,
-                        (((((task.originalestimate||0)-(task.effortleft||0)).to_f/(task.originalestimate||1))).to_f)*100,
-                        task.story.backlog.startDate.strftime("%m/%d/%Y"),
-                        task.story.backlog.endDate.strftime("%m/%d/%Y"),
-                        task.developers.join(','),
-                        nil,nil,"HXT",nil,nil,"V1.3"]
+        if project.exists_in_agilefant?
+          csv << [2, "P-#{project.id}", ("Project: #{project.name}")[0..max_project_length], nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+          AfBacklog.find_from_business_process(project).stories.each do |story|
+            if story
+              csv << [3, "T-#{story.id}", (story.name)[0..max_project_length], nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+              story.children.each do |sub_story|
+                csv << ["4", "T-#{sub_story.id}", (sub_story.name)[0..max_project_length], nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+                sub_story.tasks.each do |task|
+                  csv << ["5",
+                          "T-#{task.id}",
+                          (task.name)[0..max_project_length],
+                          (task.originalestimate||0)/60,
+                          (((((task.originalestimate||0)-(task.effortleft||0)).to_f/(task.originalestimate||1))).to_f)*100,
+                          task.story.backlog.startDate.strftime("%m/%d/%Y"),
+                          task.story.backlog.endDate.strftime("%m/%d/%Y"),
+                          task.developers.join(','),
+                          nil,nil,application,nil,nil,release]
+                end
               end
             end
-          else
-            if planned_path[path]
-              csv << [2, "T-#{path.id}", path.name, path.estimate||130*path.developers.count, nil, planned_path[path][0].strftime("%m/%d/%Y"), planned_path[path][0].end_of_month.strftime("%m/%d/%Y"), planned_path[path][1], nil, nil, "HXT", nil, nil, "V1.3"]
-            else # unplanned
-              csv << [2, "T-#{path.id}", path.name, nil, nil, nil, nil, nil, nil, nil, "HXT", nil, nil, "V1.3"]
+          end
+
+
+          project.paths.each do |path|
+            story = AfStory.find_from_bpad_object(path)
+            if !story
+  #            csv << [3, "T-#{story.id}", story.name, nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+  #            story.children.each do |sub_story|
+  #              csv << ["4", "T-#{sub_story.id}", sub_story.name, nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+  #              sub_story.tasks.each do |task|
+  #                csv << ["5",
+  #                        "T-#{task.id}",
+  #                        task.name,
+  #                        (task.originalestimate||0)/60,
+  #                        (((((task.originalestimate||0)-(task.effortleft||0)).to_f/(task.originalestimate||1))).to_f)*100,
+  #                        task.story.backlog.startDate.strftime("%m/%d/%Y"),
+  #                        task.story.backlog.endDate.strftime("%m/%d/%Y"),
+  #                        task.developers.join(','),
+  #                        nil,nil,application,nil,nil,release]
+  #              end
+  #            end
+  #          else
+              if planned_path[path] &&  planned_path[path][0] && planned_path[path][2]
+                csv << [3, "T-#{path.id}", (path.name)[0..max_project_length], path.estimate||planned_path[path][2]||130*path.developers.count, nil, planned_path[path][0].strftime("%m/%d/%Y"), planned_path[path][0].end_of_month.strftime("%m/%d/%Y"), planned_path[path][1].username, nil, nil, application, nil, nil, release]
+#              else # unplanned
+#                csv << [3, "T-#{path.id}", path.name, nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+              end
             end
           end
         end
       end
+
     end
     filename = "WFM-BPAD-Plan-#{Time.now.to_date.to_s}.csv"
     send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)

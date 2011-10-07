@@ -2,7 +2,7 @@ Approvals Flow|Auto Approval |LONG TERM PLANNING|
 Manage (Setup) - Conditional Rules|CR-UC10 - Define Individual Rules for Consolidate Rule|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC10 - Create Balance|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC10 - Create TER Template|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|Auto Approval|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|Auto Approval|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC100 - Search / Edit existing Timecards - Basic and Advanced Search , enable Saved Search |LONG TERM PLANNING|
 Manage (Setup) Public Timecard Templates|UC1 : Create Projects Public Timecard Template|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC10 - CRUD TER Rule Set (x5)|LONG TERM PLANNING|
@@ -24,7 +24,7 @@ Approvals Flow|HR Manager rejects timecard|LONG TERM PLANNING|
 Manage (Setup) - Conditional Rules|CR-UC20 - Define Rule Conditions and Conditional Rule, defineing default rule|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC20 - Edit Balance|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC20 - Duplicate TER Template|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|Manager Approval|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|Manager Approval|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC200 - All Crud Functions From Search / Results  (Create, Duplicate, Edit and Delete a Timecard Set (never used)) on timecards from the Results table, along with changes from the task page that reflects back to questionaire|LONG TERM PLANNING|
 Manage (Setup) Public Timecard Templates|UC2: Edit Existing Public Template|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC20 - CRUD TCR Rule Set (x5)|LONG TERM PLANNING|
@@ -46,7 +46,7 @@ Approvals Flow|HR Manager approves corrected timecard|LONG TERM PLANNING|
 Manage (Setup) - Conditional Rules|CR-UC30 - Define Consolidate Rule Set, with Order and Conditions based on Time Entries|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC30 - Duplicate Balance|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC30 - Edit TER Template|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|HR Manager Approval|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|HR Manager Approval|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC300 - Task List Navigation - Navigating to / from Pages, to Task List, to speicifc pages,   Create Different Timecard Set 'types' and ensure Task list is complete|LONG TERM PLANNING|
 Manage (Setup) Public Timecard Templates|UC3: Duplicate Public Timecard Template|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC30 - CRUD TIR Rule Set (x5)|LONG TERM PLANNING|
@@ -68,7 +68,7 @@ Approvals Flow|Time exceeding limits requires approvals|LONG TERM PLANNING|
 Manage (Setup) - Conditional Rules|CR-UC40 - Define Consolidate Rule Set with Rules anfd Conditions assigned to a person without Condition values on TC|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC40 - Delete customer created Balance|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC40 - Delete TER Template - Business Rules|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|Project Data Approval Rule|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|Project Data Approval Rule|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC400 - Enable TCR Results Matrix on Review Page|LONG TERM PLANNING|
 Manage (Setup) Public Timecard Templates|UC4: Delete existing Public Timecard Template|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC40 - CRUD TAR Rule Set (x5)|LONG TERM PLANNING|
@@ -90,7 +90,7 @@ Approvals Flow| Manager Hierarchy - Serial approval|LONG TERM PLANNING|
 Manage (Setup) - Conditional Rules|CR-UC50 - Define Business Rules when Defining Conditional Rules|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC50 - Create Seeded Balances|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC50 - Create TCR Template|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|Payroll Data Approval Rule|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|Payroll Data Approval Rule|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC500 - Create Layout Set for Worker using the TC Fields defined for each section, (ensure only available from that section)|LONG TERM PLANNING|
 Manage (Setup) Public Timecard Templates|UC5:  Create Projects Biweekly Timecard Template|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC50 - Rule Sets with Conditional Rules - 1|LONG TERM PLANNING|
@@ -112,7 +112,7 @@ Approvals Flow|Changed Time Approval|LONG TERM PLANNING|
 Manage (Setup) - Conditional Rules|CR-UC60 - Define all other Conditional Rule Functionality|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC60 - Business Rules on Balances|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC60 - Duplicate TCR Template|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|Approval Maximum|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|Approval Maximum|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC600 - Enable TCR Results on Manager Page, not on Worker Page|LONG TERM PLANNING|
 Manage (Setup) Public Timecard Templates|UC6: Create Project Fields Timecard Template|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC60 - Rule Sets with Conditional Rules - 2|LONG TERM PLANNING|
@@ -134,7 +134,7 @@ Approvals Flow|Multiple Project Manager different Approval Actions|LONG TERM PLA
 Manage (Setup) - Conditional Rules|CR-UC70 - Define all other Conditional Rule Functionality|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC70 - Business Rules on Balances|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC70 - Edit TCR Template|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|Exceed Schedule Limit|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|Exceed Schedule Limit|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC700 - Confirmation Page enbaled - with proper listing in Task List, Navigation and set defintion along with TCR Results on Page as well as Review Page|LONG TERM PLANNING|
 Manage (Setup) Public Timecard Templates|UC7: Search and Duplicate Timecard Template|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC70 - Rule Sets when Overrides executed|LONG TERM PLANNING|
@@ -156,7 +156,7 @@ Approvals Flow|Payroll Data for Payroll Manager Approval, Approval not triggered
 Manage (Setup) - Conditional Rules|CR-UC80 - Define all other Conditional Rule Functionality|LONG TERM PLANNING|
 Manage (Setup) - Rule Balance|RB-UC80 - Additional Use Case Balances 1|LONG TERM PLANNING|
 Manage (Setup) - Rule Templates|RT-UC80 - Delete TCR Template - Business rules|LONG TERM PLANNING|
-Manage (Setup) Approval Rules|Adjusted Timecard|LONG TERM PLANNING|
+Manage (Setup) - Approval Rules|Adjusted Timecard|LONG TERM PLANNING|
 Manage (Setup) Layout Composer|LC-UC800 - Time Summary Info on Worker Entry|LONG TERM PLANNING|
 Manage (Setup) T&L Rule Sets|RS-UC80 - Business Rules on Rule Sets|LONG TERM PLANNING|
 Manage (Setup) T&L Rules|R-UC80 - Delete TCR Rule - Business rules|LONG TERM PLANNING|
@@ -419,3 +419,4 @@ Web TimeEntry - Worker|WTE-UC210 - Messaging from Timecard (stretch for 1.3)|LON
 Web TimeEntry - Worker|WTE-UC220 - All Business Rules 1st pass - |LONG TERM PLANNING|
 Web TimeEntry - Worker|WTE-UC230 - Business Rules 2nd pass |LONG TERM PLANNING|
 Web TimeEntry - Worker|WTE-UC240 - Remaining Functionality - Possible Intr-Period Navigation, 'Apply to all' - daily detail (if possible)|LONG TERM PLANNING|
+
