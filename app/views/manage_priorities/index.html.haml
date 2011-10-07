@@ -4,6 +4,17 @@
   %span
     Path Priorities List
 
+
+.content
+#tags-filter
+  - form_tag  manage_priorities_path, :method => 'get' do
+    - @all_tags.each do |t|
+      = check_box_tag "filters[]", t.id, params[:filters] ? params[:filters].include?(t.id.to_s) : false  , {:id => t.name}
+      = label_tag t.id, t.name + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+    %br
+    = submit_tag  "Refine by tag", :name => nil
+
+
 .content
   %ul{:id =>"sortable"}
     - for path in @all_paths
