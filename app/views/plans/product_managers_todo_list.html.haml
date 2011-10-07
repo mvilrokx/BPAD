@@ -18,6 +18,6 @@
           %tr
             %td=h path.business_process.name
             %td=h link_to path.name, path_steps_path(path)
-            %td=h value[0].strftime("%B")
-            %td=h (value[0]-4.months).end_of_month.strftime("%B")
+            %td=h value[0].strftime("%B") if value[0]
+            %td=h (value[0]-4.months).end_of_month.strftime("%B") if value[0]
 
