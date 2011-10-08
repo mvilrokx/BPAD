@@ -10,7 +10,7 @@
   - form_tag  manage_priorities_path, :method => 'get' do
     - @all_tags.each do |t|
       = check_box_tag "filters[]", t.id, params[:filters] ? params[:filters].include?(t.id.to_s) : false  , {:id => t.name}
-      = label_tag t.id, t.name + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+      = label_tag t.id, t.name + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
     %br
     = submit_tag  "Refine by tag", :name => nil
 
