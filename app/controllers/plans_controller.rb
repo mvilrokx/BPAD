@@ -8,6 +8,14 @@ class PlansController < ApplicationController
 
   def product_managers_todo_list
     @planned_paths = Plan.new.planned_paths
+		from = Date.new 2011, 5
+  	to = Time.new(2013,1,nil,nil,nil,nil,nil).to_date
+		@months = Array.new
+		m = from
+		while m <= to
+			@months << m
+			m >>= 1
+		end
   end
 
   def bpad
