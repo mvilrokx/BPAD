@@ -9,8 +9,10 @@ class AfBacklog < ActiveRecord::Base
 
 	attr_accessor :bpad_business_process_id
 
+  PRODUCT_BACKLOG = 'Fusion WFM Development'
   BACKLOG_TYPES = %w{Product Project Iteration}
   validates_inclusion_of :backlogtype, :in => BACKLOG_TYPES
+
 
   after_create :audit_create
 #  after_update :audit_update
@@ -30,7 +32,7 @@ class AfBacklog < ActiveRecord::Base
     backlog
   end
 
-  def self.product_backlog_id(product_backlog = 'Oracle Time and Labor')
+  def self.product_backlog_id(product_backlog = PRODUCT_BACKLOG)
     AfBacklog.first(:conditions => ['parent_id is null and name = ?', product_backlog]).id
   end
 
@@ -38,7 +40,7 @@ class AfBacklog < ActiveRecord::Base
     description.scan(/^@@@business_process.id=(\d+)@@@$/)
   end
 
-  def initialize_from_bpad(business_process, product_backlog = 'Oracle Time and Labor')
+  def initialize_from_bpad(business_process, product_backlog = PRODUCT_BACKLOG)
     self.name = business_process.name
     self.description = "Created by BPAD! \n\n<< DO NOT CHANGE THE TEXT INBETWEEN THESE ANGLED BRACKETS @@@business_process.id=#{business_process.id}@@@ >>"
     self.parent_id = AfBacklog.first(:conditions => ['parent_id is null and name = ?', product_backlog]).id
@@ -66,7 +68,7 @@ class AfBacklog < ActiveRecord::Base
 		iteration_startdate_map = Hash.new
 		data.each do |r|
 			iteration_startdate_map[r.name] = r.startDate
-		end 
+		end
 		return iteration_startdate_map
 	end
 
