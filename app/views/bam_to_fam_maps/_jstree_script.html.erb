@@ -105,6 +105,34 @@
         },
       "plugins" : [ "themes", "html_data", "types", "ui", "checkbox" ]
     });
+
   });
+
+
+  $(function () {
+   $('.jmfdelete').bind('click',function() {
+       var isdelete = confirm('Delete this feature?   Click Ok to confirm delete.' );
+
+       if (isdelete) {
+           $.ajax({
+                    async : false,
+                    type: 'DELETE',
+                    url: "<%= bam_to_fam_features_path %>/" + this.id ,
+                    data: {  "step_id" : <%= @step.id %> },
+                    success : function (r) {
+                      $('#right_column ul li[id=' + r.bam_to_fam_feature.id + ']').remove();
+                    //  $("#lba_tree") refresh
+
+                    },
+                    dataType: "json"
+                  });
+
+            }
+
+       })
+
+});
+
+
 </script>
 
