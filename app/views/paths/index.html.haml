@@ -17,6 +17,7 @@
       %th= sortable @paths, "id"
       %th= sortable @paths, "name"
       %th= sortable @paths, "priority"
+      %th= sortable @paths, "estimated_delivery_date", "Est. Delivery Date"
       %th Description
       %th Status
       %th= sortable @paths, "updated_at", "Last Updated"
@@ -28,6 +29,7 @@
         %td=h path.id
         %td=h path.name
         %td=h path.priority
+        %td= pretty_date(path.estimated_delivery_date)
         %td=h path.description
         %td= status_iconifier(path.status)
         %td= pretty_date_time(path.updated_at)
