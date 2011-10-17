@@ -8,7 +8,7 @@ class Plan
     @planned_paths = Hash.new
     business_processes = Hash.new
 
-    paths = Path.all(:order => "priority")
+    paths = Path.all(:order => "priority ASC")
 
     BusinessProcess.all.each do |bp|
       if bp.exists_in_agilefant?
@@ -43,7 +43,7 @@ class Plan
             available_developers = developers.clone
             iteration_start_date = iteration_start_date.next_month
           end
-         end
+        end
       end
     end
   end

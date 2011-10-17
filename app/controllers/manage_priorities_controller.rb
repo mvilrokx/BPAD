@@ -6,11 +6,10 @@ class ManagePrioritiesController < ApplicationController
 #    @all_paths = Path.find :all, :order => 'priority' #, :conditions => "priority IS NOT NULL"
 #	  @other_paths = Path.find :all, :conditions => "priority IS NULL"
 #    all_tags
-     @all_paths = refine_search (params[:filters])
+     @all_paths = refine_search(params[:filters])
 	end
 
 	def prioritize_paths
-	  ap params
     for path in Path.all
      	path.priority = params['path'].index(path.id.to_s) + 1
       path.save
@@ -34,10 +33,6 @@ class ManagePrioritiesController < ApplicationController
     end
 
   end
-
-
-
-
 
 end
 
