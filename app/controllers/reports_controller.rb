@@ -174,27 +174,30 @@ class ReportsController < ApplicationController
 		def cal_story_iteration_startDate_mapping(data)
 			$story_iteration_map = Hash.new
 			story_id_col = data.column($STORY_ID_COL)
-			story_id_col.each do |story_id|
-			story_aud_data = AfStoryAud.report_table(:all, :only=>[:id], :include =>{:backlog =>{:only=>		[:name, :startDate, :endDate, :backlogtype]}}, :conditions => ["stories_AUD.id= ?", story_id])
-			story_aud_data.rename_column("backlog.name",$ITERATION_COL)
-			story_aud_data.rename_column("backlog.startDate",$STARTDATE_COL)	
-			story_aud_data.rename_column("backlog.endDate",$ENDDATE_COL)
-			story_aud_data.rename_column("backlog.backlogtype","backlogtype")
-			story_aud_data = story_aud_data.sub_table{ |r| (r.backlogtype).eql?("Iteration")}
 
-			iteration_start_date_array = Array.new			
+			afStoryAud = AfStoryAud.new
+			story_id_backlog_id_hash = afStoryAud.getStoryIdBacklogdIdMap(story_id_col)
+
+			afBacklog = AfBacklog.new
+			iteration_start_end_hash = afBacklog.getIterationIdStartdateMap
+
+			story_id_backlog_id_hash.each do |story_id, iteration_id_array|
+
+				iteration_start_date_array = Array.new			
 			
-			start_date_col = story_aud_data.column($STARTDATE_COL)
-			start_date_col.each do |start_date|
-				startdate = start_date.to_date
-				enddate = (startdate >> 1) -1
-				if((!iteration_start_date_array.include?(startdate)) && (enddate <= $end_date_all_iterations))
-					iteration_start_date_array << startdate
+				iteration_id_array.each do |iter_id|
+					startdate = iteration_start_end_hash[iter_id]
+					if(!startdate.nil?)
+						startdate = startdate.to_date
+						enddate = (startdate >> 1) -1
+						if((!iteration_start_date_array.include?(startdate)) && (enddate <= $end_date_all_iterations))
+							iteration_start_date_array << startdate
+						end
+					end
 				end
-			end
-			iteration_start_date_array.sort!
-			iteration_start_date_array.reverse!		
-			$story_iteration_map[story_id] = iteration_start_date_array
+				iteration_start_date_array.sort!
+				iteration_start_date_array.reverse!		
+				$story_iteration_map[story_id] = iteration_start_date_array
 			end
 		end
 
@@ -224,7 +227,7 @@ class ReportsController < ApplicationController
 			end			
 		end
 
-		def cal_burn_down_all_iterations
+	def cal_burn_down_all_iterations
 			$g_dates = Array.new
 			$g_effortleft = Array.new
 			$g_effortestimate = Array.new
@@ -247,16 +250,32 @@ class ReportsController < ApplicationController
 			for i in (1..effortleft_count)
 				$g_effortleft << 0
 			end
+
+			afTask = AfTask.new 
+			taskdata = afTask.getStoryTaskHash($story_iteration_map.keys)
+			story_task_hash = taskdata[0]
+			task_array = taskdata[1]
+
+			afTaskAud = AfTaskAud.new
+			taskAuddata = afTaskAud.getTaskAudDataHash(task_array)
+			task_aud_data_hash = taskAuddata[0]
+			rev_col = taskAuddata[1]
+
+			afAgilefantRevision = AfAgilefantRevision.new
+			rev_timestamp_hash = afAgilefantRevision.getRevTimeHash(rev_col)
+
+			logger.info "+++++++++ after getting data in cal_burn_down_all_iterationsg = " + Time.now.to_s
 			$story_iteration_map.each do |story_id, iteration_array|
-				task_data = AfTask.report_table(:all, :only => [:id, :story_id], :conditions => ["story_id= ? ", story_id])
-				if(!(task_data.empty?))
-					task_id_col = task_data.column("id")
+
+				task_id_col = story_task_hash[story_id]
+				if(!(task_id_col.nil?))
+
 					task_id_col.each do |task_id|
-						task_aud_data = AfTaskAud.report_table(:all, :only => [:id, :effortleft, :originalestimate], :include => {:agilefant_revision => {:only => [:timestamp]}}, :conditions => ["tasks_AUD.id= ? ", task_id])
-						task_aud_data = task_aud_data.sub_table{ |r| !((r.effortleft).nil?)}
-						task_aud_data = task_aud_data.sub_table{ |r| !((r.originalestimate).nil?)}
-						if(!(task_aud_data.empty?))
-							task_aud_data.rename_column("agilefant_revision.timestamp", $TIME_STAMP_COL)
+
+						task_aud_data = task_aud_data_hash[task_id]
+
+						if(!(task_aud_data.nil?))
+							task_aud_data.add_column($TIME_STAMP_COL) { |r| rev_timestamp_hash[r.REV]}
 							task_aud_data.sort_rows_by!($TIME_STAMP_COL, :order => :descending)
 							timestamp_col = task_aud_data.column($TIME_STAMP_COL)
 							effortleft_col = task_aud_data.column($EFFORT_LEFT_COL)
@@ -375,11 +394,12 @@ class ReportsController < ApplicationController
 								end							
 								empty_iter_start = iter_start_date >> 1 
 							end
-						end if(!(task_aud_data.empty?))
+						end #if(!(task_aud_data.empty?))
 					end # task_id_col.each do |task_id|
 				end # if(!(task_data.empty?))
 			end # $story_iteration_map.each do |story_id, iteration_array|
 		end
+		
 
 		def create_bpname_list(data)
 			@bpnames = Array.new
