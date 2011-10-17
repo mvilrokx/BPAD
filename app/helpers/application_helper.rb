@@ -77,7 +77,12 @@ module ApplicationHelper
 	end
 
   def pretty_date_time(dt, tz = "Pacific Time (US & Canada)", format = "%d-%b-%Y %H:%M")
-    dt.in_time_zone(tz).strftime(format)
+    dt.in_time_zone(tz).strftime(format) if dt
+  end
+
+  def pretty_date(dt, format = "%d-%b-%Y")
+    ap dt
+    dt.strftime(format) if dt
   end
 
 end

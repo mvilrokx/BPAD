@@ -9,17 +9,18 @@
     %tr
       %th= "Business Process"
       %th= "Use Case"
+      %th= "Priority"
       %th= "Iteration Development Planned"
       %th= "PM Mapping Deadline"
-    
-    -for m in @months  
+
+    -for m in @months
       -for bp in BusinessProcess.all
-        -@planned_paths.each do |path, value|  
+        -@planned_paths.each do |path, value|
           -if (path.business_process_id == bp.id && value[0] && value[0].to_date >= m && value[0].to_date <= (m >>1)-1)
             %tr
               %td=h path.business_process.name
               %td=h link_to path.name, path_steps_path(path)
+              %td=h path.priority
               %td=h value[0].strftime("%B")+ value[0].strftime(" %Y")
               %td=h (value[0]-4.months).to_date.end_of_month.strftime("%B") + (value[0]-4.months).to_date.end_of_month.strftime(" %Y")
-      
 

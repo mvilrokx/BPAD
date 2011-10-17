@@ -8,7 +8,7 @@ class Plan
     @planned_paths = Hash.new
     business_processes = Hash.new
 
-    paths = Path.all(:order => "priority")
+    paths = Path.all(:order => "priority ASC")
 
     BusinessProcess.all.each do |bp|
       if bp.exists_in_agilefant?
@@ -37,12 +37,13 @@ class Plan
 
           business_processes[path.business_process] = business_processes[path.business_process] - 130
 
-         @planned_paths[path] = [iteration_start_date, available_developers.shift, timespent]
+          @planned_paths[path] = [iteration_start_date, available_developers.shift, timespent]
+          path.update_attribute(:estimated_delivery_date, iteration_start_date)
           if available_developers.empty?
             available_developers = developers.clone
             iteration_start_date = iteration_start_date.next_month
           end
-         end
+        end
       end
     end
   end

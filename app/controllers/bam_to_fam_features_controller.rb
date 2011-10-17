@@ -47,13 +47,16 @@ class BamToFamFeaturesController < ApplicationController
   end
 
   def destroy
-    if params[:id] = -1
+
+
+    if params[:id] == -1
+      puts 'xxxxxx 888.111-- BamToFamFeaturesController-destr '
       @bam_to_fam_feature = @step.bam_to_fam_features.find_by_feature_id(params[:feature_id])
     else
       @bam_to_fam_feature = @step.bam_to_fam_features.find(params[:id])
     end
     @bam_to_fam_feature.destroy
-    
+
     flash[:notice] = "Successfully destroyed bam to fam feature."
     # redirect_to bam_to_fam_features_url
     render :json => @bam_to_fam_feature, :layout => false

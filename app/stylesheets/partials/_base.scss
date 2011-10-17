@@ -24,13 +24,13 @@ $top-bar-background: #333;
   content: " ";
   display: block;
   border: {
-    @if $type == out {
-      color:transparent transparent transparent $color;
-    } @else if $type == in
-      {color:$color $color $color transparent;
-    }
     style: solid;
     width: $width;
+  }
+  @if $type == out {
+    border-color:transparent transparent transparent $color;
+  } @else if $type == in {
+    border-color:$color $color $color transparent;
   }
   height:0;
   width:0;

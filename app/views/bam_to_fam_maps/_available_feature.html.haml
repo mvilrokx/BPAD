@@ -1,20 +1,26 @@
-%li{:class => "mapped_feature", :id => mapped_feature.id}
-  = mapped_feature.name||"NoName"
-  = image_tag '/icons/comment.png', :alt=> "Click to see details", :title=>  "Click to see details"
+%div.mflist
+%li{:class => "mf" , :id => mapped_feature.id}
+  %div.mflist.mf.idel{ :style => 'display:inline'}
+    = image_tag  '/icons/delete.png', :alt=> "Click to delete", :title=>  "Click to delete", :class=> 'jmfdelete', :id => mapped_feature.id
 
-.tooltip
-  %h5{:class => "hierarchy"} Hierarchy
-  = feature_hierarchy(mapped_feature.feature)
-  .spacer
-  %h5 Priority
-  = mapped_feature.feature.priority
-  .spacer
-  %h5 Scope
-  = mapped_feature.feature.scope
-  .spacer
-  %h5 Feature Type
-  = mapped_feature.feature.feature_type
-  .spacer
-  %h5 Description
-  = simple_format mapped_feature.description if mapped_feature.description
+    %div.mflist.mf.idel.mapped_feature{ :style => 'display:inline'}
+      = image_tag '/icons/comment.png', :alt=> "Click to see details", :title=>  "Click to see details"
+      = mapped_feature.name||"NoName"
+
+    %div.mapped_feature.tooltip
+      .tooltip
+      %h5{:class => "hierarchy"} Hierarchy
+      = feature_hierarchy(mapped_feature.feature)
+      .spacer
+      %h5 Priority
+      = mapped_feature.feature.priority
+      .spacer
+      %h5 Scope
+      = mapped_feature.feature.scope
+      .spacer
+      %h5 Feature Type
+      = mapped_feature.feature.feature_type
+      .spacer
+      %h5 Description
+      = simple_format mapped_feature.description if mapped_feature.description
 

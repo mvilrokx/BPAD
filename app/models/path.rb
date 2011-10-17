@@ -7,7 +7,7 @@ class Path < ActiveRecord::Base
 
   # attr_accessible :business_process_id, :name, :description, :steps_attributes
   validates_presence_of :name, :description
-  before_save :set_priority
+  before_save :set_priority, :unless => :priority
 
   #attr_writer :tag_names
   #after_save :assign_tags

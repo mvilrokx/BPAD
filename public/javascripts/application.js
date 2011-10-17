@@ -187,21 +187,25 @@ $('#refresh_issues').live('click', function(e) {
 * opening modal Dialog for feature description
 */
 $('.mapped_feature').live('click', function(e) {
-    var $dialog = $('<div class="dialog"></div>')
-        .html($(this).next().html())
-        .dialog({
-          width: 700,
-          height: 700,
-          modal: true,
-          title: "Details",
-          show: {effect: 'blind',
-                 duration: 250
-          },
-          hide: {effect: 'blind', duration: 250},
-          close: function(ev, ui) { $('div.dialog').remove(); }
-        });
+       var $dialog = $('<div class="dialog"></div>')
+           .html($(this).next().html())
+           .dialog({
+             width: 700,
+             height: 700,
+             modal: true,
+             title: "Details",
+             show: {effect: 'blind',
+                    duration: 250
+             },
+             hide: {effect: 'blind', duration: 250},
+             close: function(ev, ui) { $('div.dialog').remove(); }
+           });
+
     return false;
 });
+
+
+
 
 /**
 * opening modal Dialog
@@ -321,5 +325,4 @@ $(function() {
     theme: "facebook"
   });
 });
-
 
