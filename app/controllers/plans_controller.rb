@@ -86,6 +86,32 @@ class PlansController < ApplicationController
         end
       end
 
+# PM PLAN
+      csv << [1, "P-1", "WFM Product Management Plan", nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+      pm_product_backlog = AfBacklog.first(:conditions => "name = 'Fusion WFM Functional'")
+      pm_product_backlog.children.each do |project_backlog|
+        csv << [2, "P-#{project_backlog.id}", ("Project: #{project_backlog.name}")[0..max_project_length], nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+        project_backlog.stories.each do |story|
+          if story
+            csv << [3, "T-#{story.id}", (story.name)[0..max_project_length], nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+            story.children.each do |sub_story|
+              csv << ["4", "T-#{sub_story.id}", (sub_story.name)[0..max_project_length], nil, nil, nil, nil, nil, nil, nil, application, nil, nil, release]
+              sub_story.tasks.each do |task|
+                csv << ["5",
+                        "T-#{task.id}",
+                        (task.name)[0..max_project_length],
+                        (task.originalestimate||0)/60,
+                        (((((task.originalestimate||0)-(task.effortleft||0)).to_f/(task.originalestimate||1))).to_f)*100,
+                        task.story.backlog.startDate.strftime("%m/%d/%Y"),
+                        task.story.backlog.endDate.strftime("%m/%d/%Y"),
+                        task.developers.join(','),
+                        nil,nil,application,nil,nil,release]
+              end
+            end
+          end
+        end
+      end
+
     end
     filename = "WFM-BPAD-Plan-#{Time.now.to_date.to_s}.csv"
     send_data(csv_string, :type => 'text/csv; charset=utf-8; header=present', :filename => filename)
