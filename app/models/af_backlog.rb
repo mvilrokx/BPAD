@@ -89,6 +89,17 @@ class AfBacklog < ActiveRecord::Base
     estimate
   end
 
+	def getIterationIdStartdateMap
+		data = AfBacklog.find(:all, :select=>"id, startDate, backlogtype", :conditions => "backlogtype like 'Iteration'")
+		iteration_startdate_map = Hash.new
+		data.each do |r|
+			iteration_startdate_map[r.id] = r.startDate
+		end
+		return iteration_startdate_map
+	end
+
+
+
 protected
 
   def audit_create
