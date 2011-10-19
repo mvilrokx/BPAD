@@ -19,7 +19,7 @@
       %th= sortable @business_processes, "updated_at", "Last Updated"
       %th Iteration
       - if current_user.iteration
-        %th{:colspan =>4, :style => "text-align: center;"}
+        %th{:colspan =>5, :style => "text-align: center;"}
           Actions
 
     -for business_process in @business_processes
@@ -33,6 +33,7 @@
           %td= action(current_user, :edit, business_process)
           %td= action(current_user, :delete, business_process)
           %td= action(current_user, :paths, business_process, Path.new)
+          %td= action(current_user, :issues, business_process, :issues)
           %td= watching business_process, current_user
 
   %p= link_to "New Business Process" , new_business_process_path, :class=>"button"

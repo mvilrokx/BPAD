@@ -56,7 +56,7 @@ ActionController::Routing::Routes.draw do |map|
                 :collection => {:lba_children => :get}
 #  map.resources :business_processes, :has_many => [:business_process_elements, :paths, :watchings]
   map.resources :business_processes do |business_process|
-    business_process.resources :business_process_elements
+    business_process.resources :business_process_elements, :issues
     business_process.resources :paths,
                                :member => {:duplicate => :get,
                                            :send_to_agilefant => :get,
@@ -65,7 +65,7 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :business_process_elements, :has_many => :flows
-  map.resources :paths, :has_many => [:steps, :watchings]
+  map.resources :paths, :has_many => [:steps, :watchings, :issues]
 #  map.resources :step, :has_one => :bam_to_fam_map
 #  map.resources :step, :has_many => :bam_to_fam_features
   map.resources :bam_to_fam_maps, :has_many => :approvals

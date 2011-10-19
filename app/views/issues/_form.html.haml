@@ -1,0 +1,26 @@
+- form_for [@issueable, @issue] do |f|
+  = f.error_messages
+  %p
+    %br= f.label :name
+    = f.text_field :name
+  %p
+    %br= f.label :description
+    = f.text_area :description
+  %p
+    %br= f.label :severity
+    = f.select :severity, Issue::SEVERITIES
+  %p
+    %br= f.label :issue_type
+    = f.select :issue_type, Issue::TYPES
+  %p
+    %br= f.label :user_id, "Assigned To"
+    = f.select ("user_id", User.find(:all).map {|u| [u.username,u.id]})
+  %p
+    %br= f.label :status
+    = f.select :status, Issue::STATUSES
+  %p
+    %br= f.label :bug_number
+    = f.text_field :bug_number
+
+  %p= f.submit
+

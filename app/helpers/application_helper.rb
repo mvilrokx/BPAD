@@ -35,6 +35,7 @@ module ApplicationHelper
     action_image_tags = { :edit           => { :enabled   => '/icons/pencil.png',
                                                :disabled  => '/icons/pencil_disabled.png' },
                           :show           => { :enabled   => '/icons/magnifier.png'},
+                          :issues         => { :enabled   => '/icons/bug.png'},
                           :show_mappings  => { :enabled   => '/icons/table_relationship.png'},
                           :duplicate      => { :enabled   => '/icons/page_copy.png'},
                           :delete         => { :enabled   => '/icons/bin_closed.png',

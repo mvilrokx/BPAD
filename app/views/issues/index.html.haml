@@ -1,0 +1,33 @@
+- title "Issues of #{@issueable.class}", false
+
+#title
+  %span
+    Issues of #{@issueable.class} "#{@issueable.name}"
+
+.content
+  %table{:class => ["pretty", "striped"]}
+    %tr
+      %th Name
+      %th Description
+      %th Status
+      %th Severity
+      %th Type
+      %th Assigned To
+      %th Bug
+      %th{:colspan =>2, :style => "text-align: center;"}
+        Actions
+
+      - for issue in @issues
+        %tr
+          %td= h issue.name
+          %td= h issue.description
+          %td= h issue.status
+          %td= h issue.severity
+          %td= h issue.issue_type
+          %td= h issue.user.username if issue.user
+          %td= h issue.bug_number
+          %td= link_to "Edit", edit_polymorphic_path([@issueable, issue])
+          %td= link_to "Delete", issue, :confirm => 'Are you sure?', :method => :delete
+
+= link_to "Add Issue", new_polymorphic_path([@issueable, :issue])
+

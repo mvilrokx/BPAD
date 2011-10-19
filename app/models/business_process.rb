@@ -1,6 +1,7 @@
 class BusinessProcess < ActiveRecord::Base
 
   has_many :business_process_elements, :dependent => :destroy
+  has_many :issues, :as => :issueable, :dependent => :destroy
   has_many :paths, :dependent => :destroy
   accepts_nested_attributes_for :business_process_elements
   has_many :watchings, :as => :watchable, :dependent => :destroy
