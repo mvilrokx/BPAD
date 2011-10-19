@@ -1,3 +1,7 @@
+- content_for :head do
+  = javascript_include_tag '../cleditor/jquery.cleditor.min.js'
+  = stylesheet_link_tag '../cleditor/jquery.cleditor.css', :media => 'screen, projection'
+
 - form_for [@issueable, @issue] do |f|
   = f.error_messages
   %p
@@ -23,4 +27,5 @@
     = f.text_field :bug_number
 
   %p= f.submit
+= render :partial => "shared/cleditor_script"
 
