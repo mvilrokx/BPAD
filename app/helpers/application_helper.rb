@@ -37,6 +37,7 @@ module ApplicationHelper
                           :show           => { :enabled   => '/icons/magnifier.png'},
                           :issues         => { :enabled   => '/icons/bug.png'},
                           :show_mappings  => { :enabled   => '/icons/table_relationship.png'},
+                          :copy           => { :enabled   => '/icons/page_copy.png'},
                           :duplicate      => { :enabled   => '/icons/page_copy.png'},
                           :delete         => { :enabled   => '/icons/bin_closed.png',
                                                :disabled  => '/icons/bin_closed_disabled.png',
@@ -53,7 +54,7 @@ module ApplicationHelper
       ap options
     end
 
-    if action == :edit || action == :duplicate
+    if action == :edit || action == :duplicate || action == :copy
       link = polymorphic_path(objects, :action=>action)
     else
       link = objects

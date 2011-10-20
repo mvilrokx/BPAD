@@ -1,0 +1,12 @@
+- title "Copy Path"
+
+- form_for [:duplicate, @business_process, @path] do |f|
+  %p
+  %p
+    %br= label_tag :copy_from_path_name, "Copy From"
+    = text_field_tag :copy_from_path_name, @path.name, :disabled => true, :style => 'width: 500px;'
+  %p
+    %br= label_tag :copy_to_path_id, "Copy To"
+    = select_tag(:copy_to_path_id, options_for_select(@paths.map {|u| [u.name,u.id]}.insert(0, ["New Path!", -1])),{:style => 'width: 500px'})
+  %p= submit_tag "Copy"
+

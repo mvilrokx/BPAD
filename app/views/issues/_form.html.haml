@@ -23,6 +23,9 @@
     %br= f.label :status
     = f.select :status, Issue::STATUSES
   %p
+    %br= f.label :source
+    = f.select :source, Issue::SOURCES
+  %p
     %br= f.label :bug_number
     = f.text_field :bug_number
 

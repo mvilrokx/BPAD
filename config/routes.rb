@@ -58,7 +58,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :business_processes do |business_process|
     business_process.resources :business_process_elements, :issues
     business_process.resources :paths,
-                               :member => {:duplicate => :get,
+                               :member => {:copy => :get,
+                                           :duplicate => :put,
                                            :send_to_agilefant => :get,
                                            :inform_functional_approvers => :get}
     business_process.resources :watchings

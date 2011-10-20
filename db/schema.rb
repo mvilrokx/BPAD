@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111019050326) do
+ActiveRecord::Schema.define(:version => 20111020185311) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20111019050326) do
     t.integer  "user_id"
     t.string   "issue_type"
     t.integer  "bug_number"
+    t.string   "source"
   end
 
   add_index "issues", ["issueable_id", "issueable_type"], :name => "issueable_ix"

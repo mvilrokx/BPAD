@@ -50,17 +50,26 @@ class PathsController < ApplicationController
     end
   end
 
-  def duplicate
-    @path = @business_process.paths.find(params[:id]).deep_clone
-    find_cur_path_dev_assgn
-    @path.priority ||= 5.to_s
-    if @path.save
-      flash[:notice] = "Successfully duplicated path."
-      redirect_to business_process_paths_path(@business_process)
+  def copy # like new and edit for duplicate
+    @path = @business_process.paths.find(params[:id])
+    @paths = @business_process.paths_with_no_steps
+  end
+
+  def duplicate  # like create and update
+    if params[:copy_to_path_id].to_i > 0
+      @copy_to_path = @business_process.paths.find(params[:copy_to_path_id])
+      @copy_to_path.steps = @business_process.paths.find(params[:id]).steps.collect { |c| c.deep_clone }
+    else
+      @copy_to_path = @business_process.paths.find(params[:id]).deep_clone
+    end
+    if @copy_to_path.save
+      flash[:notice] = "Successfully copied path."
+      redirect_to [@business_process, :paths]
     else
     	@path.errors.each_full {|msg| puts msg}
-      render :action => 'new'
+      redirect_to [@business_process, :paths]
     end
+
   end
 
   def update

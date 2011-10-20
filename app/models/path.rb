@@ -148,7 +148,7 @@ class Path < ActiveRecord::Base
 	  if exists_in_agilefant?
       path_story_oe = path_story_el = 0
       agilefant_story.children(:include => :tasks).each do |bf_story|
-        bf_story.tasks.each do |task|
+cl        bf_story.tasks.each do |task|
           path_story_oe = path_story_oe + (task.originalestimate||0)
           path_story_el = path_story_el + (task.effortleft||0)
         end
@@ -170,7 +170,6 @@ class Path < ActiveRecord::Base
   def self.next_available_priority
     Path.maximum("priority") + 1
   end
-
 
   private
 

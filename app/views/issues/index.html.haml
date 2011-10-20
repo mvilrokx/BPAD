@@ -1,5 +1,9 @@
 - title "Issues of #{@issueable.class}", false
 
+%ul{:id => "breadcrumb"}
+  %li{:class => "first"}= link_to @issueable.class.name.titleize.pluralize, @issueable.class.name.tableize.to_sym
+  %li= @issueable.name
+
 #title
   %span
     Issues of #{@issueable.class} "#{@issueable.name}"
@@ -12,7 +16,9 @@
       %th Status
       %th Severity
       %th Type
+      %th Source
       %th Assigned To
+      %th Created By
       %th Bug
       %th{:colspan =>2, :style => "text-align: center;"}
         Actions
@@ -24,10 +30,13 @@
           %td= h issue.status
           %td= h issue.severity
           %td= h issue.issue_type
+          %td= h issue.source
           %td= h issue.user.username if issue.user
+          %td= h issue.owner.username if issue.owner
           %td= h issue.bug_number
           %td= link_to "Edit", edit_polymorphic_path([@issueable, issue])
           %td= link_to "Delete", issue, :confirm => 'Are you sure?', :method => :delete
 
 = link_to "Add Issue", new_polymorphic_path([@issueable, :issue]), :class => "button"
+= link_to "Back to All #{@issueable.class.name.titleize.pluralize}", @issueable.class.name.tableize.to_sym, :class=>"button"
 

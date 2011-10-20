@@ -47,7 +47,12 @@ class BusinessProcess < ActiveRecord::Base
 
   alias_method :agilefant_backlog, :exists_in_agilefant?
 
-	protected
+
+  def paths_with_no_steps
+    paths.all(:include => :steps, :conditions => "steps.id is null", :order => "paths.name")
+  end
+
+  protected
 		def parse_xml
 			p self.changed
       bp_elements = Hash.new
