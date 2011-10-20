@@ -1,7 +1,12 @@
+- if @issueable.class == BusinessProcess
+  - back_to = @issueable.class.name.tableize.to_sym
+- elsif @issueable.class == Path
+  - back_to = [@issueable.business_process, @issueable.class.name.tableize.to_sym]
+
 - title "Issues of #{@issueable.class}", false
 
 %ul{:id => "breadcrumb"}
-  %li{:class => "first"}= link_to @issueable.class.name.titleize.pluralize, @issueable.class.name.tableize.to_sym
+  %li{:class => "first"}= link_to @issueable.class.name.titleize.pluralize, back_to
   %li= @issueable.name
 
 #title
