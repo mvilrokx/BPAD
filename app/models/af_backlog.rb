@@ -63,8 +63,8 @@ class AfBacklog < ActiveRecord::Base
 #    self.af_stories_attributes = stories
   end
 
-	def getIterationStartdateMap
-		data = AfBacklog.find(:all, :select=>"name, startDate, backlogtype", :conditions => "backlogtype like 'Iteration'")
+		def getIterationStartdateMap
+		data = AfBacklog.find(:all, :select=>"name, startDate, backlogtype", :conditions => "backlogtype like 'Iteration'", :order => "startDate")
 		iteration_startdate_map = Hash.new
 		data.each do |r|
 			iteration_startdate_map[r.name] = r.startDate
@@ -73,13 +73,29 @@ class AfBacklog < ActiveRecord::Base
 	end
 
 	def getProjectIdMap
-		data = AfBacklog.find(:all, :select=>"id, name, backlogtype", :conditions => "backlogtype like 'Project'")
+		data = AfBacklog.find(:all, :select=>"id, name, backlogtype", :conditions => "backlogtype like 'Project'")		
 		project_id_map = Hash.new
 		data.each do |r|
 			project_id_map[r.id] = r.name
 		end
 		return project_id_map
 	end
+
+	def getIterationProjectIdHash
+		project_id_map = getProjectIdMap
+		rlt = Hash.new
+		data = AfBacklog.find(:all, :select=>"id, parent_id", :conditions=>"backlogtype like 'Iteration'")
+		data.each do |r|
+			iter_id = r.id 
+			project_id = r.parent_id
+			project = project_id_map[project_id]
+			key = Array.new 
+			key << project 
+			key << iter_id 
+			rlt[key] = project_id
+		end 
+		return rlt
+	end 
 
   def original_estimate
     estimate = 0
@@ -98,7 +114,53 @@ class AfBacklog < ActiveRecord::Base
 		return iteration_startdate_map
 	end
 
+	def getIterationNameIdsMap
+		data = AfBacklog.find(:all, :select=>"id, name", :conditions => "backlogtype like 'Iteration'")
+		rlt = Hash.new 
+		data.each do |r|
+			id = r.id
+			name = r.name
+			if(rlt[name].nil?)
+				id_array = Array.new 
+				id_array << id 
+				rlt[name] = id_array
+			else
+				id_array = rlt[name]
+				id_array << id 
+				rlt[name] = id_array
+			end 
+		end
+		return rlt
+	end 
+ 
+  def getPartIterationIdStartdateMap(id_array)
+		data = AfBacklog.find(:all, :select=>"id, startDate, backlogtype", :conditions => ["backlogtype like 'Iteration' and id IN (?)", id_array])
+		iteration_startdate_map = Hash.new
+		data.each do |r|
+			iteration_startdate_map[r.id] = r.startDate
+		end
+		return iteration_startdate_map
+	end
 
+	def getStartEndDateForAllProjects
+		data = AfBacklog.find(:all, :select=>"startDate, endDate", :conditions => "backlogtype like 'Project'")
+		smallest_start_date = Date.today
+		largest_end_date = Date.today
+		data.each do |r|
+			start_date = r.startDate
+			end_date = r.endDate
+			if(start_date < smallest_start_date)
+				smallest_start_date = start_date
+			end 
+			if(end_date > largest_end_date)
+				largest_end_date = end_date
+			end 
+		end 
+		rlt = Array.new 
+		rlt << smallest_start_date.to_date
+		rlt << largest_end_date.to_date
+		return rlt
+	end 
 
 protected
 

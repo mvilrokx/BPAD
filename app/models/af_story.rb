@@ -3,7 +3,6 @@ class AfStory < ActiveRecord::Base
   set_table_name "stories"
 
 	acts_as_tree
-	acts_as_reportable
 
   belongs_to :backlog, :class_name => "AfBacklog", :foreign_key => "backlog_id"
 	belongs_to :usecase, :class_name => "AfStory", :foreign_key => "parent_id"
@@ -78,10 +77,28 @@ class AfStory < ActiveRecord::Base
 		data = AfStory.find(:all, :select=>"id, name, backlog_id", :conditions => "parent_id is null")
 		id_name_map = Hash.new
 		data.each do |r|
-			id_name_map[r.id] = r.name.to_s+"@"+r.backlog_id.to_s
+			id_name_map[r.id] = r.name
 		end
 		return id_name_map
 	end
+
+	def getUsecasenameProjectUasecaseIdMap
+		usecase_id_name_map = getUsecaseNames
+		afBacklog = AfBacklog.new 
+		project_id_map = afBacklog.getProjectIdMap
+		data = AfStory.find(:all, :select=>"id, name, backlog_id", :conditions => "parent_id is null")
+		rlt = Hash.new 
+		data.each do |r|
+			usecase = r.name
+			project = project_id_map[r.backlog_id]
+			usecase_id = r.id 
+			key = Array.new 
+			key << usecase
+			key << project 
+			rlt[key] = usecase_id
+		end 
+		return rlt
+	end 
 
   after_create :audit_create, :add_label
 
@@ -92,6 +109,71 @@ class AfStory < ActiveRecord::Base
     end
     estimate
   end
+
+	def getUsecaseStoryMap
+		story_usecase_data = AfStory.find(:all, :select=>"id, parent_id", :conditions=>"parent_id is not null")
+		usecase_story_hash = Hash.new 
+		story_usecase_data.each do |r|
+			usecase_id = r.parent_id
+			story_id  = r.id 
+			if(usecase_story_hash[usecase_id].nil?)
+				story_array = Array.new 
+				story_array << story_id 
+				usecase_story_hash[usecase_id] = story_array
+			else
+				story_array = usecase_story_hash[usecase_id]
+				story_array << story_id 
+				usecase_story_hash[usecase_id] = story_array
+			end 
+		end 
+		return usecase_story_hash
+	end 
+
+	def getIterationProjectUsecaseMap
+		usecase_project_data = AfStory.find(:all, :select=>"id, backlog_id", :conditions=>"parent_id is null")
+		usecase_project_hash = Hash.new
+		usecase_project_data.each do |r|
+			project_id = r.backlog_id 
+			usecase_id = r.id 
+			usecase_project_hash[usecase_id] = project_id
+		end
+		story_usecase_data = AfStory.find(:all, :select=>"id, parent_id, backlog_id", :conditions=>"parent_id is not null")
+		iter_project_usecase_hash = Hash.new
+		story_usecase_data.each do |r|
+			iteration_id = r.backlog_id
+			usecase_id = r.parent_id 
+			project_id = usecase_project_hash[usecase_id]
+			if(iter_project_usecase_hash[iteration_id].nil?)
+				iter_project_hash = Hash.new 
+				usecase_array = Array.new 
+				usecase_array << usecase_id 
+				iter_project_hash[project_id] = usecase_array 
+				iter_project_usecase_hash[iteration_id] = iter_project_hash
+			else
+				iter_project_hash = iter_project_usecase_hash[iteration_id]
+				if(iter_project_hash.nil?)
+					usecase_array = Array.new 
+					usecase_array << usecase_id
+					iter_project_hash[project_id] = usecase_array
+				else
+					usecase_array = iter_project_hash[project_id]
+					usecase_array << usecase_id
+					iter_project_hash[project_id] = usecase_array
+				end
+				iter_project_usecase_hash[iteration_id] = iter_project_hash
+			end
+		end 
+		return iter_project_usecase_hash
+	end 
+
+	def getCurrentStoryIdBacklogIdMap(story_array)
+		data = AfStoryAud.find(:all, :select=>"id, backlog_id", :conditions => ["id IN (?)", story_array])
+		rlt = Hash.new 
+		data.each do |r|
+			rlt[r.id] = r.backlog_id
+		end 
+		return rlt
+	end 
 
 protected
 
