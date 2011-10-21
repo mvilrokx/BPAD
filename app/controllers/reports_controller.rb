@@ -4,15 +4,6 @@ class ReportsController < ApplicationController
 	$ALL_ITERATIONS = "All Iterations"
 	$ALL_PROJECTS = "All Projects"
 	$ALL_USECASES = "All Use Cases"
-	$TASK_ID_COL = "task_id"
-	$TASK_NAME_COL = "task_name"
-	$STORY_ID_COL = "story_id"
-	$STORY_NAME_COL = "story_name"
-	$USECASE_ID_COL = "usecase_id"
-	$ITERATION_COL = "iteration"
-	$STARTDATE_COL = "startDate"
-	$ENDDATE_COL = "endDate"
-	$BUSINESS_PROCESS_COL = "businessProcess"
 	$EFFORT_LEFT_COL = "effortleft"
 	$ORIGINAL_ESTIMATE_COL = "originalestimate"
 	$TIME_STAMP_COL = "timestamp"
@@ -20,51 +11,55 @@ class ReportsController < ApplicationController
 	$g_dates = Array.new
 	$g_effortleft = Array.new
 	$g_effortestimate = Array.new
-
 	$current_date = Date.today
 	
 	def index
-
-	story_data = AfStory.report_table(:all, :only=>[:id, :name, :parent_id], :include => {:backlog =>{:only=>[:name, :startDate, :endDate, :backlogtype], :include =>{:businessProcess => {:only=>[:name]}}}})
-	story_data.rename_column("id", "story_id")
-	story_data.rename_column("name", "story_name")
-	story_data.rename_column("parent_id", "usecase_id")
-	story_data.rename_column("backlog.name","iteration")
-	story_data.rename_column("backlog.startDate","startDate")
-	story_data.rename_column("backlog.endDate","endDate")
-	story_data.rename_column("backlog.backlogtype","backlogtype")
-	story_data.rename_column("businessProcess.name","businessProcess")
-	story_data.sub_table!{ |r| (r.backlogtype).eql?("Iteration")}
-	$all_story_data = story_data	
 
 	$end_date_all_iterations = Date.new((Date.today>>3).year,(Date.today>>3).month,1)-1
 
 	afStory = AfStory.new
 	$usecase_id_name_map = afStory.getUsecaseNames 
+	$usecase_project_id_map = afStory.getUsecasenameProjectUasecaseIdMap
+	$usecase_story_hash = afStory.getUsecaseStoryMap
+	$iter_project_usecase_hash = afStory.getIterationProjectUsecaseMap
 
 	afBacklog = AfBacklog.new
 	$iteration_startdate_map = afBacklog.getIterationStartdateMap
 	$project_id_map = afBacklog.getProjectIdMap
+	$project_iter_id_map = afBacklog.getIterationProjectIdHash
+	$iteration_name_ids_map = afBacklog.getIterationNameIdsMap
 
-	a = $all_story_data
-	a.sort_rows_by!($STARTDATE_COL, :order => :descending)
-	$g_iteration_order = Array.new
-	iteration_col = a.column($ITERATION_COL)
-	iteration_col.each do |iter|
-		if(iter!=nil && !($g_iteration_order.include?(iter)))
-			$g_iteration_order << iter
-		end
-	end	
+	$g_iteration_order = $iteration_startdate_map.keys
 
 	@iterations = $g_iteration_order
 	@iterations << $ALL_ITERATIONS		
-
 	@default_iteration = $ALL_ITERATIONS
-	data = $all_story_data
-	create_bpname_list(data)
-	create_usecase_list(data)
+
+	project_data = Array.new
+	$iter_project_usecase_hash.each do |iter_id, project_hash|
+		project_hash.each do |project_id, usecase_array|
+			project_data << project_id
+		end
+	end
+
+	usecase_data = Array.new
+	$usecase_story_hash.each do |usecase_id, story_array|
+		usecase_data << usecase_id
+	end 
+
+	story_data = Array.new 
+	$usecase_story_hash.each do |usecase_id, story_array|
+		if(!story_array.nil?)
+			story_array.each do |story_id|
+				story_data << story_id 
+			end 
+		end 
+	end 
+	
+	create_bpname_list(project_data)
+	create_usecase_list(usecase_data)
 	get_start_end_date_for_all_iterations
-	cal_story_iteration_startDate_mapping(data)
+	cal_story_iteration_startDate_mapping(story_data)
 	cal_burn_down_all_iterations
 	@dates = $g_dates
 	@effortestimate = $g_effortestimate
@@ -73,7 +68,7 @@ class ReportsController < ApplicationController
 	
 	end
 
-	def updateChart
+		def updateChart
 		 
 		selects = params[:id].split('&')
 		iteration = selects[0].split('=')[1].gsub('+', ' ')
@@ -84,32 +79,33 @@ class ReportsController < ApplicationController
 		@effortestimate = nil
 		@effortleft = nil	
 		
-		data = $all_story_data
-			
-		if(!project.eql?($ALL_PROJECTS))
-			data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
-		end
-		if(!usecase.eql?($ALL_USECASES))
-			if(usecase.eql?("Code Fixes") && project.eql?($ALL_PROJECTS))
-				new_data = nil
-				$usecase_id_name_map.each do |id, name|
-					if(name.start_with?("Code Fixes"))
-						sub_data = data.sub_table{ |r| (r.usecase_id).eql?(id)}
-						if(!new_data.nil?)
-							new_data = new_data + sub_data
-						else
-							new_data = sub_data
-						end
-						end
-					end
-					data = new_data
-				else
-				lookup_usecase = usecase.to_s + "@"+($project_id_map.index(project)).to_s 
-				data = data.sub_table{ |r| (r.usecase_id).eql?($usecase_id_name_map.index(lookup_usecase))}
-			end
-		end
+		usecase_data = getSelectedUsecaseArray(iteration, project)
+		story_data = Array.new
+		if(usecase.eql?($ALL_USECASES))
+			if(!usecase_data.nil?)
+				usecase_data.each do |usecase_id|
+					story_array = $usecase_story_hash[usecase_id]
+					if(!story_array.nil?)
+						story_array.each do |story_id|
+							story_data << story_id
+						end 
+					end 
+				end 
+			end 
+		else
+			lookup_usecase = Array.new 
+			lookup_usecase << usecase 
+			lookup_usecase << project
+			story_array = $usecase_story_hash[$usecase_project_id_map[lookup_usecase]]
+			if(!story_array.nil?)
+				story_array.each do |story_id|
+					story_data << story_id
+				end 
+			end 
+		end 
+		
 		get_start_end_date_for_all_iterations
-		cal_story_iteration_startDate_mapping(data)
+		cal_story_iteration_startDate_mapping(story_data)
 		cal_burn_down_all_iterations
 		if(iteration.eql?($ALL_ITERATIONS))
 			@dates = $g_dates
@@ -126,44 +122,133 @@ class ReportsController < ApplicationController
 		render :partial => 'show_chart'
 	end
 
-
 	def iteration_change_listener
 		iteration = params[:id]
-		data = $all_story_data
-		if(!iteration.eql?($ALL_ITERATIONS))
-			data = $all_story_data.sub_table{ |r| (r.iteration).eql?(iteration)}
-		end
+		project_data = Array.new
+		usecase_data = Array.new 
+		if(iteration.eql?($ALL_ITERATIONS))
+			$iter_project_usecase_hash.each do |iter_id, project_hash|
+				if(!project_hash.nil?)
+					project_hash.each do |project_id, usecase_array|
+						if(!project_data.include?(project_id))
+							project_data << project_id 
+						end 
+					end 
+				end 
+			end 
+			$usecase_story_hash.each do |usecase_id, story_array|
+				if(!story_array.nil?)
+					usecase_data << usecase_id 
+				end 
+			end 
+		else
+			iter_id_array = $iteration_name_ids_map[iteration]
+			if(!iter_id_array.nil?)
+				iter_id_array.each do |iter_id|
+					project_hash = $iter_project_usecase_hash[iter_id] 
+					if(!project_hash.nil?)
+						project_hash.each do |project_id, usecase_array|
+							if(!usecase_array.nil?)
+								if(!project_data.include?(project_id))
+									project_data << project_id 
+								end 
+								usecase_array.each do |usecase_id|
+									if(!usecase_data.include?(usecase_id))
+										usecase_data << usecase_id
+									end 									
+								end 
+							end 
+						end 
+					end 
+				end 
+			end 
+		end #if(iteration.eql?($ALL_ITERATIONS))
 		$current_iteration = iteration
-		create_bpname_list(data)
-		create_usecase_list(data)
+		create_bpname_list(project_data)
+		create_usecase_list(usecase_data)
 		render :partial => 'select_project'
-	end
+	end 
 
 	def project_change_listener
 		project = params[:id]
-		data = $all_story_data
-		if(!$current_iteration.eql?($ALL_ITERATIONS)) 
-			data = $all_story_data.sub_table{ |r| (r.iteration).eql?($current_iteration)}
-		end
-		if(!project.eql?($ALL_PROJECTS))
-			data = data.sub_table{ |r| (r.businessProcess).eql?(project)}
-		end
-		create_usecase_list(data)
+		usecase_data = getSelectedUsecaseArray($current_iteration, project)
+		create_usecase_list(usecase_data)
 		render :partial => 'select_usecase'
 	end
-
+	
 	private 
 
+		def getSelectedUsecaseArray(iteration, project)
+			usecase_data = Array.new
+			if($current_iteration.eql?($ALL_ITERATIONS)) 
+			$iter_project_usecase_hash.each do |iter_id, project_hash|
+				if(!project_hash.nil?)
+					if(project.eql?($ALL_PROJECTS))
+						project_hash.each do |project_id, usecase_array|
+							if(!usecase_array.nil?)
+								usecase_array.each do |usecase_id|
+									if(!usecase_data.include?(usecase_id))
+										usecase_data << usecase_id 
+									end 									
+								end
+							end
+						end 
+					else
+						project_lookup = Array.new 
+						project_lookup << project
+						project_lookup << iter_id
+						usecase_array = project_hash[$project_iter_id_map[project_lookup]]
+						if(!usecase_array.nil?)
+							usecase_array.each do |usecase_id|
+								if(!usecase_data.include?(usecase_id))
+									usecase_data << usecase_id
+								end 	
+							end
+						end
+					end #if(project.eql?($ALL_PROJECTS))
+				end #if(!project_hash.nil?)
+			end #$iter_project_usecase_hash.each do |iter_id, project_hash|
+		else
+			iter_id_array = $iteration_name_ids_map[iteration]
+			if(!iter_id_array.nil?)
+				iter_id_array.each do |iter_id|
+					project_hash = $iter_project_usecase_hash[iter_id] 
+					if(!project_hash.nil?)
+						if(project.eql?($ALL_PROJECTS))
+							project_hash.each do |project_id, usecase_array|
+								if(!usecase_array.nil?)
+									usecase_array.each do |usecase_id|
+										if(!usecase_data.include?(usecase_id))
+											usecase_data << usecase_id
+										end 	
+									end
+								end
+							end 
+						else
+							project_lookup = Array.new 
+							project_lookup << project 
+							project_lookup << iter_id 
+							usecase_array = project_hash[$project_iter_id_map[project_lookup]]
+							if(!usecase_array.nil?)
+								usecase_array.each do |usecase_id|
+									if(!usecase_data.include?(usecase_id))
+										usecase_data << usecase_id
+									end 	
+								end
+							end
+						end #if(project.eql?($ALL_PROJECTS))
+					end #if(!project_hash.nil?)
+				end #iter_id_array.each do |iter_id|
+			end #if(!iter_id_array.nil?)
+		end
+		return usecase_data
+		end 
+
 		def get_start_end_date_for_all_iterations
-			project_data = AfBacklog.report_table(:all, :only => [:name, :startDate, :endDate], :conditions => "backlogtype like 'Project'")
-			startdate = nil
-			enddate = nil
-			project_data.sort_rows_by!($STARTDATE_COL)
-			startdate_col = project_data.column($STARTDATE_COL)
-			startdate = startdate_col[0].to_date
-			project_data.sort_rows_by!($ENDDATE_COL)
-			enddate_col = project_data.column($ENDDATE_COL)
-			enddate = enddate_col[-1].to_date
+			afBacklog = AfBacklog.new 
+			dates = afBacklog.getStartEndDateForAllProjects
+			startdate = dates[0]
+			enddate = dates[1]
 			if(enddate > $end_date_all_iterations)
 				enddate = $end_date_all_iterations
 			end	
@@ -173,10 +258,9 @@ class ReportsController < ApplicationController
 
 		def cal_story_iteration_startDate_mapping(data)
 			$story_iteration_map = Hash.new
-			story_id_col = data.column($STORY_ID_COL)
-
+			story_id_col = data
 			afStoryAud = AfStoryAud.new
-			story_id_backlog_id_hash = afStoryAud.getStoryIdBacklogdIdMap(story_id_col)
+			story_id_backlog_id_hash = afStoryAud.getStoryIdBacklogIdMap(story_id_col)
 
 			afBacklog = AfBacklog.new
 			iteration_start_end_hash = afBacklog.getIterationIdStartdateMap
@@ -227,7 +311,7 @@ class ReportsController < ApplicationController
 			end			
 		end
 
-	def cal_burn_down_all_iterations
+		def cal_burn_down_all_iterations
 			$g_dates = Array.new
 			$g_effortleft = Array.new
 			$g_effortestimate = Array.new
@@ -264,9 +348,7 @@ class ReportsController < ApplicationController
 			afAgilefantRevision = AfAgilefantRevision.new
 			rev_timestamp_hash = afAgilefantRevision.getRevTimeHash(rev_col)
 
-			logger.info "+++++++++ after getting data in cal_burn_down_all_iterationsg = " + Time.now.to_s
 			$story_iteration_map.each do |story_id, iteration_array|
-
 				task_id_col = story_task_hash[story_id]
 				if(!(task_id_col.nil?))
 
@@ -383,7 +465,7 @@ class ReportsController < ApplicationController
 												$g_effortleft[dayindex] += this_task_effort_estimate[iter_start_date.to_date]
 											else
 												if(this_task_effort_left[iter_start_date.to_date].nil?)
-													this_task_effort_left[iter_start_date.to_date] = 0
+													this_task_effort_left[iter_start_date.to_date] = this_task_effort_estimate[iter_start_date.to_date]
 												end
 												$g_effortleft[dayindex] += this_task_effort_left[iter_start_date.to_date]
 											end
@@ -399,13 +481,12 @@ class ReportsController < ApplicationController
 				end # if(!(task_data.empty?))
 			end # $story_iteration_map.each do |story_id, iteration_array|
 		end
-		
 
 		def create_bpname_list(data)
 			@bpnames = Array.new
-			projects = data.column("businessProcess")
-			projects.each do |entry|
-				if (entry != nil)
+			data.each do |id|
+				if (id != nil)
+					entry = $project_id_map[id]
 					if (!(@bpnames.include?(entry)))
 					@bpnames << entry
 				end
@@ -417,11 +498,10 @@ class ReportsController < ApplicationController
 
 		def create_usecase_list(data)
 			@usecases = Array.new
-			usecase_list = data.column("usecase_id")
+			usecase_list = data
 			usecase_list.each do |usecase_id|
-				usecase_lookup = $usecase_id_name_map[usecase_id]
-				if (usecase_lookup != nil)
-					usecase = usecase_lookup.split('@')[0]
+				usecase = $usecase_id_name_map[usecase_id]
+				if (usecase != nil)
 					if(!(@usecases.include?(usecase)))
 					@usecases << usecase
 				end

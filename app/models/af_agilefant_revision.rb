@@ -1,7 +1,6 @@
 class AfAgilefantRevision < ActiveRecord::Base
   establish_connection :agilefant
   set_table_name "agilefant_revisions"
-	acts_as_reportable
 
   REVISION_TYPES = {:create => 0,
                     :update => 1,
@@ -19,7 +18,6 @@ class AfAgilefantRevision < ActiveRecord::Base
 		end
 		return rev_timestamp_hash
 	end
-
 
 end
 
