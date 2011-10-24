@@ -11,8 +11,8 @@
     </p>
 
     <p>
-      <%= f.label :estimate, 'Estimate (hours)' %><br />
-			<%= f.text_field :estimate %>
+      <%= f.label :points %><br />
+			<%= f.select :points, [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100] %>
     </p>
 
      <p>
@@ -22,16 +22,11 @@
     </p>
 
 
- <!--  delvelopers  -->
+ <!--  developers  -->
     <p>
        <%= h f.label :fbstyle_devloper_tokens, "developers" %><br />
        <%= h f.text_field :fbstyle_devloper_tokens , "data-pre" => @cur_path_dev_assgn.map(&:attributes).to_json %>
     </p>
-
-
-
-
-
 
     <h3>Steps in Path</h3>
     <ol>
