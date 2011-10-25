@@ -1,0 +1,21 @@
+.left_col
+  %ol
+    %li
+      = f.label :name
+      = f.text_field :name
+    %li
+      = f.label :description
+      = f.text_area :description, :class => 'bp_override_textarea'
+    %li
+      = f.label :points
+      =f.select :points, [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100]
+
+.right_col
+  %ol
+    %li
+      = h f.label :fbstyle_tag_tokens, "Tag Names"
+      = h f.text_field :fbstyle_tag_tokens , "data-pre" => @path.tags.map(&:attributes).to_json
+    %li
+      = h f.label :fbstyle_devloper_tokens, "developers"
+      = h f.text_field :fbstyle_devloper_tokens , "data-pre" => @cur_path_dev_assgn.map(&:attributes).to_json
+

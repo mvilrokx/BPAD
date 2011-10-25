@@ -4,10 +4,11 @@
 $(document).ready(function () {
 	// This ensures that a path's steps gets deleted from the selected on downwards ...
 	$('.deletes').click(function() {
-		if ($(this).attr('checked')) {
-			$(this).parent().nextAll().find("input[type='checkbox']").attr('checked', $(this).attr('checked'));
+	  $this = $(this);
+		if ($this.attr('checked')) {
+			$this.closest('.step').nextAll().find("input[type='checkbox']").attr('checked', $this.attr('checked'));
 		} else {
-			$(this).parent().prevAll().find("input[type='checkbox']").attr('checked', $(this).attr('checked'));
+			$this.closest('.step').prevAll().find("input[type='checkbox']").attr('checked', $this.attr('checked'));
 		}
 	});
 });
@@ -323,6 +324,19 @@ $(function() {
     prePopulate: $(this).data("pre"),
     preventDuplicates: true,
     theme: "facebook"
+  });
+});
+
+// hijack More links
+$(document).ready(function () {
+  $(".show_more").click(function(e) {
+    // alert('it works');
+    $(e.target).parent().parent().next().toggle();
+    return false;
+  });
+  $(".show_all").click(function(e) {
+    $('.more').toggle();
+    return false;
   });
 });
 

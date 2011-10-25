@@ -9,7 +9,7 @@
     = f.text_field :name
   %p
     %br= f.label :description
-    = f.text_area :description
+    = f.text_area :description, :class => 'cleditor'
   %p
     %br= f.label :severity
     = f.select :severity, Issue::SEVERITIES

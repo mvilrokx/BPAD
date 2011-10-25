@@ -4,7 +4,7 @@
   = @build_feature.name
   %p
   %h5= f.label :description
-  = f.text_area :description
+  = f.text_area :description, :class => 'cleditor'
   %p
     = content_tag :button, "Save Changes", :type => :submit, :class => "button"
 

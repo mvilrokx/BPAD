@@ -1,0 +1,14 @@
+- content_for :head do
+  = javascript_include_tag '../cleditor/jquery.cleditor.min.js'
+  = stylesheet_link_tag '../cleditor/jquery.cleditor.css', :media => 'screen, projection'
+
+- form_for [@business_process,@path], :html => {:class => 'bp fancy_form'} do |f|
+  = f.error_messages
+  %fieldset
+    = render :partial => "path_header", :locals => {:f=> f}
+  %fieldset
+    %legend Steps #{link_to ('(++)', '#', :class => "show_all")}
+    = render :partial => "path_steps", :locals => {:f=> f}
+
+  %p= f.submit
+

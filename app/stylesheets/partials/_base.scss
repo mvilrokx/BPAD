@@ -20,6 +20,9 @@ $top-bar-background: #333;
 // Import compass mixins
 @import "compass/css3";
 
+// Import my mixins
+@import "partials/fancy_form";
+
 @mixin arrow ($type, $color, $width) {
   content: " ";
   display: block;

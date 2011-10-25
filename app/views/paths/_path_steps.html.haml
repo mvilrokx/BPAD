@@ -1,0 +1,38 @@
+%ol
+  - counter = 0
+  - f.fields_for :steps do |builder|
+    - counter = counter + 1
+    %li{:class => 'step', :style => "overflow: hidden;"}
+      - if builder.object.new_record? && @available_steps
+        .left_col
+          %ol
+            %li
+              = builder.label :step, "step #{counter}"
+              = builder.select :business_process_element_id, @available_steps.map {|e| [e.name + " (" + e.element_type + ")", e.id]}
+            %li
+              = builder.label :comment
+              %div
+                = builder.text_area :comment, :class => 'cleditor'
+        .right_col
+          %ol
+            %li
+              = builder.check_box :_destroy, :class=>"deletes", :style => "display: none;"
+      - else
+        .left_col
+          %ol
+            %li
+              = builder.label :step, "step #{counter} #{link_to('(+)', '#', :class => "show_more")}"
+              = builder.select :business_process_element_id, [builder.object.business_process_element.name + " (" + builder.object.business_process_element.element_type + ")", builder.object.id],{}, {:disabled => true}
+            %li{:class => "more", :style => "display: none;"}
+              = builder.label :comment
+              %div
+                = builder.text_area :comment, :class => 'cleditor'
+        .right_col
+          %ol
+            %li
+              = builder.check_box :_destroy, :class=>"deletes"
+              = builder.label :_destroy, "Remove Step"
+    %hr
+
+= render :partial => "shared/cleditor_script"
+

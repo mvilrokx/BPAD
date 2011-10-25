@@ -399,3 +399,7 @@ table.pretty {
   }
 }
 
+.fancy_form {
+  @include fancy_form;
+}
+
