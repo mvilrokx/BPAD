@@ -22,7 +22,7 @@
           %ol
             %li
               = builder.label :step, "step #{counter} #{link_to('(+)', '#', :class => "show_more")}"
-              = builder.select :business_process_element_id, [builder.object.business_process_element.name + " (" + builder.object.business_process_element.element_type + ")", builder.object.id],{}, {:disabled => true}
+              = builder.select :business_process_element_id, [builder.object.business_process_element.name + " (" + builder.object.business_process_element.element_type + ")", builder.object.id],{}, {:disabled => true, :style => 'color: #444;'}
             %li{:class => "more", :style => "display: none;"}
               = builder.label :comment
               %div
