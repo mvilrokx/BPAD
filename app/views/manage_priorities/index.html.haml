@@ -24,6 +24,7 @@
         .path-name
           = path.name
           = action(current_user, :edit, path.business_process, path)
+          = path.points
 
 :javascript
   $('#sortable li').each(function(i) {
