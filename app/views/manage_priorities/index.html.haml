@@ -23,6 +23,7 @@
           = path.priority ? path.priority.to_s() : 999999
         .path-name
           = path.name
+          = action(current_user, :edit, path.business_process, path)
 
 :javascript
   $('#sortable li').each(function(i) {
