@@ -37,11 +37,17 @@
         %td= action(current_user, :edit, @business_process, path)
         %td= action(current_user, :delete, @business_process, path)
         %td= action(current_user, :copy, @business_process, path)
-        %td= action(current_user, :issues, path, :issues)
+        - if path.issues.count > 0
+          %td= action(current_user, :existing_issues, path, :issues)
+        - else
+          %td= action(current_user, :issues, path, :issues)
         %td= action(current_user, :show_mappings, path, Step.new)
         %td= watching path, current_user
 
   %p
     = link_to "New Path", new_business_process_path_path(@business_process), :class=>"button"
     = link_to "Back to All Business Processes", business_processes_path, :class=>"button"
+
+.pagination
+  = will_paginate @paths
 

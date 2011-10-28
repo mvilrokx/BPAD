@@ -32,19 +32,20 @@ module ApplicationHelper
 
 
 	def action(user, action, *objects)
-    action_image_tags = { :edit           => { :enabled   => '/icons/pencil.png',
-                                               :disabled  => '/icons/pencil_disabled.png' },
-                          :show           => { :enabled   => '/icons/magnifier.png'},
-                          :issues         => { :enabled   => '/icons/bug.png'},
-                          :show_mappings  => { :enabled   => '/icons/table_relationship.png'},
-                          :copy           => { :enabled   => '/icons/page_copy.png'},
-                          :duplicate      => { :enabled   => '/icons/page_copy.png'},
-                          :delete         => { :enabled   => '/icons/bin_closed.png',
-                                               :disabled  => '/icons/bin_closed_disabled.png',
-                                               :mouseover => '/icons/bin.png'},
-                          :paths          => { :enabled   => '/icons/arrow_switch.png',
-                                               :disabled  => '/icons/arrow_switch_disabled.png',
-                                               :mouseover => '/icons/arrow_switch_bluegreen.png'},
+    action_image_tags = { :edit            => { :enabled   => '/icons/pencil.png',
+                                                :disabled  => '/icons/pencil_disabled.png' },
+                          :show            => { :enabled   => '/icons/magnifier.png'},
+                          :issues          => { :enabled   => '/icons/bug.png'},
+                          :existing_issues => { :enabled   => '/icons/bug_error.png'},
+                          :show_mappings   => { :enabled   => '/icons/table_relationship.png'},
+                          :copy            => { :enabled   => '/icons/page_copy.png'},
+                          :duplicate       => { :enabled   => '/icons/page_copy.png'},
+                          :delete          => { :enabled   => '/icons/bin_closed.png',
+                                                :disabled  => '/icons/bin_closed_disabled.png',
+                                                :mouseover => '/icons/bin.png'},
+                          :paths           => { :enabled   => '/icons/arrow_switch.png',
+                                                :disabled  => '/icons/arrow_switch_disabled.png',
+                                                :mouseover => '/icons/arrow_switch_bluegreen.png'},
                         }
 
     options = {:title => action}

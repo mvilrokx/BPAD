@@ -33,8 +33,14 @@
           %td= action(current_user, :edit, business_process)
           %td= action(current_user, :delete, business_process)
           %td= action(current_user, :paths, business_process, Path.new)
-          %td= action(current_user, :issues, business_process, :issues)
+          - if business_process.issues.count > 0
+            %td= action(current_user, :existing_issues, business_process, :issues)
+          - else
+            %td= action(current_user, :issues, business_process, :issues)
           %td= watching business_process, current_user
 
   %p= link_to "New Business Process" , new_business_process_path, :class=>"button"
+
+.pagination
+  = will_paginate @business_processes
 
