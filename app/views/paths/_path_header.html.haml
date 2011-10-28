@@ -18,4 +18,7 @@
     %li
       = h f.label :fbstyle_devloper_tokens, "developers"
       = h f.text_field :fbstyle_devloper_tokens , "data-pre" => @cur_path_dev_assgn.map(&:attributes).to_json
+    %li
+      = f.label :estimated_delivery_date
+      = f.text_field :estimated_delivery_date
 
