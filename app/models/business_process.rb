@@ -68,6 +68,7 @@ class BusinessProcess < ActiveRecord::Base
                     'xmlns:callActivity | ' +
                     'xmlns:startEvent | ' +
                     'xmlns:sendTask | ' +
+                    'xmlns:receiveTask | ' +
                     'xmlns:boundaryEvent | ' +
                     'xmlns:parallelGateway | ' +
                     'xmlns:exclusiveGateway | ' +
@@ -101,6 +102,10 @@ class BusinessProcess < ActiveRecord::Base
       process.xpath('xmlns:sequenceFlow').each do |arrow|
 #          flow = Flow.new(:business_process_element_id => bp_elements[arrow['sourceRef']].id,
 #                          :target_element_id => bp_elements[arrow['targetRef']].id)
+ap bp_elements[arrow['sourceRef']]
+puts bp_elements[arrow['sourceRef']].id
+ap bp_elements[arrow['targetRef']]
+puts bp_elements[arrow['targetRef']].id
           flow = Flow.find_or_initialize_by_business_process_element_id_and_target_element_id(bp_elements[arrow['sourceRef']].id, bp_elements[arrow['targetRef']].id)
           if flow.save!
               puts "Successfully created Flow."

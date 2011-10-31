@@ -15,6 +15,7 @@ class BusinessProcessElement < ActiveRecord::Base
     							 "task" =>                    {:display_name => "Task",               :mapping_required => true},
     							 "userTask" =>                {:display_name => "User Task",          :mapping_required => true},
     							 "sendTask" =>                {:display_name => "Send Task",          :mapping_required => true},
+    							 "receiveTask" =>             {:display_name => "Receive Task",       :mapping_required => true},
     							 "serviceTask" =>             {:display_name => "Service Task",       :mapping_required => true},
     							 "callActivity" =>            {:display_name => "Call Activity",      :mapping_required => false},
     							 "boundaryEvent" =>           {:display_name => "Boundary Event",     :mapping_required => false},
