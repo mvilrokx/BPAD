@@ -14,6 +14,7 @@ class BusinessProcessElement < ActiveRecord::Base
   ELEMENT_TYPES = {"startEvent" =>              {:display_name => "Start Event",        :mapping_required => false},
     							 "task" =>                    {:display_name => "Task",               :mapping_required => true},
     							 "userTask" =>                {:display_name => "User Task",          :mapping_required => true},
+    							 "sendTask" =>                {:display_name => "Send Task",          :mapping_required => true},
     							 "serviceTask" =>             {:display_name => "Service Task",       :mapping_required => true},
     							 "callActivity" =>            {:display_name => "Call Activity",      :mapping_required => false},
     							 "boundaryEvent" =>           {:display_name => "Boundary Event",     :mapping_required => false},
@@ -31,3 +32,4 @@ class BusinessProcessElement < ActiveRecord::Base
 	include Trackable
 
 end
+
