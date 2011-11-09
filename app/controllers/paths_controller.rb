@@ -16,7 +16,7 @@ class PathsController < ApplicationController
   def new
     @path = @business_process.paths.new
 #    Show list of value that is either startEvent OR based on previous step
-    @available_steps = @business_process.business_process_elements.all(:conditions => "element_type = 'startEvent'")
+    @available_steps = @business_process.start_element
     find_cur_path_dev_assgn
 
     @path.steps.build
@@ -38,24 +38,42 @@ class PathsController < ApplicationController
   def edit
     @path = @business_process.paths.find(params[:id])
     find_cur_path_dev_assgn
-    last_existing_step = Step.find_by_id(@path.steps.maximum("id"))
+    last_existing_step = @path.last_step
     if last_existing_step.nil?
-      @available_steps = @business_process.business_process_elements.all(:conditions => "element_type = 'startEvent'")
+      @available_steps = @business_process.start_element
       @path.steps.build
     else
-      @available_steps = last_existing_step.business_process_element.target_elements
+      @produced_data_objects = last_existing_step.business_process_element.produced_data_objects
+      @produced_data_objects.each do |element|
+        last_existing_step.data_object_instances.find_or_create_by_business_process_element_id(element.id)
+      end
+
+      @available_steps = last_existing_step.business_process_element.next_elements
       if !@available_steps.blank?
-         @path.steps.build
+         step = @path.steps.build
       end
     end
   end
 
-  def copy # like new and edit for duplicate
+  def update
+    @path = @business_process.paths.find(params[:id])
+    find_cur_path_dev_assgn
+    if @path.update_attributes(params[:path])
+      flash[:notice] = "Successfully updated path."
+#      redirect_to [@business_process, @path]
+#      render :action => 'edit'
+      redirect_to edit_business_process_path_path(@business_process) #, @path)
+    else
+      render :action => 'edit'
+    end
+  end
+
+  def copy # copy is to duplicate what new is to create
     @path = @business_process.paths.find(params[:id])
     @paths = @business_process.paths_with_no_steps
   end
 
-  def duplicate  # like create and update
+  def duplicate  # duplicate is to copy, what create is to new
     if params[:copy_to_path_id].to_i > 0
       @copy_to_path = @business_process.paths.find(params[:copy_to_path_id])
       @copy_to_path.steps = @business_process.paths.find(params[:id]).steps.collect { |c| c.deep_clone }
@@ -70,19 +88,6 @@ class PathsController < ApplicationController
       redirect_to [@business_process, :paths]
     end
 
-  end
-
-  def update
-    @path = @business_process.paths.find(params[:id])
-    find_cur_path_dev_assgn
-    if @path.update_attributes(params[:path])
-      flash[:notice] = "Successfully updated path."
-#      redirect_to [@business_process, @path]
-#      render :action => 'edit'
-      redirect_to edit_business_process_path_path(@business_process, @path)
-    else
-      render :action => 'edit'
-    end
   end
 
   def destroy

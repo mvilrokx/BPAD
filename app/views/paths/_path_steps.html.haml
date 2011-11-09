@@ -1,37 +1,42 @@
 %ol
   - counter = 0
-  - f.fields_for :steps do |builder|
+  - f.fields_for :steps do |step_fields|
     - counter = counter + 1
-    %li{:class => 'step', :style => "overflow: hidden;"}
-      - if builder.object.new_record? && @available_steps
+    %li.step{:style => "overflow: hidden;"}
+      - if step_fields.object.new_record? && @available_steps
         .left_col
           %ol
             %li
-              = builder.label :step, "step #{counter}"
-              = builder.select :business_process_element_id, @available_steps.map {|e| [e.name + " (" + e.element_type + ")", e.id]}
+              = step_fields.label :step, "step #{counter}"
+              = step_fields.select :business_process_element_id, @available_steps.map {|e| [e.name + (" (**) " if !e.produced_data_objects.empty?).to_s + " (" + e.element_type + ")", e.id]}
             %li
-              = builder.label :comment
+              = render :partial => "produced_data_objects", :locals => {:f=> step_fields}
+            %li
+              = step_fields.label :comment
               %div
-                = builder.text_area :comment, :class => 'cleditor'
+                = step_fields.text_area :comment, :class => 'cleditor'
         .right_col
           %ol
             %li
-              = builder.check_box :_destroy, :class=>"deletes", :style => "display: none;"
+              = step_fields.check_box :_destroy, :class=>"deletes", :style => "display: none;"
       - else
         .left_col
           %ol
             %li
-              = builder.label :step, "step #{counter} #{link_to('(+)', '#', :class => "show_more")}"
-              = builder.select :business_process_element_id, [builder.object.business_process_element.name + " (" + builder.object.business_process_element.element_type + ")", builder.object.id],{}, {:disabled => true, :style => 'color: #444;'}
-            %li{:class => "more", :style => "display: none;"}
-              = builder.label :comment
+              = step_fields.label :step, "step #{counter} #{link_to('(+)', '#', :class => "show_more")}"
+              = step_fields.select :business_process_element_id, [step_fields.object.business_process_element.name + " (" + step_fields.object.business_process_element.element_type + ")", step_fields.object.id],{}, {:disabled => true, :style => 'color: #444;'}
+            %li
+              = render :partial => "produced_data_objects", :locals => {:f=> step_fields}
+
+            %li.more{:style => "display: none;"}
+              = step_fields.label :comment
               %div
-                = builder.text_area :comment, :class => 'cleditor'
+                = step_fields.text_area :comment, :class => 'cleditor'
         .right_col
           %ol
             %li
-              = builder.check_box :_destroy, :class=>"deletes"
-              = builder.label :_destroy, "Remove Step"
+              = step_fields.check_box :_destroy, :class=>"deletes"
+              = step_fields.label :_destroy, "Remove Step"
     %hr
 
 = render :partial => "shared/cleditor_script"

@@ -167,6 +167,10 @@ class Path < ActiveRecord::Base
     @dev
   end
 
+  def last_step
+    Step.find_by_id(steps.maximum("id"))
+  end
+
   def self.next_available_priority
     Path.maximum("priority") + 1
   end

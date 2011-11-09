@@ -47,6 +47,9 @@ class BusinessProcess < ActiveRecord::Base
 
   alias_method :agilefant_backlog, :exists_in_agilefant?
 
+  def start_element
+    business_process_elements.all(:conditions => "element_type = 'startEvent'")
+  end
 
   def paths_with_no_steps
     paths.all(:include => :steps, :conditions => "steps.id is null", :order => "paths.name")

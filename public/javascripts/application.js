@@ -331,7 +331,7 @@ $(function() {
 $(document).ready(function () {
   $(".show_more").click(function(e) {
     // alert('it works');
-    $(e.target).parent().parent().next().toggle();
+    $(e.target).parents("ol").children("li.more").toggle();
     return false;
   });
   $(".show_all").click(function(e) {

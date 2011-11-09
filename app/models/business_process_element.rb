@@ -3,8 +3,9 @@ class BusinessProcessElement < ActiveRecord::Base
 
   belongs_to :business_process
   belongs_to :iteration
-  has_many :flows
+  has_many :flows, :dependent => :destroy
   has_many :steps
+  has_many :data_object_instances
   has_many :target_elements, :through => :flows
   has_many :watchings, :as => :watchable, :dependent => :destroy
 
@@ -31,6 +32,18 @@ class BusinessProcessElement < ActiveRecord::Base
 	has_paper_trail :ignore => [:name]
 
 	include Trackable
+
+  def next_elements
+    target_elements.all(:conditions => "element_type <> 'intermediateThrowEvent'")
+  end
+
+  def produced_data_objects
+    target_elements.all(:conditions => "element_type = 'intermediateThrowEvent'")
+  end
+
+  def consumed_data_objects
+    BusinessProcessElement.all(:joins => :flows, :conditions => "element_type = 'intermediateThrowEvent' AND flows.target_element_id = #{id}")
+  end
 
 end
 
