@@ -20,6 +20,9 @@ class Step < ActiveRecord::Base
   has_many :data_object_instances, :dependent => :destroy
   accepts_nested_attributes_for :data_object_instances
 
+  has_many :data_object_instance_usages
+  accepts_nested_attributes_for :data_object_instance_usages
+
 	has_paper_trail
 
 	include Trackable

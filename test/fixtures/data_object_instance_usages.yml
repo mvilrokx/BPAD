@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  step_id: 1
+  data_object_instance_id: 1
+  iteration_id: 1
+
+two:
+  step_id: 1
+  data_object_instance_id: 1
+  iteration_id: 1

@@ -1,4 +1,6 @@
 - f.fields_for :data_object_instances do |data_object_instance_fields|
-  = data_object_instance_fields.label :name, data_object_instance_fields.object.business_process_element.name
-  = data_object_instance_fields.text_field :name
+  %fieldset
+    %legend Producing Data Objects
+    = data_object_instance_fields.label :name, data_object_instance_fields.object.business_process_element.name
+    = data_object_instance_fields.text_field :name
 

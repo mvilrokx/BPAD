@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111109005551) do
+ActiveRecord::Schema.define(:version => 20111110051601) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -104,6 +104,15 @@ ActiveRecord::Schema.define(:version => 20111109005551) do
   end
 
   add_index "business_processes", ["iteration_id"], :name => "iteration_id_ix"
+
+  create_table "data_object_instance_usages", :force => true do |t|
+    t.integer  "step_id"
+    t.integer  "data_object_instance_id"
+    t.integer  "business_process_element_id"
+    t.integer  "iteration_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "data_object_instances", :force => true do |t|
     t.string   "name"

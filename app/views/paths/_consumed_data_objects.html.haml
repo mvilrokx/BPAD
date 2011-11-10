@@ -1,0 +1,6 @@
+- f.fields_for :data_object_instance_usages do |doi_usage_fields|
+  %fieldset
+    %legend Consuming Data Objects
+    = doi_usage_fields.label :data_object_instance_id, doi_usage_fields.object.business_process_element.name
+    = doi_usage_fields.select :data_object_instance_id, BusinessProcessElement.find_by_name(doi_usage_fields.object.business_process_element.name).data_object_instances.map {|e| [e.name, e.id]}
+

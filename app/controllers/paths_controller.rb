@@ -43,9 +43,13 @@ class PathsController < ApplicationController
       @available_steps = @business_process.start_element
       @path.steps.build
     else
-      @produced_data_objects = last_existing_step.business_process_element.produced_data_objects
-      @produced_data_objects.each do |element|
+      last_existing_step.business_process_element.produced_data_objects.each do |element|
         last_existing_step.data_object_instances.find_or_create_by_business_process_element_id(element.id)
+      end
+
+      last_existing_step.business_process_element.consumed_data_objects.each do |element|
+        ap element
+        last_existing_step.data_object_instance_usages.find_or_create_by_business_process_element_id(element.id)
       end
 
       @available_steps = last_existing_step.business_process_element.next_elements

@@ -10,6 +10,8 @@
               = step_fields.label :step, "step #{counter}"
               = step_fields.select :business_process_element_id, @available_steps.map {|e| [e.name + (" (**) " if !e.produced_data_objects.empty?).to_s + " (" + e.element_type + ")", e.id]}
             %li
+              = render :partial => "consumed_data_objects", :locals => {:f=> step_fields}
+            %li
               = render :partial => "produced_data_objects", :locals => {:f=> step_fields}
             %li
               = step_fields.label :comment
@@ -25,6 +27,8 @@
             %li
               = step_fields.label :step, "step #{counter} #{link_to('(+)', '#', :class => "show_more")}"
               = step_fields.select :business_process_element_id, [step_fields.object.business_process_element.name + " (" + step_fields.object.business_process_element.element_type + ")", step_fields.object.id],{}, {:disabled => true, :style => 'color: #444;'}
+            %li
+              = render :partial => "consumed_data_objects", :locals => {:f=> step_fields}
             %li
               = render :partial => "produced_data_objects", :locals => {:f=> step_fields}
 
