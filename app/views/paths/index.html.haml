@@ -19,7 +19,9 @@
       %th= sortable @paths, "priority"
       %th= sortable @paths, "estimated_delivery_date", "Est. Delivery Date"
       %th Description
+      %th Mapping Status
       %th Status
+      %th Points
       %th= sortable @paths, "updated_at", "Last Updated"
       %th{:colspan =>7, :style => "text-align: center;"}
         Actions
@@ -32,6 +34,8 @@
         %td= pretty_date(path.estimated_delivery_date)
         %td=h path.description
         %td= status_iconifier(path.status)
+        %td= path.life_cycle_status
+        %td= path.points
         %td= pretty_date_time(path.updated_at)
         %td= action(current_user, :show, @business_process, path)
         %td= action(current_user, :edit, @business_process, path)

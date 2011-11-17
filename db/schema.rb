@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111110051601) do
+ActiveRecord::Schema.define(:version => 20111117195713) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(:version => 20111110051601) do
     t.integer  "estimate"
     t.date     "estimated_delivery_date"
     t.decimal  "points",                  :precision => 10, :scale => 2
+    t.string   "life_cycle_status"
   end
 
   add_index "paths", ["business_process_id"], :name => "business_process_id_ix"

@@ -20,6 +20,9 @@ class Path < ActiveRecord::Base
   attr_reader :fbstyle_devloper_tokens
   after_save :assign_work_assginments
 
+  STATUSES = ["Placeholder", "Detailed", "Mapped", "Building", "Built", "Demoed", "Ready for QA", "In QA", "Complete"]
+  validates_inclusion_of :life_cycle_status, :in => STATUSES, :allow_nil => true, :allow_blank => true
+
   def fbstyle_tag_tokens=(ids)
     @all_defined_tags =  tags.find_by_sql("select id , name from tags")
     @all_fbstyle_tag_tokens = ids
@@ -54,6 +57,15 @@ class Path < ActiveRecord::Base
 	aasm_column :status
 
 	aasm_initial_state :not_mapped
+
+#	aasm_state :placeholder
+#	aasm_state :detailed
+#	aasm_state :building
+#	aasm_state :built
+#	aasm_state :demoed
+#	aasm_state :ready_for_qa
+#	aasm_state :in_qa
+#	aasm_state :completed
 
 	aasm_state :not_mapped
   aasm_state :mapped
