@@ -6,7 +6,7 @@ class Issue < ActiveRecord::Base
 
   STATUSES = ["Open", "Closed"]
   SEVERITIES = ["Critical", "Non-Critical", "Blocking"]
-  TYPES = ["User Interface", "Functional Design", "Technical Design", "Techstack ER", "Techstack Bug", "Dependencies"]
+  TYPES = ["User Interface", "Functional Design", "Technical Design", "Techstack ER", "Techstack Bug", "Dependencies", "Integration Issue/Task"]
   SOURCES = ["Demo", "Mapping Review", "Code Review"]
 
   validates_inclusion_of :status, :in => STATUSES
