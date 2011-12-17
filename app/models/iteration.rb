@@ -25,7 +25,7 @@ class Iteration < ActiveRecord::Base
   	true
  	end
 
-	named_scope :active, :conditions => {:status => "open"}
+	scope :active, where(:status => "open")
 
 	class InUse < StandardError
   end
@@ -40,3 +40,4 @@ class Iteration < ActiveRecord::Base
     end
 
 end
+
