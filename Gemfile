@@ -1,6 +1,6 @@
 source :gemcutter
 
-gem 'rails', '3.0.7'
+gem 'rails',               '3.0.9'
 
 # bundler requires these gems in all environments
 gem 'aasm'

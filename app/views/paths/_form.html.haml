@@ -7,7 +7,7 @@
   %fieldset
     = render :partial => "path_header", :locals => {:f=> f_path}
   %fieldset
-    %legend Steps #{link_to ('(++)', '#', :class => "show_all")}
+    %legend Steps #{link_to "(++)", "#", :class => "show_all"}
     = render :partial => "path_steps", :locals => {:f=> f_path}
 
   %p= f_path.submit
