@@ -15,6 +15,7 @@ gem 'paperclip'
 gem 'paper_trail'
 gem 'ruport',              '1.6.3'
 gem 'will_paginate'
+gem 'jquery-rails',        '>= 1.0.12'
 
 group :development do
   # bundler requires these gems in development

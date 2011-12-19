@@ -2,7 +2,7 @@
   = javascript_include_tag '../cleditor/jquery.cleditor.min.js'
   = stylesheet_link_tag '../cleditor/jquery.cleditor.css', :media => 'screen, projection'
 
-- form_for [@issueable, @issue] do |f|
+= form_for [@issueable, @issue] do |f|
   = f.error_messages
   %p
     %br= f.label :name
@@ -18,7 +18,7 @@
     = f.select :issue_type, Issue::TYPES
   %p
     %br= f.label :user_id, "Assigned To"
-    = f.select ("user_id", User.find(:all).map {|u| [u.username,u.id]})
+    = f.select "user_id", User.find(:all).map {|u| [u.username,u.id]}
   %p
     %br= f.label :status
     = f.select :status, Issue::STATUSES
