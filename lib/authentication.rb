@@ -16,8 +16,7 @@
 #   before_filter :login_required, :except => [:index, :show]
 module Authentication
   def self.included(controller)
-    controller.send :helper_method, :current_user, :logged_in?, :working_on_iteration?, :redirect_to_target_or_default
-    controller.filter_parameter_logging :password
+     controller.send :helper_method, :current_user, :logged_in?, :working_on_iteration?, :redirect_to_target_or_default
   end
 
   def current_user
@@ -60,3 +59,4 @@ module Authentication
     session[:return_to] = request.request_uri
   end
 end
+

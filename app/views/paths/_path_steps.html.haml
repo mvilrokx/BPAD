@@ -25,7 +25,7 @@
         .left_col
           %ol
             %li
-              = step_fields.label :step, "step #{counter} #{link_to('(+)', '#', :class => "show_more")}"
+              = step_fields.label :step, "step #{counter} #{link_to('(+)', '#', :class => 'show_more')}".html_safe
               = step_fields.select :business_process_element_id, [step_fields.object.business_process_element.name + " (" + step_fields.object.business_process_element.element_type + ")", step_fields.object.id],{}, {:disabled => true, :style => 'color: #444;'}
             %li
               = render :partial => "consumed_data_objects", :locals => {:f=> step_fields}
