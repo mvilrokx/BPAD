@@ -6,7 +6,6 @@ BPAD::Application.routes.draw do
   resources :interfaces
   resources :logical_entities
   resources :issues
-  resources :plannings
 
   resources :build_features
 
