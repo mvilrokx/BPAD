@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  build_iteration_id: 1
+  user_id: 1
+  resource_pct: 1
+
+two:
+  build_iteration_id: 1
+  user_id: 1
+  resource_pct: 1

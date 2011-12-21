@@ -1,0 +1,2 @@
+class IterationResource < ActiveRecord::Base
+end

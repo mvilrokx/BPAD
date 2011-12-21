@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111117195713) do
+ActiveRecord::Schema.define(:version => 20111214192306) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(:version => 20111117195713) do
   end
 
   add_index "build_features", ["buildable_id", "buildable_type"], :name => "buildable_ix"
+
+  create_table "build_iterations", :force => true do |t|
+    t.date     "start_date"
+    t.date     "stop_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "business_areas", :force => true do |t|
     t.string   "name"
@@ -199,6 +206,14 @@ ActiveRecord::Schema.define(:version => 20111117195713) do
 
   add_index "issues", ["issueable_id", "issueable_type"], :name => "issueable_ix"
 
+  create_table "iteration_resources", :force => true do |t|
+    t.integer  "build_iteration_id"
+    t.integer  "user_id"
+    t.integer  "resource_pct"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "iterations", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -266,6 +281,9 @@ ActiveRecord::Schema.define(:version => 20111117195713) do
     t.date     "estimated_delivery_date"
     t.decimal  "points",                  :precision => 10, :scale => 2
     t.string   "life_cycle_status"
+    t.date     "calc_start_it"
+    t.date     "calc_stop_it"
+    t.integer  "max_developers"
   end
 
   add_index "paths", ["business_process_id"], :name => "business_process_id_ix"
