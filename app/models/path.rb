@@ -20,7 +20,7 @@ class Path < ActiveRecord::Base
   attr_reader :fbstyle_devloper_tokens
   after_save :assign_work_assginments
 
-  STATUSES = ["Placeholder", "Detailed", "Mapped", "Building", "Built", "Ready for QA", "Demoed", "In QA", "QA Passed", "QA Failed", "QA Blocked", "QA Failed - Regressed"]
+  STATUSES = ["Placeholder", "Detailing", "Detailed", "Mapped", "Building", "Built", "Ready for QA", "Demoed", "In QA", "QA Passed", "QA Failed", "QA Blocked", "QA Failed - Regressed"]
   validates_inclusion_of :life_cycle_status, :in => STATUSES, :allow_nil => true, :allow_blank => true
 
   def fbstyle_tag_tokens=(ids)
