@@ -40,7 +40,7 @@ class Path < ActiveRecord::Base
   has_many :watchings, :as => :watchable, :dependent => :destroy
 
   has_many :steps, :dependent => :destroy
-  accepts_nested_attributes_for :steps, :reject_if => lambda { |step| step[:business_process_element_id].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :steps, :allow_destroy => true
 
 	has_paper_trail :ignore => [:name]
 
