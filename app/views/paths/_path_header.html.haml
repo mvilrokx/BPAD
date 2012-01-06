@@ -8,7 +8,7 @@
       = f.text_area :description, :class => 'bp_override_textarea'
     %li
       = f.label :points
-      =f.select :points, [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100]
+      = f.select :points, [0.00, 0.50, 1.00, 2.00, 3.00, 5.00, 8.00, 13.00, 20.00, 40.00, 100.00]
     %li
       = f.label :life_cycle_status, "Status"
       = f.select :life_cycle_status, Path::STATUSES

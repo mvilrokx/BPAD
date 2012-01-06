@@ -30,6 +30,8 @@ GEM
       activemodel (= 3.0.9)
       activesupport (= 3.0.9)
     activesupport (3.0.9)
+    acts_as_reportable (1.1.1)
+      ruport (>= 1.6.0)
     acts_as_tree (0.1.1)
     arel (2.0.10)
     awesome_print (1.0.2)
@@ -112,6 +114,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm (= 2.3.1)
+  acts_as_reportable
   acts_as_tree
   awesome_print
   compass
