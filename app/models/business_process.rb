@@ -97,7 +97,7 @@ class BusinessProcess < ActiveRecord::Base
 			# Clean up Elements that have disappeared from the diagram (they must have been deleted)
 			self.business_process_elements.all.each do |element|
 				if !bp_elements[element.xml_element_id]
-#					element.destroy
+#					element.destroy ONLY IF NEVER USED IN PATH OTHERWISE UPDATE AND MARK AS INACTIVE
 					puts "DELETE BP Element"
 				end
 			end
@@ -109,6 +109,9 @@ ap bp_elements[arrow['sourceRef']]
 puts bp_elements[arrow['sourceRef']].id
 ap bp_elements[arrow['targetRef']]
 puts bp_elements[arrow['targetRef']].id
+          # DELETE ALL Flow associated to this Business Process
+          # Recreate all flow
+          # remove all next code
           flow = Flow.find_or_initialize_by_business_process_element_id_and_target_element_id(bp_elements[arrow['sourceRef']].id, bp_elements[arrow['targetRef']].id)
           if flow.save!
               puts "Successfully created Flow."
