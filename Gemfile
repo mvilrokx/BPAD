@@ -21,6 +21,7 @@ gem 'jquery-rails',        '>= 1.0.12'
 group :development do
   # bundler requires these gems in development
   # gem 'rails-footnotes'
+  gem 'rails-erd'
 end
 
 group :test do
