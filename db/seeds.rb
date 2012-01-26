@@ -11,7 +11,9 @@ end
 
 ["SAXIAO", "SDEVALLA", "JYOTVENK", "ASIDGIDD", "MIHIPATE", "SOSAGBEM", "HVANGIPU", "SANDDE", "SNANDURI", "DCOHANOF", "GKRISHNA", "KAREREDD", "SUBCHATT", "KARUNART", "JASSINGH"].each do |username|
   developer = User.find_by_username(username)
-  developer.roles << Role.find_by_name("Developer")
-  developer.save!
+  if developer
+  	developer.roles << Role.find_by_name("Developer")
+  	developer.save!
+  end
 end
 
