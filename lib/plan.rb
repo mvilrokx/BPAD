@@ -8,7 +8,7 @@ class Plan
     @planned_paths = Hash.new
     business_processes = Hash.new
 
-    paths = Path.joins(:tags).where(:tags => {:name => "1.3m"}).order("priority ASC")
+    paths = Path.includes(:tags).where(:tags => {:name => "1.3m"}).order("priority ASC")
 
 #    BusinessProcess.all.each do |bp|
 #      if bp.exists_in_agilefant?
