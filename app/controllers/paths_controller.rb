@@ -5,7 +5,8 @@ class PathsController < ApplicationController
 
 
   def index
-    @paths = @business_process.paths.paginate(:page => params[:page], :order => sort_column(Path) + " " + sort_direction)
+    #@paths = @business_process.paths.paginate(:page => params[:page], :order => sort_column(Path) + " " + sort_direction)
+    @paths = @business_process.paths.order(sort_column(Path) + " " + sort_direction)
     find_cur_path_dev_assgn
   end
 
@@ -23,25 +24,41 @@ class PathsController < ApplicationController
   end
 
   def create
+    if params[:path][:step_attributes].nil?
+        @temppath = params[:path]
+	@temppath.delete("steps_attributes")
+ap params[:path]
+
+ap @temppath
+    end
     @path = @business_process.paths.new(params[:path])
     find_cur_path_dev_assgn
     if @path.save
-      flash[:notice] = "Successfully created path."
-#      redirect_to [@business_process, @path]
-      redirect_to edit_business_process_path_path(@business_process, @path)
+    	flash[:notice] = "Successfully created path."
+#   	redirect_to [@business_process, @path]
+    	redirect_to edit_business_process_path_path(@business_process, @path)
     else
     	@path.errors.each_full {|msg| puts msg}
-      render :action => 'new'
+   	render :action => 'new'
     end
-  end
 
+  end
   def edit
     @path = @business_process.paths.find(params[:id])
     find_cur_path_dev_assgn
     last_existing_step = @path.last_step
-    if last_existing_step.nil?
+ap @path
+ap last_existing_step
+puts "printed last existing step"
+    if last_existing_step.nil? and 
       @available_steps = @business_process.start_element
-      @path.steps.build
+      ap @available_steps
+      if !@available_steps.blank?
+         puts "available_septs is blank"
+         step = @path.steps.build
+      end
+      #@path.steps.build
+      ap @step
     else
       last_existing_step.business_process_element.produced_data_objects.each do |element|
         last_existing_step.data_object_instances.find_or_create_by_business_process_element_id(element.id)
