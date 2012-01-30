@@ -1,15 +1,16 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111214192306) do
+ActiveRecord::Schema.define(:version => 20120130124001) do
 
   create_table "approvals", :force => true do |t|
     t.integer  "user_id"
@@ -73,6 +74,10 @@ ActiveRecord::Schema.define(:version => 20111214192306) do
     t.date     "stop_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "banked_points"
+    t.decimal  "resource_count",         :precision => 12, :scale => 6
+    t.decimal  "point_capacity",         :precision => 12, :scale => 6
+    t.decimal  "post_planning_capacity", :precision => 12, :scale => 6
   end
 
   create_table "business_areas", :force => true do |t|
@@ -166,6 +171,15 @@ ActiveRecord::Schema.define(:version => 20111214192306) do
 
   add_index "flows", ["business_process_element_id"], :name => "business_process_element_id_ix"
   add_index "flows", ["target_element_id"], :name => "target_element_id_ix"
+
+  create_table "fragments", :force => true do |t|
+    t.integer "allocated"
+    t.integer "build_iteration_id"
+    t.integer "path_id"
+    t.decimal "points",             :precision => 10, :scale => 6
+    t.integer "user_id"
+    t.decimal "hours_equivalent",   :precision => 10, :scale => 6
+  end
 
   create_table "functional_work_units", :force => true do |t|
     t.string   "name"
@@ -268,6 +282,12 @@ ActiveRecord::Schema.define(:version => 20111214192306) do
 
   add_index "logical_entity_attributes", ["logical_entity_id"], :name => "logical_entity_id_ix"
 
+  create_table "path_demos", :primary_key => "path_demo_id", :force => true do |t|
+    t.integer "path_id",                 :null => false
+    t.string  "demo_date", :limit => 20
+    t.string  "demo_by",   :limit => 45
+  end
+
   create_table "paths", :force => true do |t|
     t.integer  "business_process_id"
     t.string   "name"
@@ -288,6 +308,16 @@ ActiveRecord::Schema.define(:version => 20111214192306) do
 
   add_index "paths", ["business_process_id"], :name => "business_process_id_ix"
   add_index "paths", ["iteration_id"], :name => "iteration_id_ix"
+
+  create_table "planning_runs", :force => true do |t|
+    t.decimal "ppdi",                        :precision => 10, :scale => 6
+    t.integer "number_its_used"
+    t.integer "number_paths_planned"
+    t.decimal "iteration_capacity_used",     :precision => 10, :scale => 6
+    t.decimal "points_of_planned_paths",     :precision => 10, :scale => 6
+    t.integer "planned_months_in_agilefant"
+    t.text    "messages"
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"

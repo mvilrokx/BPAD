@@ -6,8 +6,11 @@ BPAD::Application.routes.draw do
   resources :interfaces
   resources :logical_entities
   resources :issues
-  resources :plannings
-
+  
+  match '/plannings/calc' => 'plannings#calc'
+  
+  resources :plannings 
+  
   resources :build_features
 
   resources :lbas do

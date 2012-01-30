@@ -1,2 +1,103 @@
-- @users.each do |user|
-  #{user.username}
+- title "Business Processes", false
+
+%ul{:id => "breadcrumb"}
+  %li{:class => "first"}
+    Dashboard
+  %li{:class => "second"}
+    Planning
+
+
+  
+  
+#title
+  %span
+    Path Planning 
+  
+
+.content
+
+  %p= link_to "Re-plan (Run Calculation)" , plannings_calc_path , :class=>"button"
+  
+  %h3 
+    Planning variables
+    
+  %table{:class => ["pretty", "striped"]}
+    %tr
+      %td= h "Calculated Points Velocity, Per Developer, Per Iteration (PPDI)"
+      %td= h @planningRun.ppdi
+    %tr     
+      %td= h "Number of Iterations Used In PPDI Calculation"
+      %td= h @planningRun.number_its_used
+    %tr
+      %td= h "Number of Paths Planned"
+      %td= h @planningRun.number_paths_planned
+    %tr
+      %td= h "Points Capacity of Iterations Used"
+      %td= h @planningRun.iteration_capacity_used
+    %tr
+      %td= h "Total Points of Planned Paths"
+      %td= h @planningRun.points_of_planned_paths
+    %tr
+      %td= h "Messages from Planning Calculation"
+      %td= h @planningRun.messages  
+    %tr
+      %td= h "No of Future Planned Months In Agilefant"
+      %td= h @planningRun.planned_months_in_agilefant 
+  
+  %h3 
+    Iterations    
+  %table{:class => ["pretty", "striped"]}
+    %tr
+      %th= sortable @bis, "Start date"
+      %th= sortable @bis, "Stop date"
+      %th= sortable @bis, "Banked Points"
+      %th= sortable @bis, "Bandwidth"
+      %th= sortable @bis, "Start Capacity (Points)"
+      %th= sortable @bis, "End Capacity (Points)"
+     
+      -for bi in @bis
+        %tr
+          %td= h bi.start_date
+          %td= h bi.stop_date
+          %td= h bi.banked_points
+          %td= h bi.resource_count
+          %td= h bi.point_capacity
+          %td= h bi.post_planning_capacity
+  
+  %h3 
+    Planned Paths
+  %table{:class => ["pretty", "striped"]}
+    %tr
+      %th= sortable @allPaths, "Last Path Of"
+      %th= sortable @allPaths, "priority"
+      %th= sortable @allPaths, "id"
+      %th= sortable @allPaths, "name"
+      %th= sortable @allPaths, "status"
+      %th= sortable @allPaths, "points"
+      %th= sortable @allPaths, "max dev"
+      %th= sortable @allPaths, "start it"
+      %th= sortable @allPaths, "stop it"
+      
+      -for path in @allPaths
+        %tr
+          %td= h path.lastTagOccurance
+          %td= h path.priority
+          %td= h path.id
+          %td= h path.name
+          %td= h path.life_cycle_status
+          %td= h path.points
+          %td= h path.max_developers
+          %td= h path.calc_start_it
+          %td= h path.calc_stop_it
+          
+   
+        
+    
+          
+       
+         
+       
+
+   
+
+

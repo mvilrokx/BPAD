@@ -6,6 +6,8 @@ class Path < ActiveRecord::Base
   has_many :users, :through => :work_assignments
 
   has_many :issues, :as => :issueable, :dependent => :destroy
+  
+  has_many :fragments
 
   # attr_accessible :business_process_id, :name, :description, :steps_attributes
   validates_presence_of :name, :description
@@ -13,6 +15,8 @@ class Path < ActiveRecord::Base
 
   #attr_writer :tag_names
   #after_save :assign_tags
+  
+  attr_accessor :lastTagOccurance
 
   attr_reader :fbstyle_tag_tokens
   after_save :assign_fbstyle_tags
