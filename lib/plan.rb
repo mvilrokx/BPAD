@@ -8,16 +8,16 @@ class Plan
     @planned_paths = Hash.new
     business_processes = Hash.new
 
-    paths = Path.all(:order => "priority ASC")
+    paths = Path.includes(:tags).where(:tags => {:name => "1.3m"}).order("priority ASC")
 
-    BusinessProcess.all.each do |bp|
-      if bp.exists_in_agilefant?
-        business_processes[bp] = AfProjectBucket.first(:conditions => ['proj_id = ?', bp.agilefant_backlog.id]).left_over_hours
+#    BusinessProcess.all.each do |bp|
+#      if bp.exists_in_agilefant?
+#        business_processes[bp] = AfProjectBucket.first(:conditions => ['proj_id = ?', bp.agilefant_backlog.id]).left_over_hours
 
-      else
-        puts "#{bp.name} #{bp.id} DOES NOT EXIST IN AGILEFANT"
-      end
-    end
+#      else
+#        puts "#{bp.name} #{bp.id} DOES NOT EXIST IN AGILEFANT"
+#      end
+#    end
 
     developers = User.all(:joins => :roles, :conditions => 'roles.name = "Developer"', :order =>:username)
 
@@ -25,17 +25,17 @@ class Plan
 
     paths.each do |path|
       if path.business_process.exists_in_agilefant?
-        if AfStory.find_from_bpad_object(path) || business_processes[path.business_process] <= 0
+        if AfStory.find_from_bpad_object(path) # || business_processes[path.business_process] <= 0
           @planned_paths[path] = [nil, nil]
         else
-          timespent = 0
-          if business_processes[path.business_process]  < 130
-            timespent = business_processes[path.business_process]
-          else
-            timespent = 130
-          end
+          timespent = 130 #0
+#          if business_processes[path.business_process]  < 130
+#            timespent = business_processes[path.business_process]
+#          else
+#            timespent = 130
+#          end
 
-          business_processes[path.business_process] = business_processes[path.business_process] - 130
+#          business_processes[path.business_process] = business_processes[path.business_process] - 130
 
           @planned_paths[path] = [iteration_start_date, available_developers.shift, timespent]
           path.update_attribute(:estimated_delivery_date, iteration_start_date)

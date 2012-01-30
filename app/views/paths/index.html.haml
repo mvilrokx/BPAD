@@ -8,9 +8,6 @@
   %span
     Paths
 
-.pagination
-  = will_paginate @paths
-
 .content
   %table{:class => ["pretty", "striped"]}
     %tr
@@ -51,7 +48,4 @@
   %p
     = link_to "New Path", new_business_process_path_path(@business_process), :class=>"button"
     = link_to "Back to All Business Processes", business_processes_path, :class=>"button"
-
-.pagination
-  = will_paginate @paths
 

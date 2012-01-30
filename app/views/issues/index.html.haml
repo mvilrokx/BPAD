@@ -30,15 +30,15 @@
 
       - for issue in @issues
         %tr
-          %td= h issue.name
-          %td= issue.description
-          %td= h issue.status
-          %td= h issue.severity
-          %td= h issue.issue_type
-          %td= h issue.source
-          %td= h issue.user.username if issue.user
-          %td= h issue.owner.username if issue.owner
-          %td= h issue.bug_number
+          %td= issue.name
+          %td= issue.description.html_safe
+          %td= issue.status
+          %td= issue.severity
+          %td= issue.issue_type
+          %td= issue.source
+          %td= issue.user.username if issue.user
+          %td= issue.owner.username if issue.owner
+          %td= issue.bug_number
           %td= link_to "Edit", edit_polymorphic_path([@issueable, issue])
           %td= link_to "Delete", issue, :confirm => 'Are you sure?', :method => :delete
 

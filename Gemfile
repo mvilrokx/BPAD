@@ -3,7 +3,7 @@ source :gemcutter
 gem 'rails',               '3.0.9'
 
 # bundler requires these gems in all environments
-gem 'aasm'
+gem 'aasm', '2.3.1'
 gem 'acts_as_tree'
 gem 'awesome_print'
 gem 'compass'
@@ -14,12 +14,14 @@ gem 'nokogiri'
 gem 'paperclip'
 gem 'paper_trail'
 gem 'ruport',              '1.6.3'
+gem 'acts_as_reportable'
 gem 'will_paginate'
 gem 'jquery-rails',        '>= 1.0.12'
 
 group :development do
   # bundler requires these gems in development
   # gem 'rails-footnotes'
+  gem 'rails-erd'
 end
 
 group :test do

@@ -4,7 +4,6 @@ class CreateLogicalEntities < ActiveRecord::Migration
       t.string :name
       t.string :description
       t.integer :lbo_id
-      t.integration :iteration_id
       t.boolean :datedness
       t.boolean :translation
       t.timestamps
@@ -15,3 +14,4 @@ class CreateLogicalEntities < ActiveRecord::Migration
     drop_table :logical_entities
   end
 end
+

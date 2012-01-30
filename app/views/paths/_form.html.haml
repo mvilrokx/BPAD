@@ -2,7 +2,7 @@
   = javascript_include_tag '../cleditor/jquery.cleditor.min.js'
   = stylesheet_link_tag '../cleditor/jquery.cleditor.css', :media => 'screen, projection'
 
-- form_for [@business_process,@path], :html => {:class => 'bp fancy_form'} do |f_path|
+= form_for [@business_process,@path], :html => {:class => 'bp fancy_form'} do |f_path|
   = f_path.error_messages
   %fieldset
     = render :partial => "path_header", :locals => {:f=> f_path}
