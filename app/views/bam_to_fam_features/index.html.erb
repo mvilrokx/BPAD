@@ -31,8 +31,8 @@
       </tr>
       <% for bam_to_fam_feature in @bam_to_fam_features %>
         <tr>
-          <td><%=h bam_to_fam_feature.name %></td>
-          <td><%=h bam_to_fam_feature.description %></td>
+          <td><%= bam_to_fam_feature.name %></td>
+          <td><%= bam_to_fam_feature.description.html_safe %></td>
           <td><%= link_to "Map", feature_fam_to_tam_maps_path(bam_to_fam_feature.feature_id), :class => "button" %></td>
         </tr>
       <% end %>
@@ -43,3 +43,4 @@
 <p>
   <%= link_to "Back to All Steps of the Path" , path_steps_path(@step.path), :class=>"button" %>
 </p>
+
