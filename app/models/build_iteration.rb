@@ -1,6 +1,7 @@
 class BuildIteration < ActiveRecord::Base
   has_many :iteration_resources, :dependent => :destroy
   has_many :users, :through => :iteration_resources 
+  has_many :fragments
   
   attr_accessor :bandwidth
   attr_accessor :ppdi

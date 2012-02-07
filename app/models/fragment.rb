@@ -1,4 +1,7 @@
 class Fragment < ActiveRecord::Base
+  belongs_to :path
+  belongs_to :af_user, :foreign_key => "user_id"
+  belongs_to :build_iteration
 
   attr_accessor :name
 

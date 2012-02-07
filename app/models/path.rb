@@ -191,6 +191,10 @@ class Path < ActiveRecord::Base
     Path.maximum("priority") + 1
   end
 
+  def self.tagged_as(tag)
+    joins(:tags).where('tags.name = ?', tag)
+  end
+
   private
 
   #def assign_tags
