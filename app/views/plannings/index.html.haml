@@ -49,46 +49,49 @@
   %table{:class => ["pretty", "striped"]}
     %tr
       %th= sortable @bis, "Start date"
-      %th= sortable @bis, "Stop date"
+ 
       %th= sortable @bis, "Banked Points"
       %th= sortable @bis, "Bandwidth"
       %th= sortable @bis, "Start Capacity (Points)"
       %th= sortable @bis, "End Capacity (Points)"
+      %th= sortable @bis, "Used Capacity (Points)"
      
       -for bi in @bis
         %tr
-          %td= h bi.start_date
-          %td= h bi.stop_date
+          %td= h bi.start_date.strftime("%b %y")
           %td= h bi.banked_points
           %td= h bi.resource_count
-          %td= h bi.point_capacity
-          %td= h bi.post_planning_capacity
+          %td= h sprintf("%.1f",bi.point_capacity)
+          %td= h sprintf("%.1f",bi.post_planning_capacity)
+          %td= h sprintf("%.1f",bi.point_capacity-bi.post_planning_capacity)
   
   %h3 
     Planned Paths
   %table{:class => ["pretty", "striped"]}
     %tr
       %th= sortable @allPaths, "Last Path Of"
-      %th= sortable @allPaths, "priority"
-      %th= sortable @allPaths, "id"
-      %th= sortable @allPaths, "name"
-      %th= sortable @allPaths, "status"
-      %th= sortable @allPaths, "points"
-      %th= sortable @allPaths, "max dev"
-      %th= sortable @allPaths, "start it"
-      %th= sortable @allPaths, "stop it"
+      %th= sortable @allPaths, "All Tags"
+      %th= sortable @allPaths, "Pri."
+      %th= sortable @allPaths, "Id"
+      %th= sortable @allPaths, "Name"
+      %th= sortable @allPaths, "Status"
+      %th= sortable @allPaths, "Points"
+      %th= sortable @allPaths, "Max Dev"
+      %th= sortable @allPaths, "Start"
+      %th= sortable @allPaths, "Stop"
       
       -for path in @allPaths
         %tr
           %td= h path.lastTagOccurance
+          %td= h path.tags.collect{|tag| tag.name}.join(',')
           %td= h path.priority
           %td= h path.id
           %td= h path.name
           %td= h path.life_cycle_status
           %td= h path.points
           %td= h path.max_developers
-          %td= h path.calc_start_it
-          %td= h path.calc_stop_it
+          %td= h path.calc_start_it.strftime("%b")
+          %td= h path.calc_stop_it.strftime("%b")
           
    
         

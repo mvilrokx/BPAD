@@ -194,7 +194,7 @@ end
               
               newFrag = Fragment.new({:allocated=>0,:build_iteration_id=>-1,:path_id=>fragToSchedule.path_id,:points=>remainder,:id=>@fragmentIndex})
               newFrag.id = @fragmentIndex
-              newFrag.setFields(path.priority)
+              newFrag.setFields(fragToSchedule.path_priority)
               @fragments[@fragmentIndex]=newFrag
               puts "Added Fragment Id #{newFrag.id}"
               @fragmentIndex=@fragmentIndex+1
