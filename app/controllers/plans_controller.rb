@@ -23,7 +23,7 @@ class PlansController < ApplicationController
     release = "V1.3"
     max_project_length = 200
 
-    @projects = BusinessProcess.all(:include => :paths)
+    @projects = BusinessProcess.where(:include_in_plan => true).all(:include => :paths)
 
     available_users = User.all
     planned_path = Plan.new.planned_paths
